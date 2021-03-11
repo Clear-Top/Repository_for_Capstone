@@ -12,3 +12,6 @@ Baseline모델은 LPSR-Recognition 구조를 Keras로 구현 및 훈련 진행
 
 # Input [Image,Video] 에 따라 다르게 구현해야하는지 의문.
 SISR을 이용하여 의도적인 Down Sampling을 통한 모델 훈련, SRGAN을 사용해보는것도 괜찮아보임.
+
+# Dataset
+현재 한국 차량 번호판인식을 위한 데이터셋을 구하는것이 어려움, slee@gachon.ac.kr 분께 컨택 넣어서 관련 데이터셋을 얻거나 직접 데이터를 구해야할듯
