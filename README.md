@@ -1,9 +1,13 @@
-# Capstone_Design
+#Capstone_Design
 https://github.com/brightyoun/LPSR-Recognition 참조 <br/>
 https://github.com/apoorva-dave/LicensePlateDetector-deployment-flask 참조 <br/>
 http://pr.gachon.ac.kr/ALPR.html <br/>
 http://blog.naver.com/PostView.nhn?blogId=sogangori&logNo=221093668692&parentCategoryNo=&categoryNo=6&viewDate=&isShowPopularPosts=false&from=postView <br/>
 https://github.com/azizsiyaev/korean_car_licence_plate_detection_and_recognition <br/>
+
+#훈련용
+https://www.youtube.com/watch?v=mmj3nxGT2YQ [참조] <br/>
+https://colab.research.google.com/drive/1_GdoqCJWXsChrOiY8sZMr_zbr_fH-0Fg?usp=sharing [참조]
 
 
 # Flask 기반의 SR-LPR 어플리케이션 구현
