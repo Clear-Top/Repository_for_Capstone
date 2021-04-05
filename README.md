@@ -18,4 +18,5 @@ Baseline모델은 LPSR-Recognition 구조를 Keras로 구현 및 훈련 진행
 SISR을 이용하여 의도적인 Down Sampling을 통한 모델 훈련, SRGAN을 사용해보는것도 괜찮아보임.
 
 # Dataset
-현재 한국 차량 번호판인식을 위한 데이터셋을 구하는것이 어려움, slee@gachon.ac.kr 분께 컨택 넣어서 관련 데이터셋을 얻거나 직접 데이터를 구해야할듯
+https://sejonguniversity-my.sharepoint.com/personal/minhdl_sju_ac_kr/_layouts/15/onedrive.aspx?originalPath=aHR0cHM6Ly9zZWpvbmd1bml2ZXJzaXR5LW15LnNoYXJlcG9pbnQuY29tLzpmOi9nL3BlcnNvbmFsL21pbmhkbF9zanVfYWNfa3IvRXJSTXE4MjNWbkJLdlNrbHB0bjJXYklCLUp4TDdwS3QzaE91aVk4RTNvV2tyUT9ydGltZT1iNXlXOVNMNDJFZw&id=%2Fpersonal%2Fminhdl%5Fsju%5Fac%5Fkr%2FDocuments%2Fradish%20project%20dataset%2FCapstone%5Fdataset%2Flicense%20plate%20dataset <br/>
+
