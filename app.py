@@ -1,9 +1,21 @@
 import os
 from flask import Flask, render_template, request
 import os.path
+import cv2 as cv
 
 UPLOAD_FOLDER = "static/images"
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'xlsx'])
+
+
+"""
+#model configuration & weight file for License Plate Detection
+"""
+lpdcfg = "yolov4-ANPR.cfg"
+lpdweight = "yolov4-ANPR.weights"
+lpdnet = cv.dnn.readNetFromDarknet(lpdcfg, lpdweight)
+lpdnet.setPreferableBackend(cv.dnn.DNN_BACKEND_OPENCV)
+lpdnet.setPreferableTarget(cv.dnn.DNN_TARGET_CPU)
+
 
 app = Flask(__name__)
 app.debug = True
