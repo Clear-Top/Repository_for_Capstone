@@ -37,7 +37,7 @@ def lpd(file):
     # Draw the predicted bounding box
     def drawPred(classId, conf, left, top, right, bottom):
         # Draw a bounding box.
-        cv.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 3)
+        #cv.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 3)
 
         label = '%.2f' % conf
 
@@ -46,10 +46,10 @@ def lpd(file):
             label = '%s:%s' % (classes[classId], label)
         
         #Display the label at the top of the bounding box
-        labelSize, baseLine = cv.getTextSize(label, cv.FONT_HERSHEY_SIMPLEX, 0.5, 1)
-        top = max(top, labelSize[1])
-        cv.rectangle(frame, (left, top - round(1.5*labelSize[1])), (left + round(1.5*labelSize[0]), top + baseLine), (0, 0, 255), cv.FILLED)
-        cv.putText(frame, label, (left, top), cv.FONT_HERSHEY_SIMPLEX, 0.75, (0,0,0), 2)
+        #labelSize, baseLine = cv.getTextSize(label, cv.FONT_HERSHEY_SIMPLEX, 0.5, 1)
+        #top = max(top, labelSize[1])
+        #cv.rectangle(frame, (left, top - round(1.5*labelSize[1])), (left + round(1.5*labelSize[0]), top + baseLine), (0, 0, 255), cv.FILLED)
+        #cv.putText(frame, label, (left, top), cv.FONT_HERSHEY_SIMPLEX, 0.75, (0,0,0), 2)
         crop_img = frame[top:bottom, left:right]
         return crop_img
     # Remove the bounding boxes with low confidence using non-maxima suppression
