@@ -41,7 +41,7 @@ def upload_page():
 
         if file and allowed_file(file.filename):
             file.save(os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
-            print(file.filename);
+            print(file.filename)
             
             full_image,plates = lpd(file)
 
