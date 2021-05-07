@@ -47,8 +47,3 @@ def get_coordinates(geotags):
 
     return (lat,lon)
 
-exif = get_exif('test.jpg')
-geotags = get_geotagging(exif)
-
-# {exif값 확인}
-print(get_coordinates(geotags))
