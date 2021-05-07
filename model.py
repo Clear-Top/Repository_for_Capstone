@@ -138,8 +138,3 @@ class LPRNet:
     def summary(self):
         self.model.summary()
 
-
-if __name__ == '__main__':
-    model = LPRNet(46)
-    model.load_weights("saved_models/weights_last.pb")
-    model.summary()

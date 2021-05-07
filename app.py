@@ -1,6 +1,5 @@
 import os
 from flask import Flask, render_template, request
-from skew_plate import rotate
 import cv2 as cv
 import argparse
 import sys
@@ -51,16 +50,16 @@ def upload_page():
             for i,pic in enumerate(plates):
                 if pic is not None:
                     try:
-                        print(i,"     ",pic.shape)
+                        print("[",i,"]",pic.shape)
                         pic = cv.resize( pic, None, fx = 3, fy = 3, interpolation = cv.INTER_CUBIC)
                         plate_num.append(lpr(pic))
 
-                        cv.imwrite("result/"+full_image[:-4]+"_result"+str(i)+".jpg", pic.astype(np.uint8));
+                        cv.imwrite("result/"+full_image[:-4]+"_result"+str(i)+".jpg", pic.astype(np.uint8))
                     except:
                         continue
             for i in plate_num:
                 print(i)
-            print(RESULT_FOLDER + full_image[:-4]+"_result0.jpg")
+            
             return render_template('upload.html',
                                    msg='Successfully processed',
                                    extracted_text=full_image,
