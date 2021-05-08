@@ -32,7 +32,7 @@
     <!-- db데이터 쓰기-->
 
     <div class="container">
-        <h1 style="text-align:center; font-size: 50px;">Hello {{name}}, {{date}} Map test</h1>
+        <h1 style="text-align:center; font-size: 50px;">Map test</h1>
 
         <div id="left">
             <form action="#" method="GET">
@@ -78,15 +78,10 @@
     <!-- <script type="text/javascript" src="{{ url_for('static', filename = 'js/mouseEvent.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/instanceButton.js') }}"></script> -->
 
+
+
+
     <script>
-        alert('testData.txt reading 성공...!');
-        // load data "flask->javascript"
-        var n = JSON.parse('{{test|tojson|safe}}');
-        var displayBox = document.getElementById('searchDisplay');
-        displayBox.innerHTML += "Index: " + n.No + " , 번호판: " + n.PlateNum;
-        displayBox.style.textAlign = "left";
-
-
         alert('카카오맵 호출');
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
             mapOption = {
