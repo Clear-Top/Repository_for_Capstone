@@ -5,7 +5,7 @@ import argparse
 import sys
 import numpy as np
 import os.path
-from lpd import lpd 
+from lpd import lpd
 from lpr import lpr
 UPLOAD_FOLDER = '/static/uploads/'
 RESULT_FOLDER = '/result/'
@@ -19,7 +19,6 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-
 def allowed_file(file):
     return '.' in file and file.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -27,6 +26,11 @@ def allowed_file(file):
 @app.route('/')
 def home_page():
     return render_template('index.html')
+
+
+@app.route('/map')
+def map_page():
+    return render_template('mapPage.html')
 
 
 @app.route('/upload', methods=['GET', 'POST'])
@@ -42,24 +46,26 @@ def upload_page():
         if file and allowed_file(file.filename):
             file.save(os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
             print(file.filename)
-            
-            full_image,plates = lpd(file)
+
+            full_image, plates = lpd(file)
 
             plate_num = []
             print("[SYS] lpr ")
-            for i,pic in enumerate(plates):
+            for i, pic in enumerate(plates):
                 if pic is not None:
                     try:
-                        print("[",i,"]",pic.shape)
-                        pic = cv.resize( pic, None, fx = 3, fy = 3, interpolation = cv.INTER_CUBIC)
+                        print("[", i, "]", pic.shape)
+                        pic = cv.resize(pic, None, fx=3, fy=3,
+                                        interpolation=cv.INTER_CUBIC)
                         plate_num.append(lpr(pic))
 
-                        cv.imwrite("result/"+full_image[:-4]+"_result"+str(i)+".jpg", pic.astype(np.uint8))
+                        cv.imwrite(
+                            "result/"+full_image[:-4]+"_result"+str(i)+".jpg", pic.astype(np.uint8))
                     except:
                         continue
             for i in plate_num:
                 print(i)
-            
+
             return render_template('upload.html',
                                    msg='Successfully processed',
                                    extracted_text=full_image,
@@ -67,6 +73,7 @@ def upload_page():
                                    lpd_src=RESULT_FOLDER + full_image[:-4]+"_result0.jpg")
     elif request.method == 'GET':
         return render_template('upload.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
