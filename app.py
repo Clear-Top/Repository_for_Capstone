@@ -32,7 +32,19 @@ def allowed_file(file):
 def home_page():
     return render_template('index.html')
 
-
+@app.route('/map')
+def map():
+    return render_template('mapPage.html')
+@app.route('/xlupload', methods=['GET', 'POST'])
+def upload_excel():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_excel(file.filename) :
+            file.save(os.path.join(os.getcwd()+'/static/excel/',file.filename))
+            return render_template('mapPage.html')
+    elif request.method == 'GET':
+        return render_template('mapPage.html')
+    
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_page():
     if request.method == 'POST':
@@ -72,17 +84,5 @@ def upload_page():
     elif request.method == 'GET':
         return render_template('upload.html')
 
-@app.route('/xl')
-def render_excel():
-    return render_template('xl.html')
-@app.route('/xlupload', methods=['GET', 'POST'])
-def upload_excel():
-    if request.method == 'POST':
-        file = request.files['file']
-        if file and allowed_excel(file.filename) :
-            file.save(os.path.join(os.getcwd()+'/static/excel/',file.filename))
-            return 'success'
-    elif request.method == 'GET':
-        return render_template('xl.html')
 if __name__ == '__main__':
     app.run(debug=True)

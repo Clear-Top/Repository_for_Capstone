@@ -209,3 +209,27 @@ hr{
     text-align: center;
     line-height: 65px;
 }
+
+
+#button1 input[type="file"] {  
+    position: absolute; 
+    width: 1px; 
+    height: 1px; 
+    padding: 0; 
+    margin: -1px; 
+    overflow: hidden; 
+    clip:rect(0,0,0,0);
+    border: 0;
+
+  }
+  #icon input[type="submit"] {  
+    position: absolute; 
+    width: 1px; 
+    height: 1px; 
+    padding: 0; 
+    margin: -1px; 
+    overflow: hidden; 
+    clip:rect(0,0,0,0);
+    border: 0;
+    /*display:none;*/
+  }

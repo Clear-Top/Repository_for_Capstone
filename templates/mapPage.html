@@ -52,12 +52,15 @@
         <div id="map"></div>
         <div id="right">
             <div id="excelAdd">Button of Adding File
-                <div id="button1" style="cursor: help;">How to use</div>
-                <div class="icon" style="cursor: pointer;">
-                    <i class="material-icons md-48">
-                        file_upload
-                    </i>
-                </div>
+                <form action = "http://localhost:5000/xlupload" method="post" enctype="multipart/form-data">
+                    <div id="button1" style="cursor: help;"><label for ="add">"How to use</label>
+                        <input type="file" name="file" id="add"></div>
+                        
+                    <div class="icon" style="cursor: pointer;"><label for ="sub">
+                     <i class="material-icons md-48">
+                         file_upload
+                     </i></label><input type=submit value=Upload id="sub"></div>
+                </form>
             </div>
             <div id="markerVisible">Button of Marker On/Off
                 <div id="button2" style="cursor: help;">How to use</div>
