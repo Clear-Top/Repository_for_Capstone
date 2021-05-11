@@ -1,7 +1,6 @@
 import os
 from flask import Flask, render_template, request
 import cv2 as cv
-from alyn.deskew import SkewDetect
 import argparse
 import sys
 import numpy as np
