@@ -1,0 +1,235 @@
+* {
+	box-sizing: border-box;
+}
+
+
+.container{
+  margin: 0 auto;
+  width: 1500px;
+  text-align: center;
+}
+
+#left{
+    background-color: gray;
+    width: 25%;
+    height: 800px;
+    position: relative;
+    float: left;
+}
+
+
+.searchBar{
+    position: absolute;
+    left: 10%;
+    top: 10px;
+    width: 100%;
+    max-width: 300px;
+    display: inline-flex;
+}
+
+.searchBar__input{
+    flex-grow: 1;
+    padding: 10px;
+    outline: none;
+    border:1px solid gray;
+    border-radius: 5px 0 0 5px;
+    background: white;
+    transition: background 0.25s, box-shadow 0.25s;
+    float: left;
+    height: 40px;
+}
+
+.searchBar__input:focus{
+    background: rgb(209, 221, 78);
+    box-shadow: 0 0 2px black;
+}
+
+.searchBar__input::placeholder{
+    color: black;
+}
+
+.searchBar__button{
+    width: 60px;
+    height: 40px;
+    box-shadow: 0 0 2px black;
+    color: gray;
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    user-select: none;
+}
+
+#requirement{
+    position: absolute;
+    font-size: 15px;
+    top: 40px;
+    left: 35%;
+    font-weight: bold;
+}
+
+#searchDisplay{
+    position: absolute;
+    width: 365px;
+    height: 89.5%;
+    background: white;
+    left: 5px;
+    top: 10%;
+}
+
+/* 지도 사이즈 */
+#map{
+    width:50%;
+    height:800px;
+    float: left;
+    background-color: none;
+}
+
+#right{
+    background-color: green;
+    width: 25%;
+    height: 800px;
+    position: relative;
+    float: left;
+    font-weight: bold;
+}
+
+
+
+#excelAdd{
+    position: absolute;
+    width: 365px;
+    height: 100px;
+    left: 5px;
+    top: 5px;
+    background-color: gray;
+}
+
+#markerVisible{
+    position: absolute;
+    width: 365px;
+    height: 100px;
+    left: 5px;
+    top: 110px;
+    background-color: gray;
+}
+
+hr{
+    border: none;
+    border-top: 3px dashed gray;
+    color: #fff;
+    height: 0.1px;
+    left: 5px;
+    width: 365px;
+    position: absolute;
+    top:215px;
+}
+
+#instanceBox{
+    position: absolute;
+    width: 365px;
+    height: 555px;
+    left: 5px;
+    top: 30%;
+    background-color: gray;
+}
+
+#excelAdd{
+    background: rgb(176, 187, 141);
+
+}
+
+#markerVisible{
+    background: rgb(190, 159, 195);
+}
+
+#button1{
+    background: gray;
+    position: absolute;
+    width: 270px;
+    height: 65px;
+    left: 10px;
+    margin-top: 5px; 
+    float: left;
+    border-radius: 10px 10px 10px 10px;
+    text-align: center;
+    line-height: 65px;
+    font-size: x-large;
+    transition: transform 0.5s, opacity 0.5s;
+    
+}
+
+#button1:hover{
+    transform: scale(0.9,0.9);
+    opacity: 0.6;
+}
+
+#button2{
+    background: gray;
+    position: absolute;
+    width: 270px;
+    height: 65px;
+    left: 10px;
+    margin-top: 5px; 
+    float: left;
+    border-radius: 10px 10px 10px 10px;
+    text-align: center;
+    line-height: 65px;
+    font-size: x-large;
+    transition: transform 0.5s, opacity 0.5s;
+}
+
+#button2:hover{
+    transform: scale(0.9,0.9);
+    opacity: 0.6;
+}
+
+.icon{
+    background: gray;
+    width: 75px;
+    height: 65px;
+    position: absolute;
+    line-height: 65px;
+    margin-top: 5px;
+    left : 285px;
+    border-radius: 10px 10px 10px 10px;
+    transition: transform 0.4s, opacity 0.5s;
+}
+
+.icon:hover{
+    transform: scale(0.9,0.9);
+    opacity: 0.6;
+}
+
+.material-icons.md-48 {
+    font-size: 36px;
+    text-align: center;
+    line-height: 65px;
+}
+
+
+#button1 input[type="file"] {  
+    position: absolute; 
+    width: 1px; 
+    height: 1px; 
+    padding: 0; 
+    margin: -1px; 
+    overflow: hidden; 
+    clip:rect(0,0,0,0);
+    border: 0;
+
+  }
+  #icon input[type="submit"] {  
+    position: absolute; 
+    width: 1px; 
+    height: 1px; 
+    padding: 0; 
+    margin: -1px; 
+    overflow: hidden; 
+    clip:rect(0,0,0,0);
+    border: 0;
+    /*display:none;*/
+  }

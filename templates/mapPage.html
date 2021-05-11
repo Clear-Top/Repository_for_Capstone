@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="kor">
+
+<head>
+    <meta charset="UTP-8">
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4a81af8fef0943a32040477087ec034a"></script>
+    <!-- <script type=" text/javascript" src="../static/js/kakaoMap.js"></script> -->
+    <script type=" text/javascript" src="../static/js/mouseEvent.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/kakaoMap.css">
+
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/kakaoMap.css') }}"> -->
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <title>맵 Test</title>
+
+</head>
+
+<body>
+
+    <!-- testData.txt 파일읽고 출력하기 -->
+    <!-- {%for i in n%}
+    <p>{{i}}</p>
+    {% endfor%} -->
+    <!-- testData.txt 파일읽고 출력하기 -->
+
+    <!-- db데이터 쓰기 -->
+    <!-- {%for i in data%}
+    <p>{{i}}</p>
+    {% endfor%} -->
+    <!-- db데이터 쓰기-->
+
+    <div class="container">
+        <h1 style="text-align:center; font-size: 50px;">Map test</h1>
+
+        <div id="left">
+            <form action="#" method="GET">
+                <div class="searchBar">
+                    <input type="text" class="searchBar__input" name="search" placeholder="Enter Plate Number">
+                    <button type="submut" class="searchBar__button">
+                        <i class="material-icons">search</i>
+                    </button>
+                </div>
+            </form>
+            <p id="requirement">ex) 12마3456</p>
+            <div id="searchDisplay">
+                <!-- 버튼컴포넌트 삽입예정 -->
+                {%for i in carnum%}
+                <p>{{i}}</p>
+                {% endfor%}
+            </div>
+        </div>
+
+        <div id="map"></div>
+        <div id="right">
+            <div id="excelAdd">Button of Adding File
+                <form action="http://localhost:5000/xlupload" method="post" enctype="multipart/form-data">
+                    <div id="button1" style="cursor: help;"><label for="add">"How to use</label>
+                        <input type="file" name="file" id="add">
+                    </div>
+
+                    <div class="icon" style="cursor: pointer;"><label for="sub">
+                            <i class="material-icons md-48">
+                                file_upload
+                            </i></label><input type=submit value=Upload id="sub"></div>
+                </form>
+            </div>
+            <div id="markerVisible">Button of Marker On/Off
+                <div id="button2" style="cursor: help;">How to use</div>
+                <div class="icon" style="cursor: pointer;">
+                    <i class="material-icons md-48">
+                        push_pin
+                    </i>
+                </div>
+            </div>
+            <hr />
+            <div id="instanceBox">
+                Waiting for making...
+                <!-- 인스턴스조회 박스 -->
+            </div>
+        </div>
+        <!-- <script type=" text/javascript" src="../static/js/kakaoMap.js"></script> -->
+    </div>
+    <!-- <script type="text/javascript" src="{{ url_for('static', filename = 'js/mouseEvent.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/instanceButton.js') }}"></script> -->
+
+
+
+
+    <script>
+        alert('카카오맵 호출');
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+            mapOption = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+        // 마커를 표시할 위치입니다 
+        var position = new kakao.maps.LatLng(33.450701, 126.570667);
+
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+            position: position
+        });
+
+        // 마커를 지도에 표시합니다.
+        marker.setMap(map);
+
+        // 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우를 생성합니다
+        var iwContent = '<div style="text-align:left;disply:flex;width:200px;padding:5px;">Marker Number : ??? <br/> Plate Num : ??? <br/>Location of It : ???</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+
+        // 인포윈도우를 생성합니다
+        var infowindow = new kakao.maps.InfoWindow({
+            content: iwContent
+        });
+
+        // 마커에 마우스오버 이벤트를 등록합니다
+        kakao.maps.event.addListener(marker, 'mouseover', function () {
+            // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+            infowindow.open(map, marker);
+        });
+
+        // 마커에 마우스아웃 이벤트를 등록합니다
+        kakao.maps.event.addListener(marker, 'mouseout', function () {
+            // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+            infowindow.close();
+        });
+
+    </script>
+</body>
+
+</html>
