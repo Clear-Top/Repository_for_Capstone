@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, request
 import cv2 as cv
+from alyn.deskew import SkewDetect
 import argparse
 import sys
 import numpy as np
@@ -46,19 +47,21 @@ def upload_page():
             full_image,plates = lpd(file)
 
             plate_num = []
+            plate_prob= []
             print("[SYS] lpr ")
             for i,pic in enumerate(plates):
                 if pic is not None:
                     try:
                         print("[",i,"]",pic.shape)
-                        pic = cv.resize( pic, None, fx = 3, fy = 3, interpolation = cv.INTER_CUBIC)
-                        plate_num.append(lpr(pic))
-
+                        #pic = cv.resize( pic, None, fx = 3, fy = 3, interpolation = cv.INTER_CUBIC)
+                        lp,prob = lpr(pic)
+                        plate_num.append(lp)
+                        plate_prob.append(float(prob[0][0]))
                         cv.imwrite("result/"+full_image[:-4]+"_result"+str(i)+".jpg", pic.astype(np.uint8))
                     except:
                         continue
-            for i in plate_num:
-                print(i)
+            for i in range(len(plate_num)):
+                print("[PROB ",i,"]", plate_num[i], plate_prob[i])
             
             return render_template('upload.html',
                                    msg='Successfully processed',

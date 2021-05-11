@@ -37,8 +37,7 @@ def lpd(file):
     # Draw the predicted bounding box
     def drawPred(classId, conf, left, top, right, bottom):
         # Draw a bounding box.
-        #cv.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 3)
-
+        #
         label = '%.2f' % conf
 
         if classes:
@@ -50,7 +49,8 @@ def lpd(file):
         #top = max(top, labelSize[1])
         #cv.rectangle(frame, (left, top - round(1.5*labelSize[1])), (left + round(1.5*labelSize[0]), top + baseLine), (0, 0, 255), cv.FILLED)
         #cv.putText(frame, label, (left, top), cv.FONT_HERSHEY_SIMPLEX, 0.75, (0,0,0), 2)
-        crop_img = frame[top:bottom, left:right]
+        crop_img = frame[top-3:bottom+3, left-3:right+3]
+        cv.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 3)
         return crop_img
     # Remove the bounding boxes with low confidence using non-maxima suppression
     def postprocess(frame, outs):
@@ -112,7 +112,7 @@ def lpd(file):
             print("Input image file ", f, " doesn't exist")
             sys.exit(1)
         cap = cv.VideoCapture(f)
-        print(cap)
+        #print(cap)
         outputFile = f[:-4]+'_yolo_out_py.jpg'
         out_image=file.filename[:-4]+'_yolo_out_py.jpg'
 
@@ -149,5 +149,4 @@ def lpd(file):
         # Write the frame with the detection boxes
         if (f):
             cv.imwrite(outputFile, frame.astype(np.uint8));
-    print(len(License_list))
     return out_image,License_list;
