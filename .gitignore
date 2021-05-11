@@ -3,3 +3,4 @@ yolov4-ANPR.cfg
 yolov4-ANPR.weights
 result/
 static/
+__pycache__/
