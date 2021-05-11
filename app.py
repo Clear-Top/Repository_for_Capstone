@@ -74,7 +74,6 @@ def upload_page():
             for i, pic in enumerate(plates):
                 if pic is not None:
                     try:
-<<<<<<< HEAD
                         print("[",i,"]",pic.shape)
                         #pic = cv.resize( pic, None, fx = 3, fy = 3, interpolation = cv.INTER_CUBIC)
                         lp,prob = lpr(pic)
@@ -86,20 +85,6 @@ def upload_page():
             for i in range(len(plate_num)):
                 print("[PROB ",i,"]", plate_num[i], plate_prob[i])
             
-=======
-                        print("[", i, "]", pic.shape)
-                        pic = cv.resize(pic, None, fx=3, fy=3,
-                                        interpolation=cv.INTER_CUBIC)
-                        plate_num.append(lpr(pic))
-
-                        cv.imwrite(
-                            "result/"+full_image[:-4]+"_result"+str(i)+".jpg", pic.astype(np.uint8))
-                    except:
-                        continue
-            for i in plate_num:
-                print(i)
-
->>>>>>> f57bb4110febbc271fcc65e9607c906538d49e55
             return render_template('upload.html',
                                    msg='Successfully processed',
                                    extracted_text=full_image,
