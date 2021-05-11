@@ -69,9 +69,11 @@ def upload_page():
                 if pic is not None:
                     try:
                         print("[",i,"]",pic.shape)
-                        pic = cv.resize( pic, None, fx = 3, fy = 3, interpolation = cv.INTER_CUBIC)
-                        plate_num.append(lpr(pic))
-
+                        #pic = cv.resize( pic, None, fx = 3, fy = 3, interpolation = cv.INTER_CUBIC)
+                        lp,prob = lpr(pic)
+                        plate_num.append(lp)
+                        print(type(lp),lp.shape)
+                        plate_prob.append(float(prob[0][0]))
                         cv.imwrite("result/"+full_image[:-4]+"_result"+str(i)+".jpg", pic.astype(np.uint8))
                     except:
                         continue
