@@ -8,7 +8,7 @@ def data(curs, conn):
     # conn = db.connect_db()
     # curs = conn.cursor()
 
-    # 명령어 저장
+    # 자동차번호만 추출
     sql = "select carnum from class1"
 
     # 명령어 실행
