@@ -15,12 +15,6 @@ import extractExif
 UPLOAD_FOLDER = '/static/uploads/'
 RESULT_FOLDER = '/result/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
-<< << << < HEAD
-ALLOWED_EXCEL = set(['xlsx', 'xls'])
-app = Flask(__name__)
-
-
-== == == =
 ALLOWED_EXCEL = set(['xlsx', 'xls'])
 kor_dict = ["가", "나", "다", "라", "마", "거", "너", "더", "러",
             "머", "버", "서", "어", "저", "고", "노", "도", "로",
@@ -28,9 +22,6 @@ kor_dict = ["가", "나", "다", "라", "마", "거", "너", "더", "러",
             "무", "부", "수", "우", "주", "허", "하", "호"]
 num_dict = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 app = Flask(__name__)
-
-
->>>>>> > 0670f8f1f24bd6398155156671d8992cfca1ab6d
 
 
 def allowed_excel(filename):
@@ -129,6 +120,8 @@ def upload_page():
             for i in range(len(plate_num)):
                 try:
                     print("[PROB ", i, "]", plate_num[i], len(plate_num[i]))
+                    writeExcel.write_excel(
+                        excel, plate_num[i], 'test', time, UPLOAD_FOLDER, file.filename, lalo)
                     if plate_num[i][-5] not in kor_dict:
                         print("wrong assumption")
                     else:
