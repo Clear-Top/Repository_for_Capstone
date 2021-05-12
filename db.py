@@ -1,9 +1,10 @@
 import pymysql
 import readExcel
+import app
 
 
 def connect_db():
-    conn = pymysql.connect(host='127.0.0.1', port=3307, user='root',
+    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root',
                            passwd='1234', db='capstone', charset='utf8')
     print('DB 연결성공')
     return conn
@@ -21,16 +22,15 @@ def select_all():
         return None
 
 
-def insert_test():
-    conn = pymysql.connect(host='127.0.0.1', port=3307, user='root',
-                           passwd='1234', db='capstone', charset='utf8')
+def insert_test(excel_name,conn):
+    #conn은 connection ,excel_name은 엑셀파일이름
     try:
         with conn.cursor() as curs:
             i = 2
             while True:
                 list = []
                 for j in range(2, 9):
-                    a = readExcel.read_excel(i, j)
+                    a = readExcel.read_excel(i, j, excel_name)
                     if a != 0:
                         list.append(a)
                     else:
@@ -48,6 +48,6 @@ def insert_test():
         return None
 
 # db 연결
-# connect_db()
+#connect_db()
 
-# insert_test()
+#insert_test()

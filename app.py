@@ -5,6 +5,7 @@ import argparse
 import sys
 import numpy as np
 import os.path
+import db
 from lpd import lpd
 from lpr import lpr
 import searchCar
@@ -39,8 +40,7 @@ def home_page():
 
 @app.route('/map')
 def map():
-    carnums = searchCar.read_carnum()
-    return render_template('mapPage.html', carnum=carnums)
+    return render_template('mapPage.html')
 
 
 @app.route('/xlupload', methods=['GET', 'POST'])
@@ -49,7 +49,11 @@ def upload_excel():
         file = request.files['file']
         if file and allowed_excel(file.filename):
             file.save(os.path.join(os.getcwd()+'/static/excel/', file.filename))
-            return render_template('mapPage.html')
+            # 엑셀업로드+db반영
+            conn = db.connect_db()
+            db.insert_test(file.filename, conn)
+            conn.close()
+            return 'success'
     elif request.method == 'GET':
         return render_template('mapPage.html')
 
@@ -90,6 +94,11 @@ def upload_page():
 
             plate_num = []
             plate_prob = []
+            print(file.filename)
+
+            full_image, plates = lpd(file)
+
+            plate_num = []
             print("[SYS] lpr ")
             for i, pic in enumerate(plates):
                 if pic is not None:
@@ -109,6 +118,16 @@ def upload_page():
                 # !!!추론결과가 나올때마다 액셀에 미리저장 (일단은 로컬에 곧바로 저장 -> 추후에 save버튼눌러야 저장되게끔 구현예정)
                 writeExcel.write_excel(
                     excel, plate_num[i][0], 'test', time, UPLOAD_FOLDER, file.filename, lalo)
+                print("[", i, "]", pic.shape)
+                pic = cv.resize(pic, None, fx=3, fy=3,
+                                interpolation=cv.INTER_CUBIC)
+                plate_num.append(lpr(pic))
+
+                cv.imwrite(
+                    "result/"+full_image[:-4]+"_result"+str(i)+".jpg", pic.astype(np.uint8))
+
+            for i in plate_num:
+                print(i)
 
             return render_template('upload.html',
                                    msg='Successfully processed',
