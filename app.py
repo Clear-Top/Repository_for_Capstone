@@ -47,6 +47,25 @@ def home_page():
     return render_template('index.html')
 
 
+@app.route('/searchCar', methods=['GET'])
+def search_carnum():
+    if request.method == 'GET':
+        temp = request.args.get('search')
+        print("검색한 번호 : " + temp)
+        conn = db.connect_db()
+        curs = conn.cursor()
+        data = db.select_data(temp, conn, curs)
+        if(data == "No"):
+            return render_template('mapPage.html', carnum="없는 데이터입니다.")
+        else:
+            return render_template('mapPage.html', carnum=data)
+        conn.close()
+
+        # print(data)
+    else:
+        return render_template('mapPage.html')
+
+
 @app.route('/xlupload', methods=['GET', 'POST'])
 def upload_excel():
     if request.method == 'POST':
@@ -70,12 +89,7 @@ def upload_excel():
 
             return render_template('mapPage.html', msg='[제출성공]', carnum=data)
     elif request.method == 'GET':
-        temp = request.args.get('search')
-        print(1)
-        conn = db.connect_db()
-        db.select_data(temp,conn)
-        print(2)
-        return render_template('mapPage.html', msg=NULL)
+        return render_template('mapPage.html')
 
 
 @app.route('/upload', methods=['GET', 'POST'])
