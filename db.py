@@ -4,22 +4,22 @@ import app
 
 
 def connect_db():
-    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root',
-                           passwd='root', db='capstone', charset='utf8')
+    conn = pymysql.connect(host='127.0.0.1', port=3307, user='root',
+                           passwd='1234', db='capstone', charset='utf8')
     print('DB 연결성공')
     return conn
 
 
-def select_all():
-    try:
-        with conn.cursor() as cursor:
-            sql = "select * from class1"
-            cursor.execute(sql)
-            rs = cursor.fetchall()
-            for row in rs:
-                print(row)
-    finally:
-        return None
+# def select_all():
+#     try:
+#         with conn.cursor() as cursor:
+#             sql = "select * from class1"
+#             cursor.execute(sql)
+#             rs = cursor.fetchall()
+#             for row in rs:
+#                 print(row)
+#     finally:
+#         return None
 
 
 def insert_test(excel_name, conn):
@@ -47,21 +47,22 @@ def insert_test(excel_name, conn):
     finally:
         return None
 
-def select_data(carnum, conn):
 
+def select_data(carnum, conn, curs):
     try:
-        with conn.cursor() as curs:
-            sql = "select * from class1 where carnum =" + carnum
-            curs.execute(sql)
-            rs = curs.fetchall()
-            for row in rs:
-                print(row)
+        sql = "select IFNULL(MAX(carnum), \"No\") from class1 where carnum = \'" + \
+            carnum+"\';"
+        print("실행한 SQL문 : "+sql)
+        curs.execute(sql)
+        conn.commit()
+        rs = curs.fetchall()
+        # for row in rs:
+        #     print(row)
     finally:
-        return None
-
-
-
-
+        if(rs == "No"):
+            return rs
+        else:
+            return rs[0][0]
 
 
 # db 연결
