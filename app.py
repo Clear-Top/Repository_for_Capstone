@@ -1,18 +1,20 @@
-import os
-from flask import Flask, render_template, request
-import cv2 as cv
-import argparse
-import sys
-import numpy as np
-import os.path
-
-from pymysql import NULL
-import db
-from lpd import lpd
-from lpr import lpr
-import searchCar
-import writeExcel
+import readDB
 import extractExif
+import writeExcel
+import searchCar
+from lpr import lpr
+from lpd import lpd
+import db
+from pymysql import NULL
+import os.path
+import numpy as np
+import sys
+import argparse
+import cv2 as cv
+from flask import Flask, render_template, request
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 
 UPLOAD_FOLDER = '/static/uploads/'
 RESULT_FOLDER = '/result/'
@@ -58,10 +60,15 @@ def upload_excel():
             file.save(os.path.join(
                 os.getcwd()+'/static/excel/', file.filename))
             # 엑셀업로드+db반영
-            conn = db.connect_db()
-            db.insert_test(file.filename, conn)
+            conn = db.connect_db()  # DB연결
+            curs = conn.cursor()    # cursor생성
+
+            db.insert_test(file.filename, conn)  # test삽입
+
+            data = readDB.data(curs, conn)
             conn.close()
-            return render_template('mapPage.html', msg='[제출성공]')
+
+            return render_template('mapPage.html', msg='[제출성공]', carnum=data)
     elif request.method == 'GET':
         return render_template('mapPage.html', msg=NULL)
 
