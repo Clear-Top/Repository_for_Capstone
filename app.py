@@ -5,6 +5,8 @@ import argparse
 import sys
 import numpy as np
 import os.path
+
+from pymysql import NULL
 import db
 from lpd import lpd
 from lpr import lpr
@@ -43,24 +45,25 @@ def home_page():
     return render_template('index.html')
 
 
-@app.route('/map')
-def map():
-    return render_template('mapPage.html')
-
-
 @app.route('/xlupload', methods=['GET', 'POST'])
 def upload_excel():
     if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            return render_template('mapPage.html', msg='[제출실패]')
         file = request.files['file']
+        if file.filename == '':
+            return render_template('mapPage.html', msg='[제출실패]')
         if file and allowed_excel(file.filename):
-            file.save(os.path.join(os.getcwd()+'/static/excel/', file.filename))
+            file.save(os.path.join(
+                os.getcwd()+'/static/excel/', file.filename))
             # 엑셀업로드+db반영
             conn = db.connect_db()
             db.insert_test(file.filename, conn)
             conn.close()
-            return 'success'
+            return render_template('mapPage.html', msg='[제출성공]')
     elif request.method == 'GET':
-        return render_template('mapPage.html')
+        return render_template('mapPage.html', msg=NULL)
 
 
 @app.route('/upload', methods=['GET', 'POST'])
