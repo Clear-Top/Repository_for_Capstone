@@ -52,7 +52,6 @@ def select_data(carnum, conn, curs):
     try:
         sql = "select IFNULL(MAX(carnum), \"No\") from class1 where carnum = \'" + \
             carnum+"\';"
-        print("실행한 SQL문 : "+sql)
         curs.execute(sql)
         conn.commit()
         rs = curs.fetchall()
