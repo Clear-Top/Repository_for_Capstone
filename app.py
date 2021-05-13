@@ -101,7 +101,7 @@ def upload_page():
             info = extractExif.get_exif("static/uploads/"+file.filename)
             if info is not None:
                 time = extractExif.get_exif_time(file.filename)
-                lalo = extractExif.get_coordinates(get_geotagging(
+                lalo = extractExif.get_coordinates(extractExif.get_geotagging(
                     info))
             else:
                 time = None
