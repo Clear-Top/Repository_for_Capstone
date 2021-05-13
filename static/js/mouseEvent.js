@@ -1,5 +1,5 @@
 window.onload = function () {
-    alert('마우스이벤트호출');
+    // alert('마우스이벤트호출');
 
     var btn1 = document.getElementById('button1');
     var btn2 = document.getElementById('button2');
