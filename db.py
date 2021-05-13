@@ -47,6 +47,23 @@ def insert_test(excel_name, conn):
     finally:
         return None
 
+def select_data(carnum, conn):
+
+    try:
+        with conn.cursor() as curs:
+            sql = "select * from class1 where carnum =" + carnum
+            curs.execute(sql)
+            rs = curs.fetchall()
+            for row in rs:
+                print(row)
+    finally:
+        return None
+
+
+
+
+
+
 # db 연결
 # connect_db()
 
