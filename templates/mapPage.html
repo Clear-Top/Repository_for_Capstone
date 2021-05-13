@@ -34,7 +34,7 @@
         <h1 style="text-align:center; font-size: 50px;">Map test</h1>
 
         <div id="left">
-            <form action="#" method="GET">
+            <form action="/searchCar" method="GET">
                 <div class="searchBar">
                     <input type="text" class="searchBar__input" name="search" placeholder="Enter Plate Number">
                     <button type="submut" class="searchBar__button">
@@ -45,9 +45,7 @@
             <p id="requirement">ex) 12마3456</p>
             <div id="searchDisplay">
                 <!-- 버튼컴포넌트 삽입예정 -->
-                {%for i in carnum%}
-                <p>{{i[0]}}</p>
-                {% endfor%}
+                <p>{{carnum}}</p>
             </div>
         </div>
 
@@ -103,8 +101,6 @@
             var msg = '{{ msg }}';
             if (msg == '[제출실패]') {
                 alert('Excel파일을 제출해주세요..');
-            } else {
-                alert('성공적으로 업로드되었습니다.');
             }
 
             function markerOn() {
