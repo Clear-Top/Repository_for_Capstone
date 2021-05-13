@@ -4,3 +4,4 @@ yolov4-ANPR.weights
 result/
 static/
 __pycache__/
+DS_Store

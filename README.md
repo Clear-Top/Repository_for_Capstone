@@ -27,3 +27,19 @@ SISR을 이용하여 의도적인 Down Sampling을 통한 모델 훈련, SRGAN�
 # Dataset
 https://sejonguniversity-my.sharepoint.com/personal/minhdl_sju_ac_kr/_layouts/15/onedrive.aspx?originalPath=aHR0cHM6Ly9zZWpvbmd1bml2ZXJzaXR5LW15LnNoYXJlcG9pbnQuY29tLzpmOi9nL3BlcnNvbmFsL21pbmhkbF9zanVfYWNfa3IvRXJSTXE4MjNWbkJLdlNrbHB0bjJXYklCLUp4TDdwS3QzaE91aVk4RTNvV2tyUT9ydGltZT1iNXlXOVNMNDJFZw&id=%2Fpersonal%2Fminhdl%5Fsju%5Fac%5Fkr%2FDocuments%2Fradish%20project%20dataset%2FCapstone%5Fdataset%2Flicense%20plate%20dataset <br/>
 
+* * *
+```
+작성일 : 2021/05/13 (목)
+```
+# About UX/UI Design
+> Flask 상에서 index.html 파일을 **"main_page.html"** 로 대체할 예정.
+> 현재 추론을 실행하고 리스트조회가 가능한 HTML의 틀만 완성된 상태.
+> 맵조회 관련페이지 디자인이 끝나가고 있기때문에, 서둘러서 작업할 예정.
+> 나머지 디자인은 천천히 시간을 두고 작업할 예정
+
+- ## 작업예정 (main_page.html)
+- **맵조회부분**에서 "차량검색"을 통해 DB에서부터 불러온 "차량번호"를 통해, 버튼컴포넌트 제작예정
+- 차량번호마다 Marker(인스턴스)의 색깔을 다르게 구현예정
+- 지역 or 구역 or 개수제한  에 따라 클러스터링 구현예정
+- **리스트조회부분**에서 사진을 넣을 DisplayBox 부분과 결과를 반환받을 DisplayBox를 각각 구현할 예정
+- 버튼에 기능도 삽입할 예정
