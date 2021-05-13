@@ -70,6 +70,11 @@ def upload_excel():
 
             return render_template('mapPage.html', msg='[제출성공]', carnum=data)
     elif request.method == 'GET':
+        temp = request.args.get('search')
+        print(1)
+        conn = db.connect_db()
+        db.select_data(temp,conn)
+        print(2)
         return render_template('mapPage.html', msg=NULL)
 
 
