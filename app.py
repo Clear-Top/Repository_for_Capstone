@@ -44,8 +44,7 @@ def allowed_file(file):
 
 @app.route('/')
 def home_page():
-    return render_template('index.html')
-
+    return render_template('up.html')
 
 @app.route('/searchCar', methods=['GET'])
 def search_carnum():
@@ -149,13 +148,12 @@ def upload_page():
             for i in range(len(plate_num)):
                 try:
                     print("[PROB ", i, "]", plate_num[i], len(plate_num[i]))
-                    writeExcel.write_excel(
-                        excel, plate_num[i], 'test', time, UPLOAD_FOLDER, file.filename, lalo)
                     if plate_num[i][-5] not in kor_dict:
                         print("wrong assumption")
                     else:
                         if (len(plate_num[i]) == 6 or len(plate_num[i]) == 7):
                             print("right length")
+                            writeExcel.write_excel(excel, plate_num[i], 'test', time, UPLOAD_FOLDER, file.filename, lalo)
                         else:
                             print("wrong length")
                 except:
