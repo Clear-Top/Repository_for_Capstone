@@ -44,13 +44,8 @@ def lpd(file):
             assert(classId < len(classes))
             label = '%s:%s' % (classes[classId], label)
         
-        #Display the label at the top of the bounding box
-        #labelSize, baseLine = cv.getTextSize(label, cv.FONT_HERSHEY_SIMPLEX, 0.5, 1)
-        #top = max(top, labelSize[1])
-        #cv.rectangle(frame, (left, top - round(1.5*labelSize[1])), (left + round(1.5*labelSize[0]), top + baseLine), (0, 0, 255), cv.FILLED)
-        #cv.putText(frame, label, (left, top), cv.FONT_HERSHEY_SIMPLEX, 0.75, (0,0,0), 2)
-        crop_img = frame[top-3:bottom+3, left-3:right+3]
-        cv.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 3)
+        crop_img = frame[top:bottom, left:right]
+        #cv.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 3)
         return crop_img
     # Remove the bounding boxes with low confidence using non-maxima suppression
     def postprocess(frame, outs):
@@ -95,9 +90,9 @@ def lpd(file):
             width = box[2]
             height = box[3]
             if (classIds[i] == 1):
-                #drawPred(classIds[i], confidences[i], left, top, left + width, top + height)
                 License_list.append(drawPred(classIds[i], confidences[i], left, top, left + width, top + height))
-
+            else:
+                Car_list.append(drawPred(classIds[i], confidences[i], left, top, left + width, top + height))
 
 
 
@@ -117,6 +112,7 @@ def lpd(file):
         out_image=file.filename[:-4]+'_yolo_out_py.jpg'
 
     License_list= []
+    Car_list=[]
     while cv.waitKey(1) < 0:
 
         # get frame from the video
@@ -149,4 +145,4 @@ def lpd(file):
         # Write the frame with the detection boxes
         if (f):
             cv.imwrite(outputFile, frame.astype(np.uint8));
-    return out_image,License_list;
+    return out_image,License_list,Car_list;

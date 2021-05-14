@@ -123,16 +123,17 @@ def upload_page():
             # print(time)
             # print(lalo)
 
-            full_image, plates = lpd(file)
+            full_image, plates,cars = lpd(file)
 
             plate_num = []
             plate_prob = []
             print(file.filename)
-
-            full_image, plates = lpd(file)
-
-            plate_num = []
-            plate_prob = []
+            print("[SYS] cars")
+            for i,c in enumerate(cars):
+                try:
+                    cv.imwrite("result/"+full_image[:-4]+"_car"+str(i)+".jpg", c.astype(np.uint8))
+                except:
+                    continue
             print("[SYS] lpr ")
             for i, pic in enumerate(plates):
                 if pic is not None:
@@ -142,7 +143,7 @@ def upload_page():
                         plate_num.append(lp[0])
                         plate_prob.append(float(prob[0][0]))
                         cv.imwrite(
-                            "result/"+full_image[:-4]+"_result"+str(i)+".jpg", pic.astype(np.uint8))
+                            "result/"+full_image[:-4]+"_lp"+str(i)+".jpg", pic.astype(np.uint8))
                     except:
                         continue
             for i in range(len(plate_num)):
