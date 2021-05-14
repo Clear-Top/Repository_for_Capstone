@@ -4,6 +4,7 @@ import writeExcel
 import searchCar
 from lpr import lpr
 from lpd import lpd
+from wpodnet import wpod_inf
 import db
 from pymysql import NULL
 import os.path
@@ -123,17 +124,21 @@ def upload_page():
             # print(time)
             # print(lalo)
 
-            full_image, plates,cars = lpd(file)
+            full_image, _, cars = lpd(file)
 
             plate_num = []
             plate_prob = []
-            print(file.filename)
+            plates = []
+            #print(file.filename)
             print("[SYS] cars")
             for i,c in enumerate(cars):
                 try:
                     cv.imwrite("result/"+full_image[:-4]+"_car"+str(i)+".jpg", c.astype(np.uint8))
-                except:
-                    continue
+                    img = wpod_inf(c)
+                    cv.imwrite("result/"+full_image[:-4]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
+                    plates.append(img)
+                except Exception as e:
+                    print("[ERROR]",e)
             print("[SYS] lpr ")
             for i, pic in enumerate(plates):
                 if pic is not None:
@@ -142,10 +147,10 @@ def upload_page():
                         lp, prob = lpr(pic)
                         plate_num.append(lp[0])
                         plate_prob.append(float(prob[0][0]))
-                        cv.imwrite(
-                            "result/"+full_image[:-4]+"_lp"+str(i)+".jpg", pic.astype(np.uint8))
-                    except:
-                        continue
+                        cv.imwrite("result/"+full_image[:-4]+"_lp"+str(i)+".jpg", pic.astype(np.uint8))
+                    except Exception as e:
+                        print("[ERROR]",e)
+            
             for i in range(len(plate_num)):
                 try:
                     print("[PROB ", i, "]", plate_num[i], len(plate_num[i]))
@@ -157,8 +162,8 @@ def upload_page():
                             writeExcel.write_excel(excel, plate_num[i], 'test', time, UPLOAD_FOLDER, file.filename, lalo)
                         else:
                             print("wrong length")
-                except:
-                    print(i, "index out of range")
+                except Exception as e:
+                    print("[ERROR]",e)
             return render_template('upload.html',
                                    msg='Successfully processed',
                                    extracted_text=full_image,

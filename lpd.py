@@ -58,16 +58,18 @@ def lpd(file):
         # Scan through all the bounding boxes output from the network and keep only the
         # ones with high confidence scores. Assign the box's class label as the class with the highest score.
         for out in outs:
-            print("out.shape : ", out.shape)
+            #print("out.shape : ", out.shape)
             for detection in out:
                 #if detection[4]>0.001:
                 scores = detection[5:]
                 classId = np.argmax(scores)
                 #if scores[classId]>confThreshold:
                 confidence = scores[classId]
+                """
                 if detection[4]>confThreshold:
                     print(detection[4], " - ", scores[classId], " - th : ", confThreshold)
                     print(detection)
+                """
                 if confidence > confThreshold:
                     center_x = int(detection[0] * frameWidth)
                     center_y = int(detection[1] * frameHeight)
