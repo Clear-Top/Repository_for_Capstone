@@ -4,9 +4,9 @@ import app
 
 
 def connect_db():
-    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root',
-                           passwd='root', db='capstone', charset='utf8')
-    print('DB 연결성공')
+    conn = pymysql.connect(host='127.0.0.1', port=3307, user='root',
+                           passwd='1234', db='capstone', charset='utf8')
+    # print('DB 연결성공')
     return conn
 
 
@@ -51,16 +51,19 @@ def insert_test(excel_name, conn):
 def select_data(carnum, conn, curs):
     try:
         sql = "select IFNULL(MAX(carnum), \"No\") from class1 where carnum = \'" + \
-            carnum+"\';"
+            str(carnum)+"\';"
         curs.execute(sql)
         conn.commit()
+        global rs
         rs = curs.fetchall()
         # for row in rs:
         #     print(row)
     finally:
         if(rs == "No"):
+            print("in db.py : "+rs)
             return rs
         else:
+            print("in db.py : "+rs[0][0])
             return rs[0][0]
 
 
