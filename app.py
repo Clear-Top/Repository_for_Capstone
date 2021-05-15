@@ -12,8 +12,9 @@ import numpy as np
 import sys
 import argparse
 import cv2 as cv
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import os
+import json
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
@@ -50,31 +51,43 @@ def home_page():
 
 @app.route('/searchCar', methods=['GET'])
 def search_carnum():
-    if request.method == 'GET':
+    # print('submit해서 server옴')
+    toggle = 0
+    temp = ""
+    data = ""
+    temp = request.args.get('id')
+    # temp = request.form.get('search', False)
+    print("검색한 번호 : " + str(temp))
+    conn = db.connect_db()
+    curs = conn.cursor()
+    data = db.select_data(temp, conn, curs)
+
+    json_data = data        # JSON
+    json_return = json.dumps(json_data)  # JSON
+
+    conn.close()
+    if data == "No":
         toggle = 0
-        temp = ""
-        temp = request.args.get('search')
-        print("검색한 번호 : " + temp)
-        conn = db.connect_db()
-        curs = conn.cursor()
-        data = db.select_data(temp, conn, curs)
-
-        print(data)
-
-        conn.close()
-        if(data == "No"):
-            # print('검출실패!')
-            toggle = 0
-            return render_template('mapPage.html', carnum="없는 데이터입니다.", askInsert=toggle)
-        else:
-            # print('검출성공!')
-            toggle = 1
-            return render_template('mapPage.html', carnum=data, askInsert=toggle)
-
-        # print(data)
+        print(toggle)
+        json_object = {
+            "carnum": temp,
+            "toggle": toggle
+        }
+        json_string = json.dumps(json_object)
+        print(json_string)
+        # return render_template('mapPage.html', carnum="없는 데이터입니다.", askInsert=toggle)
+        return json_string
     else:
-        print("새로고침?")
-        return render_template('mapPage.html')
+        toggle = 1
+        print(toggle)
+        json_object = {
+            "carnum": temp,
+            "toggle": toggle
+        }
+        json_string = json.dumps(json_object)
+        print(json_string)
+        # return render_template('mapPage.html', carnum=data, askInsert=toggle)
+        return json_string
 
 
 @app.route('/xlupload', methods=['GET', 'POST'])
@@ -98,8 +111,9 @@ def upload_excel():
             data = readDB.data(curs, conn)
             conn.close()
 
-            return render_template('mapPage.html', msg='[제출성공]', carnum=data)
+            return render_template('mapPage.html', msg='[제출성공]', carnum=data, askInsert=0)
     elif request.method == 'GET':
+        print('xlupload => 초기페이지')
         return render_template('mapPage.html')
 
 
