@@ -47,22 +47,33 @@ def allowed_file(file):
 def home_page():
     return render_template('up.html')
 
+
 @app.route('/searchCar', methods=['GET'])
 def search_carnum():
     if request.method == 'GET':
+        toggle = 0
+        temp = ""
         temp = request.args.get('search')
         print("검색한 번호 : " + temp)
         conn = db.connect_db()
         curs = conn.cursor()
         data = db.select_data(temp, conn, curs)
-        if(data == "No"):
-            return render_template('mapPage.html', carnum="없는 데이터입니다.")
-        else:
-            return render_template('mapPage.html', carnum=data)
+
+        print(data)
+
         conn.close()
+        if(data == "No"):
+            # print('검출실패!')
+            toggle = 0
+            return render_template('mapPage.html', carnum="없는 데이터입니다.", askInsert=toggle)
+        else:
+            # print('검출성공!')
+            toggle = 1
+            return render_template('mapPage.html', carnum=data, askInsert=toggle)
 
         # print(data)
     else:
+        print("새로고침?")
         return render_template('mapPage.html')
 
 
@@ -129,16 +140,18 @@ def upload_page():
             plate_num = []
             plate_prob = []
             plates = []
-            #print(file.filename)
+            # print(file.filename)
             print("[SYS] cars")
-            for i,c in enumerate(cars):
+            for i, c in enumerate(cars):
                 try:
-                    cv.imwrite("result/"+full_image[:-4]+"_car"+str(i)+".jpg", c.astype(np.uint8))
+                    cv.imwrite(
+                        "result/"+full_image[:-4]+"_car"+str(i)+".jpg", c.astype(np.uint8))
                     img = wpod_inf(c)
-                    cv.imwrite("result/"+full_image[:-4]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
+                    cv.imwrite(
+                        "result/"+full_image[:-4]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
                     plates.append(img)
                 except Exception as e:
-                    print("[ERROR]",e)
+                    print("[ERROR]", e)
             print("[SYS] lpr ")
             for i, pic in enumerate(plates):
                 if pic is not None:
@@ -147,10 +160,11 @@ def upload_page():
                         lp, prob = lpr(pic)
                         plate_num.append(lp[0])
                         plate_prob.append(float(prob[0][0]))
-                        cv.imwrite("result/"+full_image[:-4]+"_lp"+str(i)+".jpg", pic.astype(np.uint8))
+                        cv.imwrite(
+                            "result/"+full_image[:-4]+"_lp"+str(i)+".jpg", pic.astype(np.uint8))
                     except Exception as e:
-                        print("[ERROR]",e)
-            
+                        print("[ERROR]", e)
+
             for i in range(len(plate_num)):
                 try:
                     print("[PROB ", i, "]", plate_num[i], len(plate_num[i]))
@@ -159,11 +173,12 @@ def upload_page():
                     else:
                         if (len(plate_num[i]) == 6 or len(plate_num[i]) == 7):
                             print("right length")
-                            writeExcel.write_excel(excel, plate_num[i], 'test', time, UPLOAD_FOLDER, file.filename, lalo)
+                            writeExcel.write_excel(
+                                excel, plate_num[i], 'test', time, UPLOAD_FOLDER, file.filename, lalo)
                         else:
                             print("wrong length")
                 except Exception as e:
-                    print("[ERROR]",e)
+                    print("[ERROR]", e)
             return render_template('upload.html',
                                    msg='Successfully processed',
                                    extracted_text=full_image,
