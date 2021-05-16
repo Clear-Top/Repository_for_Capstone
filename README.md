@@ -29,7 +29,7 @@ https://sejonguniversity-my.sharepoint.com/personal/minhdl_sju_ac_kr/_layouts/15
 
 * * *
 ```
-작성일 : 2021/05/13(목) 17:15
+작성일 : 2021/05/17(월) 01:19
 ```
 # About UX/UI Design
 > Flask 상에서 index.html 파일을 **"main_page.html"** 로 대체할 예정.
