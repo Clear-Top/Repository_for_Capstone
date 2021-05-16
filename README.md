@@ -47,5 +47,5 @@ https://sejonguniversity-my.sharepoint.com/personal/minhdl_sju_ac_kr/_layouts/15
 
 
 - ## 문제점 (mapPage.html)
-- Marker의 **색깔변경 불가능** => <u>색깔이 제외예정<u>
-- 차량검색 직후 DB에서 차량번호를 뽑아옴 (1개 or 전체) 그러나, 인스턴스조회 시에 **DB에 다시 접근** 해야만 한다. => <u>애초에 모든정보를 데려올까???<u>
+- Marker의 **색깔변경 불가능** => <u>색깔이 제외예정</u>
+- 차량검색 직후 DB에서 차량번호를 뽑아옴 (1개 or 전체) 그러나, 인스턴스조회 시에 **DB에 다시 접근** 해야만 한다. => <u>애초에 모든정보를 데려올까???</u>
