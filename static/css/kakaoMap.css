@@ -78,6 +78,7 @@
     background: white;
     left: 5px;
     top: 10%;
+    overflow:auto;
 }
 
 /* 지도 사이즈 */
