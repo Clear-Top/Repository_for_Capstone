@@ -42,9 +42,9 @@
                 <!-- onkeypress="JavaScript:press(this.form)" -->
                 <form id="carnumForm" onsubmit="return false">
                     <input id="input" type="text" class="searchBar__input" name="search"
-                        placeholder="Enter Plate Number" onkeyup="enterkey()">
-                    <button type="button" class="searchBar__button" id="ajax">
-                        <i class="material-icons">search</i>
+                        placeholder="Enter Plate Number"">
+                    <button type=" button" class="searchBar__button" id="ajax">
+                    <i class="material-icons">search</i>
                     </button>
                 </form>
             </div>
@@ -201,35 +201,39 @@
         }
 
         function paintToDo(result) {
+            alert("result")
             toggle = result['toggle'];
             carnum = result['carnum'];
             if (toggle == 1) {
                 // alert('버튼그리기');
-                color = randomColor();
-                var p = document.getElementById("searchDisplay");
-                var newDIV = document.createElement("div");
-                newDIV.innerHTML = carnum;
-                newDIV.style.backgroundColor = color;
-                newDIV.style.margin = "3px 3px 3px 3px";
-                newDIV.style.height = "60px";
-                newDIV.style.borderRadius = "10px 10px 10px 10px";
-                newDIV.style.lineHeight = "60px";
-                newDIV.style.fontWeight = "bold";
-                newDIV.style.cursor = "pointer";
-                newDIV.setAttribute("class", "instance");
-                newDIV.onclick = function () {
-                    alert('클릭');
+                // alert(carnum.length)
+                for (i = 0; i < carnum.length; i++) {
+                    color = randomColor();
+                    var p = document.getElementById("searchDisplay");
+                    var newDIV = document.createElement("div");
+                    newDIV.innerHTML = carnum[i];
+                    newDIV.style.backgroundColor = color;
+                    newDIV.style.margin = "3px 3px 3px 3px";
+                    newDIV.style.height = "60px";
+                    newDIV.style.borderRadius = "10px 10px 10px 10px";
+                    newDIV.style.lineHeight = "60px";
+                    newDIV.style.fontWeight = "bold";
+                    newDIV.style.cursor = "pointer";
+                    newDIV.setAttribute("class", "instance");
+                    newDIV.onclick = function () {
+                        alert('클릭');
+                    }
+                    newDIV.onmouseover = function () {
+                        event.target.style.transform = "scale(0.9)";
+                        event.target.style.transition = "all 0.3s";
+                    }
+                    newDIV.onmouseout = function () {
+                        event.target.style.transform = "scale(1)";
+                        event.target.style.transition = "all 0.3s";
+                    }
+                    p.appendChild(newDIV);
+                    $('#input').val('');
                 }
-                newDIV.onmouseover = function () {
-                    event.target.style.transform = "scale(0.9)";
-                    event.target.style.transition = "all 0.3s";
-                }
-                newDIV.onmouseout = function () {
-                    event.target.style.transform = "scale(1)";
-                    event.target.style.transition = "all 0.3s";
-                }
-                p.appendChild(newDIV);
-                $('#input').val('');
                 // alert('버튼추가완료!' + '   {{askInsert}}');
             } else {
                 $('#input').val('');
@@ -238,27 +242,47 @@
         }
 
 
-
+        // 입력한 차량번호와 같은 차량번호튜플이 존재하는지 확인후, 있다면 버튼추가
         $(function () {
             $('#ajax').click(function () {
                 // alert('아작스 버튼이벤트 발생!');
                 var formEdit = $("#input").val();
                 // alert(formEdit + "를 전송합니다.")
-                $.ajax({
-                    type: 'GET',
-                    url: '/searchCar',
-                    data: { id: formEdit },
-                    dataType: 'JSON',
-                    success: function (result) {
-                        // alert("결과 : " + result['carnum'] + "," + result['toggle']);
-                        // alert('아작스 제출성공!');
-                        paintToDo(result);
-                    },
-                    error: function (request, status, error) {
-                        alert(request + ";" + status + ";" + eror);
-                        alert('ajax error!');
-                    }
-                });
+                alert(formEdit + " 입력");
+                if (formEdit == "") {
+                    alert("select * from class1을 위한 ajax 진입!")
+                    $.ajax({
+                        type: 'GET',
+                        url: '/searchCar',
+                        data: { id: formEdit },
+                        dataType: 'JSON',
+                        success: function (result) {
+                            // alert("결과 : " + result['carnum'] + "," + result['toggle']);
+                            // alert('아작스 제출성공!');
+                            paintToDo(result);
+                        },
+                        error: function (request, status, error) {
+                            alert(request + ";" + status + ";" + eror);
+                            alert('ajax error!');
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/searchCar',
+                        data: { id: formEdit },
+                        dataType: 'JSON',
+                        success: function (result) {
+                            // alert("결과 : " + result['carnum'] + "," + result['toggle']);
+                            // alert('아작스 제출성공!');
+                            paintToDo(result);
+                        },
+                        error: function (request, status, error) {
+                            alert(request + ";" + status + ";" + eror);
+                            alert('ajax error!');
+                        }
+                    });
+                }
                 // alert('form 전송성공!');
             });
         });
