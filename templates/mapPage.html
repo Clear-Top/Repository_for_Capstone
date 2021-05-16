@@ -40,10 +40,10 @@
                 <!-- action="/searchCar" -->
                 <!-- method="GET" -->
                 <!-- onkeypress="JavaScript:press(this.form)" -->
-                <form id="carnumForm">
+                <form id="carnumForm" onsubmit="return false">
                     <input id="input" type="text" class="searchBar__input" name="search"
-                        placeholder="Enter Plate Number">
-                    <button type="button" class="searchBar__button" id="ajax" onclick="alert('버튼클릭')">
+                        placeholder="Enter Plate Number" onkeyup="enterkey()">
+                    <button type="button" class="searchBar__button" id="ajax">
                         <i class="material-icons">search</i>
                     </button>
                 </form>
@@ -189,13 +189,27 @@
             setMarkers(null);
         }
 
-        function paintToDo(toggle) {
+        function randomColor() {
+            // var colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);
+            var r = Math.round((Math.random() * (240 - 20 + 1)) + 20);
+            var g = Math.round((Math.random() * (240 - 20 + 1)) + 20);
+            var b = Math.round((Math.random() * (240 - 20 + 1)) + 20);
+            alert("rgb(" + r + "," + g + "," + b + ")");
+            // rgb(r,g,b) to String
+            var colorCode = "rgb(" + r + "," + g + "," + b + ")";
+            return colorCode;
+        }
+
+        function paintToDo(result) {
+            toggle = result['toggle'];
+            carnum = result['carnum'];
             if (toggle == 1) {
-                alert('버튼그리기');
+                // alert('버튼그리기');
+                color = randomColor();
                 var p = document.getElementById("searchDisplay");
                 var newDIV = document.createElement("div");
-                newDIV.innerHTML = "새로 생성된 DIV입니다.";
-                newDIV.style.backgroundColor = "gray";
+                newDIV.innerHTML = carnum;
+                newDIV.style.backgroundColor = color;
                 newDIV.style.margin = "3px 3px 3px 3px";
                 newDIV.style.height = "60px";
                 newDIV.style.borderRadius = "10px 10px 10px 10px";
@@ -208,49 +222,52 @@
                 }
                 newDIV.onmouseover = function () {
                     event.target.style.transform = "scale(0.9)";
-                    event.target.style.transition = "all 0.4s";
-                    event.target.style.backgroundColor = 'rgb(29, 125, 202)';
+                    event.target.style.transition = "all 0.3s";
                 }
                 newDIV.onmouseout = function () {
                     event.target.style.transform = "scale(1)";
-                    event.target.style.transition = "all 0.4s";
-                    event.target.style.backgroundColor = 'gray';
+                    event.target.style.transition = "all 0.3s";
                 }
                 p.appendChild(newDIV);
-                alert('버튼추가완료!' + '   {{askInsert}}');
+                $('#input').val('');
+                // alert('버튼추가완료!' + '   {{askInsert}}');
             } else {
+                $('#input').val('');
                 alert('버튼추가실패!' + '   {{askInsert}}');
             }
         }
 
+
+
         $(function () {
-            $('#ajax').on("click", function () {
-                alert('아작스 버튼이벤트 발생!');
-                // var formEdit = $("#carnumForm").serialize();
+            $('#ajax').click(function () {
+                // alert('아작스 버튼이벤트 발생!');
                 var formEdit = $("#input").val();
-                alert(formEdit + "를 전송합니다.")
-                // console.log(formEdit);
+                // alert(formEdit + "를 전송합니다.")
                 $.ajax({
                     type: 'GET',
                     url: '/searchCar',
                     data: { id: formEdit },
                     dataType: 'JSON',
                     success: function (result) {
-                        alert("결과 : " + result['carnum'] + "," + result['toggle']);
-                        alert('아작스 제출성공!');
-                        // $('searchDisplay').html(result)
-                        // console.log(data);
-                        paintToDo(result['toggle']);
+                        // alert("결과 : " + result['carnum'] + "," + result['toggle']);
+                        // alert('아작스 제출성공!');
+                        paintToDo(result);
                     },
                     error: function (request, status, error) {
-                        // console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error" + error);
                         alert(request + ";" + status + ";" + eror);
-                        alert('아작스 제출실패!');
+                        alert('ajax error!');
                     }
                 });
-                alert('form 전송성공!');
+                // alert('form 전송성공!');
             });
         });
+        $('#input').keypress(function (keyNum) {
+            if (keyNum.which == 13) {
+                $('#ajax').click();
+                return false;
+            }
+        })
     </script>
 </body>
 
