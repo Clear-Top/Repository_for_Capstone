@@ -59,15 +59,21 @@ def select_data(carnum, conn, curs):
         # for row in rs:
         #     print(row)
     finally:
-        if(rs == "No"):
-            print("in db.py : "+rs)
-            return rs
-        else:
-            print("in db.py : "+rs[0][0])
-            return rs[0][0]
+        return rs
 
 
-# db 연결
-# connect_db()
+def select_ALLdata(conn, curs):
+    try:
+        sql = "select carnum from class1;"
+        curs.execute(sql)
+        conn.commit()
+        global rs
+        rs = curs.fetchall()
 
-# insert_test()
+        listData = []
+        for i in rs:
+            listData.append(i[0])
+            # print(i[0])
+    finally:
+        # print("{"+sql + "}   조회완료")
+        return listData
