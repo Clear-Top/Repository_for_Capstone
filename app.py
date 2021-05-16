@@ -60,32 +60,38 @@ def search_carnum():
     print("검색한 번호 : " + str(temp))
     conn = db.connect_db()
     curs = conn.cursor()
-    data = db.select_data(temp, conn, curs)
+    if(temp == ""):
+        data = db.select_ALLdata(conn, curs)
+    else:
+        data = db.select_data(temp, conn, curs)
 
-    json_data = data        # JSON
-    json_return = json.dumps(json_data)  # JSON
+    # for i in data:
+    #     print(i)
+
+    # json_data = data        # JSON
+    # json_return = json.dumps(json_data)  # JSON
 
     conn.close()
     if data == "No":
         toggle = 0
-        print(toggle)
+        # print(toggle)
         json_object = {
-            "carnum": temp,
+            "carnum": data,
             "toggle": toggle
         }
         json_string = json.dumps(json_object)
-        print(json_string)
+        # print(json_string)
         # return render_template('mapPage.html', carnum="없는 데이터입니다.", askInsert=toggle)
         return json_string
     else:
         toggle = 1
-        print(toggle)
+        # print(toggle)
         json_object = {
-            "carnum": temp,
+            "carnum": data,
             "toggle": toggle
         }
         json_string = json.dumps(json_object)
-        print(json_string)
+        # print(json_string)
         # return render_template('mapPage.html', carnum=data, askInsert=toggle)
         return json_string
 
