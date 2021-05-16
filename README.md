@@ -29,7 +29,7 @@ https://sejonguniversity-my.sharepoint.com/personal/minhdl_sju_ac_kr/_layouts/15
 
 * * *
 ```
-작성일 : 2021/05/13(목) 17:15
+작성일 : 2021/05/17(월) 01:19
 ```
 # About UX/UI Design
 > Flask 상에서 index.html 파일을 **"main_page.html"** 로 대체할 예정.
@@ -38,10 +38,14 @@ https://sejonguniversity-my.sharepoint.com/personal/minhdl_sju_ac_kr/_layouts/15
 > 나머지 디자인은 천천히 시간을 두고 작업할 예정
 
 - ## 작업예정 (main_page.html)
-- 맵조회부분에서 **차량검색**을 통해 DB에서부터 불러온 "차량번호"를 통해, 버튼컴포넌트 제작예정
+- ~~맵조회부분에서 **차량검색**을 통해 DB에서부터 불러온 "차량번호"를 통해, 버튼컴포넌트 제작예정~~
 - 차량번호마다 Marker(인스턴스)의 색깔을 다르게 구현예정
 - 지역 or 구역 or 개수제한  에 따라 클러스터링 구현예정
-- **리스트조회부분**에서 사진을 넣을 DisplayBox 부분과 결과를 반환받을 DisplayBox를 각각 구현할 예정
-- 버튼에 기능도 삽입할 예정
-
+- ~~**리스트조회부분**에서 사진을 넣을 DisplayBox 부분과 결과를 반환받을 DisplayBox를 각각 구현할 예정~~
+- ~~버튼에 기능도 삽입할 예정~~
 - 메인페이지 오른쪽아랫부분에 **Remote Controller** 만들기
+
+
+- ## 문제점 (mapPage.html)
+- Marker의 **색깔변경 불가능** => <u>색깔이 제외예정</u>
+- 차량검색 직후 DB에서 차량번호를 뽑아옴 (1개 or 전체) 그러나, 인스턴스조회 시에 **DB에 다시 접근** 해야만 한다. => <u>애초에 모든정보를 데려올까???</u>
