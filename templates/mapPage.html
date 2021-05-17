@@ -103,6 +103,10 @@
 
 
     <script>
+        // 조회된 버튼들을 관리
+        hasButton = [];
+
+
         // window.onload = function () {
         // alert('카카오맵 호출');
         var msg = '{{ msg }}';
@@ -194,50 +198,92 @@
             var r = Math.round((Math.random() * (240 - 20 + 1)) + 20);
             var g = Math.round((Math.random() * (240 - 20 + 1)) + 20);
             var b = Math.round((Math.random() * (240 - 20 + 1)) + 20);
-            alert("rgb(" + r + "," + g + "," + b + ")");
+            // alert("rgb(" + r + "," + g + "," + b + ")");
             // rgb(r,g,b) to String
             var colorCode = "rgb(" + r + "," + g + "," + b + ")";
             return colorCode;
         }
 
         function paintToDo(result) {
-            alert("result")
+            alert(result['toggle'] + "," + result['carnum']);
             toggle = result['toggle'];
             carnum = result['carnum'];
             if (toggle == 1) {
                 // alert('버튼그리기');
                 // alert(carnum.length)
+                // alert("버튼추가여부 : " + check.val);
+                // alert("이미 추가된 버튼 : " + check.div.innerHTML);
+
                 for (i = 0; i < carnum.length; i++) {
-                    color = randomColor();
-                    var p = document.getElementById("searchDisplay");
                     var newDIV = document.createElement("div");
                     newDIV.innerHTML = carnum[i];
-                    newDIV.style.backgroundColor = color;
-                    newDIV.style.margin = "3px 3px 3px 3px";
-                    newDIV.style.height = "60px";
-                    newDIV.style.borderRadius = "10px 10px 10px 10px";
-                    newDIV.style.lineHeight = "60px";
-                    newDIV.style.fontWeight = "bold";
-                    newDIV.style.cursor = "pointer";
-                    newDIV.setAttribute("class", "instance");
-                    newDIV.onclick = function () {
-                        alert('클릭');
+
+                    check = checkAndPush(newDIV.innerHTML);
+                    if (check.value == "success") {
+                        color = randomColor();
+                        var p = document.getElementById("searchDisplay");
+                        newDIV.setAttribute('class', 'newButton');
+                        newDIV.style.transition = "opacity 0.5s";
+                        newDIV.style.backgroundColor = color;
+                        newDIV.style.margin = "3px 3px 3px 3px";
+                        newDIV.style.height = "60px";
+                        newDIV.style.borderRadius = "10px 10px 10px 10px";
+                        newDIV.style.lineHeight = "60px";
+                        newDIV.style.fontWeight = "bold";
+                        newDIV.style.cursor = "pointer";
+                        newDIV.setAttribute("class", "instance");
+
+                        // 버튼에 "클릭 이벤트" 삽입
+                        newDIV.onclick = function () {
+                            alert('클릭한 버튼의 차량번호 : ' + this.innerHTML);
+                        }
+
+                        // 버튼에 "마우스오버 이벤트" 삽입
+                        newDIV.onmouseover = function () {
+                            event.target.style.transform = "scale(0.9)";
+                            event.target.style.transition = "all 0.3s";
+                        }
+
+                        // 버튼에 "마우스아웃 이벤트" 삽입
+                        newDIV.onmouseout = function () {
+                            event.target.style.transform = "scale(1)";
+                            event.target.style.transition = "all 0.3s";
+                        }
+                        hasButton.push(newDIV)
+                        p.appendChild(newDIV);
+                    } else {
+                        divFocus(check.div);
+                        blink(check.div);
+                        break;
                     }
-                    newDIV.onmouseover = function () {
-                        event.target.style.transform = "scale(0.9)";
-                        event.target.style.transition = "all 0.3s";
-                    }
-                    newDIV.onmouseout = function () {
-                        event.target.style.transform = "scale(1)";
-                        event.target.style.transition = "all 0.3s";
-                    }
-                    p.appendChild(newDIV);
-                    $('#input').val('');
+
                 }
                 // alert('버튼추가완료!' + '   {{askInsert}}');
             } else {
-                $('#input').val('');
-                alert('버튼추가실패!' + '   {{askInsert}}');
+                alert('버튼추가실패!');
+            }
+            $('#input').val('');
+            // 현재 조회된 Button 개수
+            // alert("현재 버튼 개수 : " + hasButton.length + "개");
+            // for (i = 0; i < hasButton.length; i++) {
+            //     alert(hasButton[i].innerHTML);
+            // }
+        }
+
+        function checkAndPush(inputCarnum) {
+            for (i = 0; i < hasButton.length; i++) {
+                // alert(hasButton[i].innerHTML);
+                if (hasButton[i].innerHTML == inputCarnum) {
+                    alert(inputCarnum + " 이미 존재하는 버튼입니다.");
+                    return {
+                        value: "faile",
+                        div: hasButton[i]
+                    }
+                }
+            }
+            return {
+                value: "success",
+                div: null
             }
         }
 
@@ -292,6 +338,61 @@
                 return false;
             }
         })
+
+        // 자동포커스
+        function divFocus(div) {
+            // 방법 1 : 사용하기 쉬우나, 애니메이션 없음
+            // $(hasButton)[9].scrollIntoView(true);
+
+            // 방법 2 : 상대적인 위치(position) / 절대적인 위치(offset)을 찾아
+            //          위치정보를 저장하고, animate의 속성값인 scrollTop을 이용하여 스크롤하기
+            var scrollPosition = $(div).position().top;
+
+            $("#searchDisplay").animate({
+                scrollTop: scrollPosition
+            }, 600);
+
+        }
+
+        var saveBlink;
+        function blink(div) {
+            // 방법1 : fadeOut과 fadeIn을 재귀호출하여 무한반복 / 마우스오버시 종료
+            // 문제 : 새로운 함수 호출시 속도가 제곱으로 증가하며, 늘어나는 프로세스를 종료시키지 못함..
+            // $(div).fadeOut('fast', function () {
+            //     $(this).fadeIn('fast', function () {
+            //         blink(this)
+            //     });
+            // });
+            // $(div).mouseover(function () {
+            //     $(div).stop().fadeTo('fast', 1.0)
+            // })
+
+
+            // 방법 2 : setInterval을 통해 blink하는 함수를 호출
+            // 방법 1과 비교 : 메모리에서 실행중인 프로세스를 강제종료 가능
+            var val = null;
+            if (val == null) {
+                saveBlink = div
+                val = setInterval(blinkMessage, 700);
+            }
+            $(div).mouseover(function () {
+                if (val != null) {
+                    clearInterval(val);
+                    val = null;
+                    $(div).removeClass("blink");
+                }
+            });
+            $('#ajax').click(function () {
+                alert('blink 강제 종료');
+                clearInterval(val);
+                val = null
+                $(div).removeClass("blink");
+            })
+
+        }
+        function blinkMessage() {
+            $(saveBlink).toggleClass("blink");
+        }
     </script>
 </body>
 
