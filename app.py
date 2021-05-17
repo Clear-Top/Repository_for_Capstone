@@ -63,37 +63,22 @@ def search_carnum():
     if(temp == ""):
         data = db.select_ALLdata(conn, curs)
     else:
-        data = db.select_data(temp, conn, curs)
+        tp = db.select_data(temp, conn, curs)
+        data = tp[0]
 
-    # for i in data:
-    #     print(i)
-
-    # json_data = data        # JSON
-    # json_return = json.dumps(json_data)  # JSON
-
+    print(data)
     conn.close()
-    if data == "No":
+    if data[0] == "No":
         toggle = 0
-        # print(toggle)
-        json_object = {
-            "carnum": data,
-            "toggle": toggle
-        }
-        json_string = json.dumps(json_object)
-        # print(json_string)
-        # return render_template('mapPage.html', carnum="없는 데이터입니다.", askInsert=toggle)
-        return json_string
     else:
         toggle = 1
-        # print(toggle)
-        json_object = {
-            "carnum": data,
-            "toggle": toggle
-        }
-        json_string = json.dumps(json_object)
-        # print(json_string)
-        # return render_template('mapPage.html', carnum=data, askInsert=toggle)
-        return json_string
+    # print(toggle)
+    json_object = {
+        "carnum": data,
+        "toggle": toggle
+    }
+    json_string = json.dumps(json_object)
+    return json_string
 
 
 @app.route('/xlupload', methods=['GET', 'POST'])
