@@ -37,7 +37,7 @@ https://sejonguniversity-my.sharepoint.com/personal/minhdl_sju_ac_kr/_layouts/15
 > 맵조회 관련페이지 디자인이 끝나가고 있기때문에, 서둘러서 작업할 예정.
 > 나머지 디자인은 천천히 시간을 두고 작업할 예정
 
-- ## 작업예정 (main_page.html)
+> ## 작업예정 (main_page.html)
 - ~~맵조회부분에서 **차량검색**을 통해 DB에서부터 불러온 "차량번호"를 통해, 버튼컴포넌트 제작예정~~
 - 차량번호마다 Marker(인스턴스)의 색깔을 다르게 구현예정
 - 지역 or 구역 or 개수제한  에 따라 클러스터링 구현예정
@@ -49,6 +49,6 @@ https://sejonguniversity-my.sharepoint.com/personal/minhdl_sju_ac_kr/_layouts/15
 - 메인페이지 오른쪽아랫부분에 **Remote Controller** 만들기
 
 
-- ## 문제점 (mapPage.html)
+> ## 문제점 (mapPage.html)
 - Marker의 **색깔변경 불가능** => <u>색깔대신 다른 망안 검토중</u>
 - 차량검색 직후 DB에서 차량번호를 뽑아옴 (1개 or 전체) 그러나, 인스턴스조회 시에 **DB에 다시 접근** 해야만 한다. => <u>애초에 모든정보를 데려올까???</u>
