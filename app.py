@@ -155,7 +155,7 @@ def upload_page():
             # print(time)
             # print(lalo)
 
-            full_image, _, cars = lpd(file)
+            full_image, yolo_lp, cars = lpd(file)
 
             plate_num = []
             plate_prob = []
@@ -164,14 +164,20 @@ def upload_page():
             print("[SYS] cars")
             for i, c in enumerate(cars):
                 try:
-                    cv.imwrite(
-                        "result/"+full_image[:-4]+"_car"+str(i)+".jpg", c.astype(np.uint8))
                     img = wpod_inf(c)
-                    cv.imwrite(
-                        "result/"+full_image[:-4]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
+                    cv.imwrite("result/"+full_image[:-4]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
+                    cv.imwrite("result/"+full_image[:-4]+"_car"+str(i)+".jpg", c.astype(np.uint8))
                     plates.append(img)
                 except Exception as e:
-                    print("[ERROR]", e)
+                    try:
+                        n = 0
+                        for i in yolo_lp:
+                            cv.imwrite("result/"+full_image[:-4]+"yv4"+str(n)+".jpg",i.astype(np.uint8))
+                            n+=1
+                    except Exception as ef:
+                        print("[ERROR]",e,ef)
+            if len(plates) == 0:
+                print("[NOT FOUND]")
             print("[SYS] lpr ")
             for i, pic in enumerate(plates):
                 if pic is not None:
@@ -180,8 +186,7 @@ def upload_page():
                         lp, prob = lpr(pic)
                         plate_num.append(lp[0])
                         plate_prob.append(float(prob[0][0]))
-                        cv.imwrite(
-                            "result/"+full_image[:-4]+"_lp"+str(i)+".jpg", pic.astype(np.uint8))
+                        #cv.imwrite("result/"+full_image[:-4]+"_lp"+str(i)+".jpg", pic.astype(np.uint8))
                     except Exception as e:
                         print("[ERROR]", e)
 
@@ -190,12 +195,14 @@ def upload_page():
                     print("[PROB ", i, "]", plate_num[i], len(plate_num[i]))
                     if plate_num[i][-5] not in kor_dict:
                         print("wrong assumption")
+                        #TODO: Implement alternative algorithm for handling
                     else:
                         if (len(plate_num[i]) == 6 or len(plate_num[i]) == 7):
                             print("right length")
                             writeExcel.write_excel(
                                 excel, plate_num[i], 'test', time, UPLOAD_FOLDER, file.filename, lalo)
                         else:
+                            #TODO: Implement alternative algorithm
                             print("wrong length")
                 except Exception as e:
                     print("[ERROR]", e)
@@ -203,7 +210,7 @@ def upload_page():
                                    msg='Successfully processed',
                                    extracted_text=full_image,
                                    img_src=UPLOAD_FOLDER + full_image,
-                                   lpd_src=RESULT_FOLDER + full_image[:-4]+"_result0.jpg")
+                                   lpd_src="result/"+full_image[:-4]+"_wp0.jpg")
     elif request.method == 'GET':
         return render_template('upload.html')
 
