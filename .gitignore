@@ -2,6 +2,8 @@ yolov4.weights
 yolov4-ANPR.cfg
 yolov4-ANPR.weights
 result/
-static/
+excel/
+images/
+uploads/
 __pycache__/
 DS_Store
