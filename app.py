@@ -18,8 +18,8 @@ import json
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
-UPLOAD_FOLDER = '/static/uploads/'
-RESULT_FOLDER = '/static/result/'
+UPLOAD_FOLDER = './static/uploads/'
+RESULT_FOLDER = './static/result/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 ALLOWED_EXCEL = set(['xlsx', 'xls'])
 kor_dict = ["가", "나", "다", "라", "마", "거", "너", "더", "러",
@@ -167,15 +167,15 @@ def upload_page():
             for i, c in enumerate(cars):
                 try:
                     img = wpod_inf(c)
-                    cv.imwrite("/static/result/"+full_image[:-4]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
-                    cv.imwrite("/static/result/"+full_image[:-4]+"_car"+str(i)+".jpg", c.astype(np.uint8))
+                    cv.imwrite("./static/result/"+full_image[:-4]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
+                    cv.imwrite("./static/result/"+full_image[:-4]+"_car"+str(i)+".jpg", c.astype(np.uint8))
                     print("/static/result/"+full_image[:-4]+"_wp"+str(i)+".jpg")
                     plates.append(img)
                 except Exception as e:
                     try:
                         n = 0
                         for i in yolo_lp:
-                            cv.imwrite("/static/result/"+full_image[:-4]+"yv4"+str(n)+".jpg",i.astype(np.uint8))
+                            cv.imwrite("./static/result/"+full_image[:-4]+"yv4"+str(n)+".jpg",i.astype(np.uint8))
                             n+=1
                     except Exception as ef:
                         print("[ERROR]",e,ef)
@@ -214,7 +214,7 @@ def upload_page():
                                    extracted_text=full_image,
                                    img_src=UPLOAD_FOLDER + full_image[:-16]+".jpg",
                                    lpd_src=RESULT_FOLDER + full_image[:-4]+"_wp0.jpg",
-                                   car_num=plate_num[i],
+                                   car_num=plate_num,
                                    car_time=time,
                                    car_lalo=lalo,
                                    car_filename=file.filename)
