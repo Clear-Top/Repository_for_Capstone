@@ -36,10 +36,10 @@
             <div id="left_box">
                 <div class="in_left_box1">uploaded image <br><br>{% if img_src %}<img src="{{ img_src }}" style=width:500px>{% endif %}</div>
                 <div class="in_left_box2">transformed image <br><br>{% if lpd_src %}<img src="{{ lpd_src }}">{% endif %}</div>
-                <div class="in_left_box3">{% if car_num %}차량번호 : {{car_num}},{% endif %}
+                <div class="in_left_box3">{{lpd_src}}{% if car_num %}차량번호 : {{car_num}},{% endif %}
                     {% if car_time %}촬영 시간 : {{car_time}}{% endif %}
                     {% if car_lalo %}위도, 경도 : {{car_lalo}}{% endif %}
-                <img src="{{ url_for('static', filename=lpd_src) }}"/></div>
+                </div>
             </div>
         </div>
         <div id="frame4">
