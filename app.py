@@ -18,7 +18,7 @@ import json
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
-UPLOAD_FOLDER = '/static/uploads/'
+UPLOAD_FOLDER = './static/uploads/'
 RESULT_FOLDER = './static/result/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 ALLOWED_EXCEL = set(['xlsx', 'xls'])
@@ -42,7 +42,6 @@ def allowed_file(filename):
 
 def allowed_file(file):
     return '.' in file and file.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 
 
 
@@ -158,7 +157,7 @@ def upload_page():
             # print(lalo)
 
             full_image, yolo_lp, cars = lpd(file)
-
+            upload_source = []
             plate_num = []
             plate_prob = []
             plates = []
@@ -169,7 +168,7 @@ def upload_page():
                     img = wpod_inf(c)
                     cv.imwrite("./static/result/"+full_image[:-4]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
                     cv.imwrite("./static/result/"+full_image[:-4]+"_car"+str(i)+".jpg", c.astype(np.uint8))
-                    print("/static/result/"+full_image[:-4]+"_wp"+str(i)+".jpg")
+                    upload_source.append("./static/result/"+full_image[:-4]+"_wp"+str(i)+".jpg")
                     plates.append(img)
                 except Exception as e:
                     try:
@@ -214,9 +213,11 @@ def upload_page():
                                    extracted_text=full_image,
                                    img_src=UPLOAD_FOLDER + full_image[:-16]+".jpg",
                                    lpd_src=RESULT_FOLDER + full_image[:-4]+"_wp0.jpg",
+                                   car_num=plate_num,
                                    car_time=time,
                                    car_lalo=lalo,
-                                   car_filename=file.filename)
+                                   car_filename=file.filename,
+                                   car_source=upload_source)
     elif request.method == 'GET':
         return render_template('up.html')
 
