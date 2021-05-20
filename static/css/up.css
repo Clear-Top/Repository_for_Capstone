@@ -120,6 +120,7 @@ input{
   padding-right:20px;
   border-radius:.5em;
   float :right;
+  overflow : auto;
 }
 .in_left_box3{
   background-color:white;
@@ -135,6 +136,7 @@ input{
   padding-right:20px;
   border-radius:.5em;
   float :right;
+  overflow : auto;
 }
 .filebox label{
   display : inline-block;
