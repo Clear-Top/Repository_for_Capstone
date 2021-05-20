@@ -27,18 +27,20 @@
             <div id="right_box">upload : 이미지 업로드.<br>transform : 이미지 변환<br>download image : 변환된 이미지 저장<br>download excel : 전체 데이터 저장<hr>
                     
                     <form method=post enctype=multipart/form-data>
-                        <div class="filebox"><label for ="fb"><img src="/static/images/upload.png" alt="upload" style=" width:100px;height:100px;">upload</label><input type=file name=file id="fb"></div>
+                        <div class="filebox"><label for ="fb"><img src="/static/images/upload.png" alt="upload" style=" width:100px;height:100px;">upload</label><input multiple=multiple type=file name=file id="fb"></div>
                         <div class="filebox"><label for ="sm"><img src="/static/images/transform.png" style="width:100px;height:100px;">transform</label><input type=submit value=upload id="sm"></div>
                     </form>
-                <button class="download_box btn" href="{{lpd_src}}"><strong>download image</strong></button>
-                <button class="download_box btn" onclick="alert('엑셀저장완료!')"><strong>download excel</strong></button>
+                <button class="download_box btn" ><strong>download image</strong></button>
+                <button class="download_box btn" ><strong>download excel</strong></button>
             </div>
             <div id="left_box">
                 <div class="in_left_box1">uploaded image <br><br>{% if img_src %}<img src="{{ img_src }}" style=width:500px>{% endif %}</div>
-                <div class="in_left_box2">transformed image <br><br>{% if lpd_src %}<img src="{{ lpd_src }}">{% endif %}</div>
-                <div class="in_left_box3">{{lpd_src}}{% if car_num %}차량번호 : {{car_num}},{% endif %}
-                    {% if car_time %}촬영 시간 : {{car_time}}{% endif %}
-                    {% if car_lalo %}위도, 경도 : {{car_lalo}}{% endif %}
+                <div class="in_left_box2">transformed image <br><br>{% if car_source %}{% for uploaded_s in car_source %}<img src="{{ uploaded_s }}" style=width:340px;height:80px; >{% endfor %}{% endif %}</div>
+                <div class="in_left_box3">{% for number in car_num %}
+                    {% if car_num %}차량번호 : {{number}}{% endif %}
+                    촬영 시간 :{% if car_time %} {{car_time}}{% else %} 존재하지 않습니다.{% endif %}
+                    위도 정보 :{% if car_lalo %} {{car_lalo}}{% else %} 존재하지 않습니다.{% endif %}<hr>
+                    {% endfor %}
                 </div>
             </div>
         </div>
