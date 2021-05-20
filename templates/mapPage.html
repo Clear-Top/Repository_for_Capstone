@@ -10,6 +10,7 @@
     <script type=" text/javascript" src="../static/js/mouseEvent.js"></script>
     <!-- <link rel="stylesheet" type="text/css" href="../static/css/kakaoMap.css"> -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/kakaoMap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/overlay.css') }}">
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -103,6 +104,43 @@
 
 
     <script>
+        // test data of '12가3456'
+        // 클릭시에 위도경도값을 동적으로 생성하여 만들어야함
+        var test_position = [
+            {
+                title: '12가3456',
+                latlng: new kakao.maps.LatLng(37.55222645660858, 127.07402497111372),
+                image: '../static/images/영실관.jpg'
+            },
+            {
+                title: '12가3456',
+                latlng: new kakao.maps.LatLng(37.55236254929694, 127.0733490544685),
+                image: '../static/images/충무관.jpg'
+            },
+            {
+                title: '12가3456',
+                latlng: new kakao.maps.LatLng(37.551894729639535, 127.07405715762066),
+                image: '../static/images/율곡관.jpg'
+            },
+            {
+                title: '12가3456',
+                latlng: new kakao.maps.LatLng(37.551666484410134, 127.07433172732024),
+                image: '../static/images/학술정보원.jpg'
+            },
+            {
+                title: '12가3456',
+                latlng: new kakao.maps.LatLng(37.55040370778018, 127.0732566803555),
+                image: '../static/images/광개토관.jpg'
+            },
+            {
+                title: '12가3456',
+                latlng: new kakao.maps.LatLng(37.549956632654954, 127.07453618415181),
+                image: '../static/images/세종관.jpg'
+            }
+
+        ];
+
+        //======================================(Regrading of API)======================================
         // window.onload = function () {
         // alert('카카오맵 호출');
         var msg = '{{ msg }}';
@@ -110,32 +148,28 @@
             alert('Excel파일을 제출해주세요..');
         }
 
-        function markerOn() {
-            alert('marker On');
-        }
+        // function markerOn() {
+        //     alert('marker On');
+        // }
 
-        function markerOff() {
-            alert('marker Off');
-        }
+        // function markerOff() {
+        //     alert('marker Off');
+        // }
 
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
             mapOption = {
-                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                center: new kakao.maps.LatLng(37.55222645660858, 127.07402497111372), // 지도의 중심좌표
                 level: 3 // 지도의 확대 레벨
             };
 
-        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-        // 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우를 생성합니다
-        var iwContent = '<div style="text-align:left;disply:flex;width:200px;padding:5px;">Marker Number : ??? <br/> Plate Num : ??? <br/>Location of It : ???</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-        // 인포윈도우를 생성합니다
-        var infowindow = new kakao.maps.InfoWindow({
-            content: iwContent
-        });
+        // 지도를 생성합니다
+        var map = new kakao.maps.Map(mapContainer, mapOption);
 
-        // 지도를 클릭했을때 클릭한 위치에 마커를 추가하도록 지도에 클릭이벤트를 등록합니다
+        // 지도를 클릭했을때, 해당 좌표를 반환합니다.
         kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
-            // 클릭한 위치에 마커를 표시합니다 
-            addMarker(mouseEvent.latLng);
+            // 클릭한 위치에 마커를 표시합니다
+            alert('latitude : ' + mouseEvent.latLng.getLat());   // 위도얻기
+            alert('longitude : ' + mouseEvent.latLng.getLng());  // 경도얻기
         });
 
         // 지도에 표시된 마커 객체를 가지고 있을 배열입니다
@@ -146,31 +180,74 @@
 
         // 마커를 생성하고 지도위에 표시하는 함수입니다
         function addMarker(position) {
+            alert(position.length + "개의 마커를 생성합니다.");
 
             // 마커를 생성합니다
-            var marker = new kakao.maps.Marker({
-                position: position
-            });
+            for (i = 0; i < position.length; i++) {
+                var marker = new kakao.maps.Marker({
+                    position: position[i].latlng,
+                    clickable: true //마커클릭시 지도클릭 이벤트방지용
+                });
 
-            // 마커가 지도 위에 표시되도록 설정합니다
-            marker.setMap(map);
+                // 마커가 지도 위에 표시되도록 설정합니다
+                marker.setMap(map);
 
-            // 생성된 마커를 배열에 추가합니다
-            markers.push(marker);
+                // 생성된 마커를 배열에 추가합니다
+                markers.push(marker);
 
-            // 마커에 마우스오버 이벤트를 등록합니다
-            kakao.maps.event.addListener(marker, 'mouseover', function () {
-                // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
-                infowindow.open(map, marker);
-            });
-            // 마커에 마우스아웃 이벤트를 등록합니다
-            kakao.maps.event.addListener(marker, 'mouseout', function () {
-                // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
-                infowindow.close();
-            });
+                var testContent = '<div class=\"wrap\">' +
+                    '                  <div class=\"info\">' +
+                    '                       <div class=\"title\">' + position[i].title + '</div>' +
+                    '                       <div class=\"body\">' +
+                    '                           <div class=\"img\">' +
+                    '                               <img src=\"' + position[i].image + '\" width=\"100\" height=\"100\">' +
+                    '                           </div>' +
+                    '                           <div class=\"desc\">' +
+                    '                               <div class=\"ellipsis\">위치 : </div>' +
+                    '                               <div class=\"jibun ellipsis\">위도 : </div>' +
+                    '                               <div class=\"jibun ellipsis\">경도 : </div>' +
+                    '                               <div class=\"jibun ellipsis\">시각 : </div>' +
+                    '                           </div>' +
+                    '                       </div>' +
+                    '                   </div>' +
+                    '               </div>';
+
+
+                // 커스텀오버레이 구현
+                var overlay = new kakao.maps.CustomOverlay({
+                    content: testContent,
+                    position: position[i].latlng
+                })
+
+                // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+                // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+                // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+                kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, overlay));
+                kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(overlay));
+                kakao.maps.event.addListener(marker, 'click', makeClickListener());
+            }
         }
 
+        // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+        function makeOverListener(map, marker, overlay) {
+            return function () {
+                overlay.setMap(map)
+            };
+        }
 
+        // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+        function makeOutListener(overlay) {
+            return function () {
+                overlay.setMap(null)
+            };
+        }
+
+        // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+        function makeClickListener() {
+            return function () {
+                alert('인스턴스 조회 (구현예정)')
+            };
+        }
 
         // 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
         function setMarkers(map) {
@@ -189,55 +266,103 @@
             setMarkers(null);
         }
 
+        //======================================(Except of API)======================================
+        // 조회된 버튼들을 관리
+        hasButton = [];
+
         function randomColor() {
-            // var colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);
             var r = Math.round((Math.random() * (240 - 20 + 1)) + 20);
             var g = Math.round((Math.random() * (240 - 20 + 1)) + 20);
             var b = Math.round((Math.random() * (240 - 20 + 1)) + 20);
-            alert("rgb(" + r + "," + g + "," + b + ")");
+
             // rgb(r,g,b) to String
             var colorCode = "rgb(" + r + "," + g + "," + b + ")";
             return colorCode;
         }
 
         function paintToDo(result) {
-            alert("result")
+            alert(result['toggle'] + "," + result['carnum']);
             toggle = result['toggle'];
             carnum = result['carnum'];
             if (toggle == 1) {
                 // alert('버튼그리기');
                 // alert(carnum.length)
+                // alert("버튼추가여부 : " + check.val);
+                // alert("이미 추가된 버튼 : " + check.div.innerHTML);
+
                 for (i = 0; i < carnum.length; i++) {
-                    color = randomColor();
-                    var p = document.getElementById("searchDisplay");
                     var newDIV = document.createElement("div");
                     newDIV.innerHTML = carnum[i];
-                    newDIV.style.backgroundColor = color;
-                    newDIV.style.margin = "3px 3px 3px 3px";
-                    newDIV.style.height = "60px";
-                    newDIV.style.borderRadius = "10px 10px 10px 10px";
-                    newDIV.style.lineHeight = "60px";
-                    newDIV.style.fontWeight = "bold";
-                    newDIV.style.cursor = "pointer";
-                    newDIV.setAttribute("class", "instance");
-                    newDIV.onclick = function () {
-                        alert('클릭');
+
+                    check = checkAndPush(newDIV.innerHTML);
+                    if (check.value == "success") {
+                        color = randomColor();
+                        var p = document.getElementById("searchDisplay");
+                        newDIV.setAttribute('class', 'newButton');
+                        newDIV.style.transition = "opacity 0.5s";
+                        newDIV.style.backgroundColor = color;
+                        newDIV.style.margin = "3px 3px 3px 3px";
+                        newDIV.style.height = "60px";
+                        newDIV.style.borderRadius = "10px 10px 10px 10px";
+                        newDIV.style.lineHeight = "60px";
+                        newDIV.style.fontWeight = "bold";
+                        newDIV.style.cursor = "pointer";
+                        newDIV.setAttribute("class", "instance");
+
+                        // 버튼에 "클릭 이벤트" 삽입
+                        // 클릭 시 API에게 차량번호와 위도/경도를 전달
+                        newDIV.onclick = function () {
+                            alert("\"" + this.innerHTML + "\" 에 대한 Marker(들)를 생성합니다.");
+                            addMarker(test_position);
+
+                        }
+
+                        // 버튼에 "마우스오버 이벤트" 삽입
+                        newDIV.onmouseover = function () {
+                            event.target.style.transform = "scale(0.9)";
+                            event.target.style.transition = "all 0.3s";
+                        }
+
+                        // 버튼에 "마우스아웃 이벤트" 삽입
+                        newDIV.onmouseout = function () {
+                            event.target.style.transform = "scale(1)";
+                            event.target.style.transition = "all 0.3s";
+                        }
+                        hasButton.push(newDIV)
+                        p.appendChild(newDIV);
+                    } else {
+                        divFocus(check.div);
+                        blink(check.div);
+                        break;
                     }
-                    newDIV.onmouseover = function () {
-                        event.target.style.transform = "scale(0.9)";
-                        event.target.style.transition = "all 0.3s";
-                    }
-                    newDIV.onmouseout = function () {
-                        event.target.style.transform = "scale(1)";
-                        event.target.style.transition = "all 0.3s";
-                    }
-                    p.appendChild(newDIV);
-                    $('#input').val('');
+
                 }
                 // alert('버튼추가완료!' + '   {{askInsert}}');
             } else {
-                $('#input').val('');
-                alert('버튼추가실패!' + '   {{askInsert}}');
+                alert('버튼추가실패!');
+            }
+            $('#input').val('');
+            // 현재 조회된 Button 개수
+            // alert("현재 버튼 개수 : " + hasButton.length + "개");
+            // for (i = 0; i < hasButton.length; i++) {
+            //     alert(hasButton[i].innerHTML);
+            // }
+        }
+
+        function checkAndPush(inputCarnum) {
+            for (i = 0; i < hasButton.length; i++) {
+                // alert(hasButton[i].innerHTML);
+                if (hasButton[i].innerHTML == inputCarnum) {
+                    alert(inputCarnum + " 이미 존재하는 버튼입니다.");
+                    return {
+                        value: "faile",
+                        div: hasButton[i]
+                    }
+                }
+            }
+            return {
+                value: "success",
+                div: null
             }
         }
 
@@ -292,6 +417,61 @@
                 return false;
             }
         })
+
+        // 자동포커스
+        function divFocus(div) {
+            // 방법 1 : 사용하기 쉬우나, 애니메이션 없음
+            // $(hasButton)[9].scrollIntoView(true);
+
+            // 방법 2 : 상대적인 위치(position) / 절대적인 위치(offset)을 찾아
+            //          위치정보를 저장하고, animate의 속성값인 scrollTop을 이용하여 스크롤하기
+            var scrollPosition = $(div).position().top;
+
+            $("#searchDisplay").animate({
+                scrollTop: scrollPosition
+            }, 600);
+
+        }
+
+        var saveBlink;
+        function blink(div) {
+            // 방법1 : fadeOut과 fadeIn을 재귀호출하여 무한반복 / 마우스오버시 종료
+            // 문제 : 새로운 함수 호출시 속도가 제곱으로 증가하며, 늘어나는 프로세스를 종료시키지 못함..
+            // $(div).fadeOut('fast', function () {
+            //     $(this).fadeIn('fast', function () {
+            //         blink(this)
+            //     });
+            // });
+            // $(div).mouseover(function () {
+            //     $(div).stop().fadeTo('fast', 1.0)
+            // })
+
+
+            // 방법 2 : setInterval을 통해 blink하는 함수를 호출
+            // 방법 1과 비교 : 메모리에서 실행중인 프로세스를 강제종료 가능
+            var val = null;
+            if (val == null) {
+                saveBlink = div
+                val = setInterval(blinkMessage, 700);
+            }
+            $(div).mouseover(function () {
+                if (val != null) {
+                    clearInterval(val);
+                    val = null;
+                    $(div).removeClass("blink");
+                }
+            });
+            $('#ajax').click(function () {
+                alert('blink 강제 종료');
+                clearInterval(val);
+                val = null
+                $(div).removeClass("blink");
+            })
+
+        }
+        function blinkMessage() {
+            $(saveBlink).toggleClass("blink");
+        }
     </script>
 </body>
 

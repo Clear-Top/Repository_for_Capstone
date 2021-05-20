@@ -29,7 +29,7 @@ https://sejonguniversity-my.sharepoint.com/personal/minhdl_sju_ac_kr/_layouts/15
 
 * * *
 ```
-작성일 : 2021/05/17(월) 01:19
+작성일 : 2021/05/20(목) 00:53
 ```
 # About UX/UI Design
 > Flask 상에서 index.html 파일을 **"main_page.html"** 로 대체할 예정.
@@ -37,15 +37,21 @@ https://sejonguniversity-my.sharepoint.com/personal/minhdl_sju_ac_kr/_layouts/15
 > 맵조회 관련페이지 디자인이 끝나가고 있기때문에, 서둘러서 작업할 예정.
 > 나머지 디자인은 천천히 시간을 두고 작업할 예정
 
-- ## 작업예정 (main_page.html)
+> ## 작업예정 (main_page.html)
 - ~~맵조회부분에서 **차량검색**을 통해 DB에서부터 불러온 "차량번호"를 통해, 버튼컴포넌트 제작예정~~
 - 차량번호마다 Marker(인스턴스)의 색깔을 다르게 구현예정
 - 지역 or 구역 or 개수제한  에 따라 클러스터링 구현예정
 - ~~**리스트조회부분**에서 사진을 넣을 DisplayBox 부분과 결과를 반환받을 DisplayBox를 각각 구현할 예정~~
 - ~~버튼에 기능도 삽입할 예정~~
+- ~~전체차량 조회 기능추가~~
+- ~~전체차량 버튼에서 원하는 차량번호로 자동스크롤 및 Blink기능 추가~~
+- ~~맵 API에게 차량번호 + 위도 + 경도 정보전달~~
 - 메인페이지 오른쪽아랫부분에 **Remote Controller** 만들기
+- 버튼을 모던하게 디자인
+- Marker에 Over, Out, Click 시에 다른 이미지 오버래핑
+- "Marker 클릭 -> (인스턴스조회 실행) -> sql질의" 기능입히기
 
 
-- ## 문제점 (mapPage.html)
-- Marker의 **색깔변경 불가능** => <u>색깔이 제외예정</u>
-- 차량검색 직후 DB에서 차량번호를 뽑아옴 (1개 or 전체) 그러나, 인스턴스조회 시에 **DB에 다시 접근** 해야만 한다. => <u>애초에 모든정보를 데려올까???</u>
+> ## 문제점 (mapPage.html)
+- Marker의 **색깔변경 불가능** => <u>색깔대신 다른 망안 검토중</u>
+- ~~차량검색 직후 DB에서 차량번호를 뽑아옴 (1개 or 전체) 그러나, 인스턴스조회 시에 **DB에 다시 접근** 해야만 한다. => 애초에 모든정보를 데려올까???~~

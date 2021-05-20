@@ -12,9 +12,8 @@ import numpy as np
 import sys
 import argparse
 import cv2 as cv
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request
 import os
-import json
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
@@ -51,6 +50,33 @@ def home_page():
 
 @app.route('/searchCar', methods=['GET'])
 def search_carnum():
+<<<<<<< HEAD
+    if request.method == 'GET':
+        toggle = 0
+        temp = ""
+        temp = request.args.get('search')
+        print("검색한 번호 : " + temp)
+        conn = db.connect_db()
+        curs = conn.cursor()
+        data = db.select_data(temp, conn, curs)
+
+        print(data)
+
+        conn.close()
+        if(data == "No"):
+            # print('검출실패!')
+            toggle = 0
+            return render_template('mapPage.html', carnum="없는 데이터입니다.", askInsert=toggle)
+        else:
+            # print('검출성공!')
+            toggle = 1
+            return render_template('mapPage.html', carnum=data, askInsert=toggle)
+
+        # print(data)
+    """else:
+        print("새로고침?")
+        return render_template('mapPage.html')"""
+=======
     # print('submit해서 server옴')
     toggle = 0
     temp = ""
@@ -63,37 +89,23 @@ def search_carnum():
     if(temp == ""):
         data = db.select_ALLdata(conn, curs)
     else:
-        data = db.select_data(temp, conn, curs)
+        tp = db.select_data(temp, conn, curs)
+        data = tp[0]
 
-    # for i in data:
-    #     print(i)
-
-    # json_data = data        # JSON
-    # json_return = json.dumps(json_data)  # JSON
-
+    print(data)
     conn.close()
-    if data == "No":
+    if data[0] == "No":
         toggle = 0
-        # print(toggle)
-        json_object = {
-            "carnum": data,
-            "toggle": toggle
-        }
-        json_string = json.dumps(json_object)
-        # print(json_string)
-        # return render_template('mapPage.html', carnum="없는 데이터입니다.", askInsert=toggle)
-        return json_string
     else:
         toggle = 1
-        # print(toggle)
-        json_object = {
-            "carnum": data,
-            "toggle": toggle
-        }
-        json_string = json.dumps(json_object)
-        # print(json_string)
-        # return render_template('mapPage.html', carnum=data, askInsert=toggle)
-        return json_string
+    # print(toggle)
+    json_object = {
+        "carnum": data,
+        "toggle": toggle
+    }
+    json_string = json.dumps(json_object)
+    return json_string
+>>>>>>> febf1d8f5fa041f6d8a9b9d6c38c48e5e7f90c3c
 
 
 @app.route('/xlupload', methods=['GET', 'POST'])
@@ -117,11 +129,31 @@ def upload_excel():
             data = readDB.data(curs, conn)
             conn.close()
 
-            return render_template('mapPage.html', msg='[제출성공]', carnum=data, askInsert=0)
+            return render_template('mapPage.html', msg='[제출성공]', carnum=data)
     elif request.method == 'GET':
-        print('xlupload => 초기페이지')
         return render_template('mapPage.html')
+        
+def search_carnum():
+    if request.method == 'GET':
+        toggle = 0
+        temp = ""
+        temp = request.args.get('search')
+        print("검색한 번호 : " + temp)
+        conn = db.connect_db()
+        curs = conn.cursor()
+        data = db.select_data(temp, conn, curs)
 
+        print(data)
+
+        conn.close()
+        if(data == "No"):
+            # print('검출실패!')
+            toggle = 0
+            return render_template('mapPage.html', carnum="없는 데이터입니다.", askInsert=toggle)
+        else:
+            # print('검출성공!')
+            toggle = 1
+            return render_template('mapPage.html', carnum=data, askInsert=toggle)
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_page():
@@ -129,10 +161,10 @@ def upload_page():
 
         # check if the post request has the file part
         if 'file' not in request.files:
-            return render_template('upload.html', msg='No file selected')
+            return render_template('up.html', msg='No file selected')
         file = request.files['file']
         if file.filename == '':
-            return render_template('upload.html', msg='No file selected')
+            return render_template('up.html', msg='No file selected')
 
         if file and allowed_file(file.filename):
             # make excel pointer in advance
@@ -140,14 +172,13 @@ def upload_page():
             writeExcel.write_excel_init(excel)
 
             file.save(os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
-            # print(file.filename)
+            print(file.filename)
 
             # extract EXIF (위도,경도,시간 등등)
             info = extractExif.get_exif("static/uploads/"+file.filename)
             if info is not None:
                 time = extractExif.get_exif_time(file.filename)
-                lalo = extractExif.get_coordinates(extractExif.get_geotagging(
-                    info))
+                lalo = extractExif.get_coordinates(extractExif.get_geotagging(info))
             else:
                 time = None
                 lalo = None
@@ -155,7 +186,7 @@ def upload_page():
             # print(time)
             # print(lalo)
 
-            full_image, _, cars = lpd(file)
+            full_image, yolo_lp, cars = lpd(file)
 
             plate_num = []
             plate_prob = []
@@ -164,14 +195,20 @@ def upload_page():
             print("[SYS] cars")
             for i, c in enumerate(cars):
                 try:
-                    cv.imwrite(
-                        "result/"+full_image[:-4]+"_car"+str(i)+".jpg", c.astype(np.uint8))
                     img = wpod_inf(c)
-                    cv.imwrite(
-                        "result/"+full_image[:-4]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
+                    cv.imwrite("result/"+full_image[:-4]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
+                    cv.imwrite("result/"+full_image[:-4]+"_car"+str(i)+".jpg", c.astype(np.uint8))
                     plates.append(img)
                 except Exception as e:
-                    print("[ERROR]", e)
+                    try:
+                        n = 0
+                        for i in yolo_lp:
+                            cv.imwrite("result/"+full_image[:-4]+"yv4"+str(n)+".jpg",i.astype(np.uint8))
+                            n+=1
+                    except Exception as ef:
+                        print("[ERROR]",e,ef)
+            if len(plates) == 0:
+                print("[NOT FOUND]")
             print("[SYS] lpr ")
             for i, pic in enumerate(plates):
                 if pic is not None:
@@ -180,8 +217,7 @@ def upload_page():
                         lp, prob = lpr(pic)
                         plate_num.append(lp[0])
                         plate_prob.append(float(prob[0][0]))
-                        cv.imwrite(
-                            "result/"+full_image[:-4]+"_lp"+str(i)+".jpg", pic.astype(np.uint8))
+                        #cv.imwrite("result/"+full_image[:-4]+"_lp"+str(i)+".jpg", pic.astype(np.uint8))
                     except Exception as e:
                         print("[ERROR]", e)
 
@@ -190,22 +226,33 @@ def upload_page():
                     print("[PROB ", i, "]", plate_num[i], len(plate_num[i]))
                     if plate_num[i][-5] not in kor_dict:
                         print("wrong assumption")
+                        #TODO: Implement alternative algorithm for handling
                     else:
                         if (len(plate_num[i]) == 6 or len(plate_num[i]) == 7):
                             print("right length")
                             writeExcel.write_excel(
                                 excel, plate_num[i], 'test', time, UPLOAD_FOLDER, file.filename, lalo)
                         else:
+                            #TODO: Implement alternative algorithm
                             print("wrong length")
                 except Exception as e:
                     print("[ERROR]", e)
-            return render_template('upload.html',
+            return render_template('up.html',
                                    msg='Successfully processed',
                                    extracted_text=full_image,
+<<<<<<< HEAD
+                                   img_src=UPLOAD_FOLDER + full_image[:-16]+".jpg",
+                                   lpd_src=RESULT_FOLDER + full_image[:-4]+"_wp0.jpg",
+                                   car_num=plate_num[i],
+                                   car_time=time,
+                                   car_lalo=lalo,
+                                   car_filename=file.filename)
+=======
                                    img_src=UPLOAD_FOLDER + full_image,
-                                   lpd_src=RESULT_FOLDER + full_image[:-4]+"_result0.jpg")
+                                   lpd_src="result/"+full_image[:-4]+"_wp0.jpg")
+>>>>>>> febf1d8f5fa041f6d8a9b9d6c38c48e5e7f90c3c
     elif request.method == 'GET':
-        return render_template('upload.html')
+        return render_template('up.html')
 
 
 if __name__ == '__main__':
