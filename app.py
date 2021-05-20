@@ -214,7 +214,6 @@ def upload_page():
                                    extracted_text=full_image,
                                    img_src=UPLOAD_FOLDER + full_image[:-16]+".jpg",
                                    lpd_src=RESULT_FOLDER + full_image[:-4]+"_wp0.jpg",
-                                   car_num=plate_num[i],
                                    car_time=time,
                                    car_lalo=lalo,
                                    car_filename=file.filename)
