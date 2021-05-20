@@ -14,11 +14,12 @@ import argparse
 import cv2 as cv
 from flask import Flask, render_template, request
 import os
+import json
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
 UPLOAD_FOLDER = '/static/uploads/'
-RESULT_FOLDER = '/result/'
+RESULT_FOLDER = '/static/result/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 ALLOWED_EXCEL = set(['xlsx', 'xls'])
 kor_dict = ["가", "나", "다", "라", "마", "거", "너", "더", "러",
@@ -43,9 +44,6 @@ def allowed_file(file):
     return '.' in file and file.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@app.route('/')
-def home_page():
-    return render_template('up.html')
 
 
 @app.route('/searchCar', methods=['GET'])
@@ -127,6 +125,7 @@ def search_carnum():
             toggle = 1
             return render_template('mapPage.html', carnum=data, askInsert=toggle)
 
+@app.route('/',methods=['GET','POST'])
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_page():
     if request.method == 'POST':
@@ -168,14 +167,15 @@ def upload_page():
             for i, c in enumerate(cars):
                 try:
                     img = wpod_inf(c)
-                    cv.imwrite("result/"+full_image[:-4]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
-                    cv.imwrite("result/"+full_image[:-4]+"_car"+str(i)+".jpg", c.astype(np.uint8))
+                    cv.imwrite("/static/result/"+full_image[:-4]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
+                    cv.imwrite("/static/result/"+full_image[:-4]+"_car"+str(i)+".jpg", c.astype(np.uint8))
+                    print("/static/result/"+full_image[:-4]+"_wp"+str(i)+".jpg")
                     plates.append(img)
                 except Exception as e:
                     try:
                         n = 0
                         for i in yolo_lp:
-                            cv.imwrite("result/"+full_image[:-4]+"yv4"+str(n)+".jpg",i.astype(np.uint8))
+                            cv.imwrite("/static/result/"+full_image[:-4]+"yv4"+str(n)+".jpg",i.astype(np.uint8))
                             n+=1
                     except Exception as ef:
                         print("[ERROR]",e,ef)
