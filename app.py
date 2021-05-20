@@ -50,33 +50,6 @@ def home_page():
 
 @app.route('/searchCar', methods=['GET'])
 def search_carnum():
-<<<<<<< HEAD
-    if request.method == 'GET':
-        toggle = 0
-        temp = ""
-        temp = request.args.get('search')
-        print("검색한 번호 : " + temp)
-        conn = db.connect_db()
-        curs = conn.cursor()
-        data = db.select_data(temp, conn, curs)
-
-        print(data)
-
-        conn.close()
-        if(data == "No"):
-            # print('검출실패!')
-            toggle = 0
-            return render_template('mapPage.html', carnum="없는 데이터입니다.", askInsert=toggle)
-        else:
-            # print('검출성공!')
-            toggle = 1
-            return render_template('mapPage.html', carnum=data, askInsert=toggle)
-
-        # print(data)
-    """else:
-        print("새로고침?")
-        return render_template('mapPage.html')"""
-=======
     # print('submit해서 server옴')
     toggle = 0
     temp = ""
@@ -105,7 +78,6 @@ def search_carnum():
     }
     json_string = json.dumps(json_object)
     return json_string
->>>>>>> febf1d8f5fa041f6d8a9b9d6c38c48e5e7f90c3c
 
 
 @app.route('/xlupload', methods=['GET', 'POST'])
@@ -240,17 +212,12 @@ def upload_page():
             return render_template('up.html',
                                    msg='Successfully processed',
                                    extracted_text=full_image,
-<<<<<<< HEAD
                                    img_src=UPLOAD_FOLDER + full_image[:-16]+".jpg",
                                    lpd_src=RESULT_FOLDER + full_image[:-4]+"_wp0.jpg",
                                    car_num=plate_num[i],
                                    car_time=time,
                                    car_lalo=lalo,
                                    car_filename=file.filename)
-=======
-                                   img_src=UPLOAD_FOLDER + full_image,
-                                   lpd_src="result/"+full_image[:-4]+"_wp0.jpg")
->>>>>>> febf1d8f5fa041f6d8a9b9d6c38c48e5e7f90c3c
     elif request.method == 'GET':
         return render_template('up.html')
 
