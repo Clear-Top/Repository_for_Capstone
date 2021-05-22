@@ -87,6 +87,8 @@
     height:800px;
     float: left;
     background-color: none;
+    border-top: black solid 1px;
+    border-bottom: black solid 1px;
 }
 
 #right{
@@ -135,7 +137,9 @@ hr{
     height: 555px;
     left: 5px;
     top: 30%;
-    background-color: gray;
+    background-color: #BEBEBE;
+    border-radius: 10px 10px 10px 10px;
+    border: gray solid 5px;
 }
 
 #excelAdd{
