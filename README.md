@@ -29,7 +29,7 @@ https://sejonguniversity-my.sharepoint.com/personal/minhdl_sju_ac_kr/_layouts/15
 
 * * *
 ```
-작성일 : 2021/05/18(월) 01:00
+작성일 : 2021/05/20(목) 00:53
 ```
 # About UX/UI Design
 > Flask 상에서 index.html 파일을 **"main_page.html"** 로 대체할 예정.
@@ -45,10 +45,13 @@ https://sejonguniversity-my.sharepoint.com/personal/minhdl_sju_ac_kr/_layouts/15
 - ~~버튼에 기능도 삽입할 예정~~
 - ~~전체차량 조회 기능추가~~
 - ~~전체차량 버튼에서 원하는 차량번호로 자동스크롤 및 Blink기능 추가~~
-- 맵 API에게 차량번호 + 위도 + 경도 정보전달
+- ~~맵 API에게 차량번호 + 위도 + 경도 정보전달~~
 - 메인페이지 오른쪽아랫부분에 **Remote Controller** 만들기
+- 버튼을 모던하게 디자인
+- Marker에 Over, Out, Click 시에 다른 이미지 오버래핑
+- "Marker 클릭 -> (인스턴스조회 실행) -> sql질의" 기능입히기
 
 
 > ## 문제점 (mapPage.html)
 - Marker의 **색깔변경 불가능** => <u>색깔대신 다른 망안 검토중</u>
-- 차량검색 직후 DB에서 차량번호를 뽑아옴 (1개 or 전체) 그러나, 인스턴스조회 시에 **DB에 다시 접근** 해야만 한다. => <u>애초에 모든정보를 데려올까???</u>
+- ~~차량검색 직후 DB에서 차량번호를 뽑아옴 (1개 or 전체) 그러나, 인스턴스조회 시에 **DB에 다시 접근** 해야만 한다. => 애초에 모든정보를 데려올까???~~
