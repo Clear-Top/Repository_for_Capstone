@@ -2,12 +2,12 @@
     position: absolute;
     left: 0;
     bottom: 40px;
-    width: 288px;
-    height: 132px;
-    margin-left: -144px;
+    width: 358px;
+    height: 162px;
+    margin-left: -179px;
     text-align: left;
     overflow: hidden;
-    font-size: 14px;
+    font-size: 13px;
     font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
     line-height: 1.5;
 }
@@ -18,8 +18,8 @@
 }
 
 .wrap .info {
-    width: 286px;
-    height: 120px;
+    width: 356px;
+    height: 150px;
     border-radius: 5px;
     border-bottom: 2px solid #ccc;
     border-right: 1px solid #ccc;
@@ -37,7 +37,7 @@
     height: 30px;
     background: #eee;
     border-bottom: 1px solid #ddd;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
 }
 
@@ -48,8 +48,8 @@
 
 .info .desc {
     position: relative;
-    margin: 5px 0 0 90px;
-    height: 75px;
+    margin: 9px 0 0 95px;
+    height: 100px;
 }
 
 .desc .ellipsis {
@@ -66,10 +66,10 @@
 
 .info .img {
     position: absolute;
-    top: 6px;
+    top: 10px;
     left: 5px;
-    width: 73px;
-    height: 71px;
+    width: 83px;
+    height: 91px;
     border: 1px solid #ddd;
     color: #888;
     overflow: hidden;
