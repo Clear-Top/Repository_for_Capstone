@@ -14,6 +14,8 @@
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/overlay.css') }}"> -->
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
     <title>맵 Test</title>
 
@@ -37,30 +39,27 @@
         <h1 style="text-align:center; font-size: 50px;">Map test</h1>
 
         <div id="left">
-            <!-- onsubmit="return false;" -->
             <div class="searchBar">
-                <!-- action="/searchCar" -->
-                <!-- method="GET" -->
-                <!-- onkeypress="JavaScript:press(this.form)" -->
                 <form id="carnumForm" onsubmit="return false">
                     <input id="input" type="text" class="searchBar__input" name="search"
                         placeholder="Enter Plate Number">
                     <button type=" button" class="searchBar__button" id="ajax">
                         <i class="material-icons">search</i>
                     </button>
+                    <button type=" button" class="searchBar__refresh" onclick="alert('새로고침(구현X)')">
+                        <i class="material-icons">refresh</i>
+                    </button>
                 </form>
             </div>
             <p id="requirement">ex) 12마3456</p>
             <div id="searchDisplay">
-                <!-- 버튼컴포넌트 삽입예정 -->
-                <!-- {{carnum}}
-                {{askInsert}} -->
+                <!-- 버튼컴포넌트 삽입영역 -->
             </div>
         </div>
 
         <div id="map"></div>
         <div id="right">
-            <div id="excelAdd">Button of Adding File
+            <div id="excelAdd">Button of Adding and Uploading File
                 <form action="http://localhost:5000/xlupload" method="post" enctype="multipart/form-data">
                     <div id="button1" style="cursor: pointer;"><label for="add">Click and Upload</label>
                         <input type="file" name="file" id="add">
@@ -75,19 +74,27 @@
                     </div>
                 </form>
             </div>
-            <div id="markerVisible">Button of Marker On/Off
+            <div id="markerVisible">Button of Marking On/Off
                 <div id="button2" style="cursor: pointer;" onclick="showMarkers()">
-                    <!-- Marker On -->
                     <i class="material-icons md-48">
+                        <!-- Marker On -->
                         push_pin
                     </i>
                     On
                 </div>
                 <div class="icon" style="cursor: pointer;" onclick="hideMarkers()">
                     <i class="material-icons md-48">
+                        <!-- Marker Off -->
                         push_pin
                     </i>
-                    off
+                    Off
+                </div>
+                <div class="icon icon2" style="cursor: pointer;" onclick="alert('마커삭제(구현X)')">
+                    <i class="material-icons md-48">
+                        <!-- Marker Off -->
+                        push_pin
+                    </i>
+                    Del
                 </div>
             </div>
             <hr />
@@ -98,10 +105,21 @@
                     the marker you<br>want
                     to check.
                 </p> -->
-                <div class="imagBox"
+                <div class="imgBox"
                     style="position:absolute; width: 300px; height:200px; background-color:gray; left:30px; top:20px;">
-                    <img src="https://dasima.xyz/wp-content/uploads/2018/09/img-src-ufo-2.png" alt="대체이미지">
+                    <img src="https://dasima.xyz/wp-content/uploads/2018/09/img-src-ufo-2.png" alt="dummyImage">
                 </div>
+                <div class="inquiry line"
+                    style="width: 330px; height: 2px; background-color: gray; margin: 20px 1px 1px 1px; left: 13px;">
+                </div>
+                <div class="inquiry carnum">차량번호 :</div>
+                <div class="inquiry location">발견위치</div>
+                <ul class="inquiry detailLocation" style="list-style-type: square;">
+                    <li>지번주소 :</li>
+                    <li>도로명주소 :</li>
+                </ul>
+                <div class="inquiry date">발견날짜 :</div>
+                <div class="inquiry time">발견시각 :</div>
                 <!-- 인스턴스조회 박스 -->
             </div>
         </div>
@@ -185,8 +203,7 @@
         // 지도를 클릭했을때, 해당 좌표를 반환합니다.
         kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
             // 클릭한 위치에 마커를 표시합니다
-            alert('latitude : ' + mouseEvent.latLng.getLat());   // 위도얻기
-            alert('longitude : ' + mouseEvent.latLng.getLng());  // 경도얻기
+            alert('< Return the location Info you clicked >\n' + 'latitude : ' + mouseEvent.latLng.getLat() + '\nlongitude : ' + mouseEvent.latLng.getLng());   // 위/경도 얻기
         });
 
         // 지도에 표시된 마커 객체를 가지고 있을 배열입니다
