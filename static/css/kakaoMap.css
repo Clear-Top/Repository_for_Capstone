@@ -20,28 +20,32 @@
 
 .searchBar{
     position: absolute;
-    left: 10%;
+    left: 5%;
     top: 10px;
     width: 100%;
-    max-width: 300px;
+    max-width: 400px;
     display: inline-flex;
 }
 
 .searchBar__input{
+    font-weight: bold;
+    font-family: 'Noto Sans KR', sans-serif;
     flex-grow: 1;
     padding: 10px;
     outline: none;
-    border:1px solid gray;
+    /* border:1px solid gray; */
+    border: none;
     border-radius: 5px 0 0 5px;
-    background: white;
+    background: rgb(230,230,230);
     transition: background 0.25s, box-shadow 0.25s;
     float: left;
+    box-shadow: 2px 3px 3px black;
     height: 40px;
 }
 
 .searchBar__input:focus{
-    background: rgb(209, 221, 78);
-    box-shadow: 0 0 2px black;
+    /* background: rgb(209, 221, 78); */
+    background: rgb(176, 187, 141);
 }
 
 .searchBar__input::placeholder{
@@ -49,9 +53,12 @@
 }
 
 .searchBar__button{
+    position: relative;
+    top: 0px;
+    left: 4px;
     width: 60px;
     height: 40px;
-    box-shadow: 0 0 2px black;
+    box-shadow: 2px 3px 3px black;
     color: gray;
     outline: none;
     border: none;
@@ -61,7 +68,38 @@
     border-radius: 0 5px 5px 0;
     cursor: pointer;
     user-select: none;
+    transition: all 0.1s;
 }
+
+.searchBar__button:active{
+    transform: translate(3px,3px);
+}
+
+.searchBar__refresh{
+    position: absolute;
+    top: 0px;
+    left: 290px;
+    width: 50px;
+    height: 40px;
+    box-shadow: 2px 3px 3px black;
+    color: gray;
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px 5px 5px 5px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.1s;
+}
+
+.searchBar__refresh:active{
+    transform: translate(3px,3px);
+    background-color: rgb(240,164,164);
+}
+
+
 
 #requirement{
     position: absolute;
@@ -75,7 +113,7 @@
     position: absolute;
     width: 365px;
     height: 89.5%;
-    background: white;
+    background: rgb(230, 230, 230);
     left: 5px;
     top: 10%;
     overflow:auto;
@@ -87,12 +125,12 @@
     height:800px;
     float: left;
     background-color: none;
-    border-top: black solid 1px;
-    border-bottom: black solid 1px;
+    border-top: gray solid 2px;
+    border-bottom: gray solid 2px;
 }
 
 #right{
-    background-color: green;
+    background-color: darkolivegreen;
     width: 25%;
     height: 800px;
     position: relative;
@@ -117,7 +155,6 @@
     height: 100px;
     left: 5px;
     top: 110px;
-    background-color: gray;
 }
 
 hr{
@@ -137,24 +174,28 @@ hr{
     height: 555px;
     left: 5px;
     top: 30%;
-    background-color: #BEBEBE;
+    /* background-color: #BEBEBE; */
+    /* background-color:white; */
+    background-color:rgb(230,230,230);
     border-radius: 10px 10px 10px 10px;
     border: gray solid 5px;
 }
 
 #excelAdd{
     background: rgb(176, 187, 141);
+    border-radius: 5px;
 
 }
 
 #markerVisible{
-    background: rgb(190, 159, 195);
+    background: rgb(176, 187, 141);
+    border-radius: 5px;
 }
 
 #button1{
     background: gray;
     position: absolute;
-    width: 270px;
+    width: 260px;
     height: 65px;
     left: 10px;
     margin-top: 5px; 
@@ -175,7 +216,7 @@ hr{
 #button2{
     background: gray;
     position: absolute;
-    width: 170px;
+    width: 108.333px;
     height: 65px;
     left: 10px;
     margin-top: 5px; 
@@ -199,7 +240,7 @@ hr{
     position: absolute;
     line-height: 65px;
     margin-top: 5px;
-    left : 285px;
+    left : 280px;
     border-radius: 10px 10px 10px 10px;
     text-align: center;
     line-height: 65px;
@@ -213,8 +254,13 @@ hr{
 }
 
 #markerVisible > .icon{
-    width: 170px;
-    left: 190px;
+    width: 108.333px;
+    left: 128.333px;
+}
+
+#markerVisible > .icon2{
+    width: 108.333px;
+    left: 246.666px;
 }
 
 .material-icons.md-48 {
@@ -249,4 +295,47 @@ hr{
 
   .blink {
             opacity: 0.5;
+}
+
+.inquiry{
+    position: relative;
+    width: fit-content;
+    /* background-color: blue; */
+    margin-top: 30px;
+    margin-left: 30px;
+    top: 220px;
+    
+    text-align: left;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: bold;
+    font-style: normal;
+    font-size: 16px;
+
+    color:gray
+}
+
+.detailLocation{
+    position: relative;
+    margin-top: 3px;
+    margin-left: 0px;
+    /* background-color: yellow; */
+    text-align: right;
+    width: fit-content;
+}
+
+.imgBox{
+    z-index: 1;
+    cursor: not-allowed;
+    border: gray solid 3px;
+    transition: transform 0.3s, border 0.5s;
+}
+
+.imgBox:hover{
+    transform: scale(2.0,2.0);
+    border: black solid 2.5px;
+    border-radius: 5px;
+}
+
+.carnum{
+    margin-top: 20px;
 }
