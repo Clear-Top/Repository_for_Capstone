@@ -50,9 +50,9 @@ https://sejonguniversity-my.sharepoint.com/personal/minhdl_sju_ac_kr/_layouts/15
 
 - 메인페이지 오른쪽아랫부분에 **Remote Controller** 만들기
 - "Marker 클릭 -> (인스턴스조회 실행) -> sql질의" 기능입히기
-> 지역 or 구역 or 개수제한  에 따라 클러스터링 구현예정
-> Dynamic View Pointing 구현예정
-> 시간별로 정렬된 리스트뷰 구현예정
+> ## 지역 or 구역 or 개수제한  에 따라 클러스터링 구현예정
+> ## Dynamic View Pointing 구현예정
+> ## 시간별로 정렬된 리스트뷰 구현예정
 
 
 > ## 문제점 (mapPage.html)
