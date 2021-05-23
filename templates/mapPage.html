@@ -310,6 +310,7 @@
         //======================================(Except of API)======================================
         // 조회된 버튼들을 관리
         hasButton = [];
+        selectedCheck = [];
 
         function randomColor() {
             var r = Math.round((Math.random() * (240 - 20 + 1)) + 20);
@@ -349,12 +350,35 @@
                         newDIV.style.fontWeight = "bold";
                         newDIV.style.cursor = "pointer";
                         newDIV.style.border = "2px solid " + color;
+                        newDIV.style.position = 'relative';
                         newDIV.setAttribute("class", "instance");
 
                         // 버튼에 "클릭 이벤트" 삽입
-                        // 클릭 시 API에게 차량번호와 위도/경도를 전달
+                        // 1. 클릭 시 API에게 차량번호와 위도/경도를 전달
+                        // 2. 클릭 시 클릭한 버튼에 체크아이콘 삽입
                         newDIV.onclick = function () {
-                            alert("\"" + this.innerHTML + "\" 에 대한 Marker(들)를 생성합니다.");
+                            // alert("\"" + this.innerHTML + "\" 에 대한 Marker(들)를 생성합니다.");
+                            if (selectedCheck.length != 0) {
+                                // alert('배열이 비어있지 않습니다. 이전선택을 취소합니다.');
+                                var parent = selectedCheck[0].parentNode;
+                                var child = selectedCheck[0];
+
+                                parent.removeChild(child);
+                                selectedCheck.pop();
+                            }
+                            var checkIcon = document.createElement("i");
+                            checkIcon.setAttribute('class', 'material-icons md-45');
+                            checkIcon.innerHTML = 'done';
+                            checkIcon.style.fontSize = '45px';
+                            checkIcon.style.position = 'absolute';
+                            checkIcon.style.left = '280px';
+                            checkIcon.style.color = 'rgba(255,0,0,1)';
+                            checkIcon.style.opacity = '0.3';
+
+                            alert(checkIcon.innerHTML);
+                            this.appendChild(checkIcon);
+                            selectedCheck.push(checkIcon);
+
                             addMarker(test_position);
                         }
 
