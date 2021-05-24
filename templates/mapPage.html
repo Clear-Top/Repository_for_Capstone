@@ -45,7 +45,7 @@
                     <button type=" button" class="searchBar__button" id="ajax">
                         <i class="material-icons">search</i>
                     </button>
-                    <button type=" button" class="searchBar__refresh" onclick="alert('새로고침(구현X)')">
+                    <button type=" button" class="searchBar__refresh" onclick="refreshButton()">
                         <i class="material-icons">refresh</i>
                     </button>
                 </form>
@@ -88,7 +88,7 @@
                     </i>
                     Off
                 </div>
-                <div class="icon icon2" style="cursor: pointer;" onclick="alert('마커삭제(구현X)')">
+                <div class="icon icon2" style="cursor: pointer;" onclick="deleteMarkers()">
                     <i class="material-icons md-48">
                         <!-- Marker Off -->
                         push_pin
@@ -135,78 +135,65 @@
     <script>
         // test data of '12가3456'
         // 클릭시에 위도경도값을 동적으로 생성하여 만들어야함
-        var test_position = [
-            {
-                title: '12가1111',
-                latlng: new kakao.maps.LatLng(37.55222645660858, 127.07402497111372),
-                image: '../static/images/영실관.jpg',
-                date: '2021-05-24 09:09:09'
-            },
-            {
-                title: '12가2222',
-                latlng: new kakao.maps.LatLng(37.55236254929694, 127.0733490544685),
-                image: '../static/images/충무관.jpg',
-                date: '2021-05-25 09:09:09'
-            },
-            {
-                title: '12가3333',
-                latlng: new kakao.maps.LatLng(37.551894729639535, 127.07405715762066),
-                image: '../static/images/율곡관.jpg',
-                date: '2021-05-26 09:09:09'
-            },
-            {
-                title: '12가4444',
-                latlng: new kakao.maps.LatLng(37.551666484410134, 127.07433172732024),
-                image: '../static/images/학술정보원.jpg',
-                date: '2021-05-27 09:09:09'
-            },
-            {
-                title: '12가5555',
-                latlng: new kakao.maps.LatLng(37.55040370778018, 127.0732566803555),
-                image: '../static/images/광개토관.jpg',
-                date: '2021-05-28 09:09:09'
-            },
-            {
-                title: '12가6666',
-                latlng: new kakao.maps.LatLng(37.549956632654954, 127.07453618415181),
-                image: '../static/images/세종관.jpg',
-                date: '2021-05-29 09:09:09'
-            },
-            {
-                title: '12가7777',
-                latlng: new kakao.maps.LatLng(37.568, 127.08453618415181),
-                image: '../static/images/세종관.jpg',
-                date: '2021-05-30 09:09:09'
-            }
-        ];
+        // var test_position = [
+        //     {
+        //         title: '12가1111',
+        //         latlng: new kakao.maps.LatLng(37.55222645660858, 127.07402497111372),
+        //         image: '../static/images/영실관.jpg',
+        //         date: '2021-05-24 09:09:09'
+        //     },
+        //     {
+        //         title: '12가2222',
+        //         latlng: new kakao.maps.LatLng(37.55236254929694, 127.0733490544685),
+        //         image: '../static/images/충무관.jpg',
+        //         date: '2021-05-25 09:09:09'
+        //     },
+        //     {
+        //         title: '12가3333',
+        //         latlng: new kakao.maps.LatLng(37.551894729639535, 127.07405715762066),
+        //         image: '../static/images/율곡관.jpg',
+        //         date: '2021-05-26 09:09:09'
+        //     },
+        //     {
+        //         title: '12가4444',
+        //         latlng: new kakao.maps.LatLng(37.551666484410134, 127.07433172732024),
+        //         image: '../static/images/학술정보원.jpg',
+        //         date: '2021-05-27 09:09:09'
+        //     },
+        //     {
+        //         title: '12가5555',
+        //         latlng: new kakao.maps.LatLng(37.55040370778018, 127.0732566803555),
+        //         image: '../static/images/광개토관.jpg',
+        //         date: '2021-05-28 09:09:09'
+        //     },
+        //     {
+        //         title: '12가6666',
+        //         latlng: new kakao.maps.LatLng(37.549956632654954, 127.07453618415181),
+        //         image: '../static/images/세종관.jpg',
+        //         date: '2021-05-29 09:09:09'
+        //     },
+        //     {
+        //         title: '12가7777',
+        //         latlng: new kakao.maps.LatLng(37.568, 127.08453618415181),
+        //         image: '../static/images/세종관.jpg',
+        //         date: '2021-05-30 09:09:09'
+        //     }
+        // ];
 
         //======================================(Regrading of API)======================================
+        // 조회된 버튼들을 관리
+        hasButton = [];
+        selectedCheck = [];
+        var selectedCarnum;
+        // 지도에 표시된 마커 객체를 가지고 있을 배열입니다
+        var markers = [];
+
         var imgBox = document.getElementsByClassName('imgBox');
         var Box = document.getElementById('instanceBox');
-        // imgBox[0].addEventListener('mouseover', function () {
-        //     Box.style.overflow = 'visible'
-        // });
-
-        // imgBox[0].addEventListener('mouseout', function () {
-        //     Box.style.overflow = 'auto';
-        // });
-        // window.onload = function () {
-        // alert('카카오맵 호출');
         var msg = '{{ msg }}';
         if (msg == '[제출실패]') {
             alert('Excel파일을 제출해주세요..');
         }
-
-        // function markerOn() {
-        //     alert('marker On');
-        // }
-
-        // function markerOff() {
-        //     alert('marker Off');
-        // }
-
-
-
 
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
             mapOption = {
@@ -223,8 +210,7 @@
             alert('< Return the location Info you clicked >\n' + 'latitude : ' + mouseEvent.latLng.getLat() + '\nlongitude : ' + mouseEvent.latLng.getLng());   // 위/경도 얻기
         });
 
-        // 지도에 표시된 마커 객체를 가지고 있을 배열입니다
-        var markers = [];
+
 
         var clusterer = new kakao.maps.MarkerClusterer({
             map: map,
@@ -239,12 +225,17 @@
         var geocoder = new kakao.maps.services.Geocoder();
         // 마커를 생성하고 지도위에 표시하는 함수
         function addMarker(position) {
-            alert(position.length + "개의 마커를 생성합니다.");
-
+            // alert(position.length + "개의 마커를 생성합니다.");
             // 마커생성
             for (i = 0; i < position.length; i++) {
+                // 위도경도 합치기 (colaboration)
+                var lat = position[i].lati;
+                var lng = position[i].longt;
+                var latlng = new kakao.maps.LatLng(lat, lng);
+
                 var marker = new kakao.maps.Marker({
-                    position: position[i].latlng,
+                    // position: position[i].latlng,
+                    position: latlng,
                     title: position[i].title
                     // clickable: true //마커클릭시 지도클릭 이벤트방지용
                 });
@@ -266,7 +257,7 @@
                 // 커스텀오버레이 구현
                 var overlay = new kakao.maps.CustomOverlay({
                     content: testContent,
-                    position: position[i].latlng
+                    position: latlng
                 })
 
                 // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
@@ -406,20 +397,48 @@
             }
         }
 
-        // "마커 보이기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에 표시하는 함수입니다
+        // "Marker On" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에 표시
         function showMarkers() {
+            if (markers.length == 0) {
+                alert('표시할 마커가 존재하지않습니다.\n버튼을 클릭하여 마커를 표시해주시기 바랍니다.');
+            }
             setMarkers(map)
         }
 
-        // "마커 감추기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에서 삭제하는 함수입니다
+        // "Marker Off" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에서 삭제
         function hideMarkers() {
+            if (markers.length == 0) {
+                alert('숨길 마커가 존재하지 않습니다.');
+            }
             setMarkers(null);
         }
 
+
+        // "Marker Del" 버튼을 클릭하면 기존의 마커집합이 모두 삭제
+        function deleteMarkers() {
+            setMarkers(null);
+            selectedCheck.pop();
+            clusterer.clear();
+            selectedCarnum = null;
+            markers.length = 0;
+            // alert('모든 marker를 삭제하였습니다.');
+        }
+
+        function refreshButton() {
+            if (paintToDo(null)) {
+                deleteMarkers();
+                selectedCarnum = null;
+                selectedCheck.pop();
+                hasButton.length = 0;
+
+                alert('새로고침이 완료되었습니다.');
+            } else {
+                alert('error');
+            }
+        }
+
         //======================================(Except of API)======================================
-        // 조회된 버튼들을 관리
-        hasButton = [];
-        selectedCheck = [];
+
 
         function randomColor() {
             var r = Math.round((Math.random() * (240 - 20 + 1)) + 20);
@@ -432,126 +451,116 @@
         }
 
         function paintToDo(result) {
-            alert(result['toggle'] + "," + result['carnum']);
-            toggle = result['toggle'];
-            carnum = result['carnum'];
-            if (toggle == 1) {
-                // alert('버튼그리기');
-                // alert(carnum.length)
-                // alert("버튼추가여부 : " + check.val);
-                // alert("이미 추가된 버튼 : " + check.div.innerHTML);
-
-                for (i = 0; i < carnum.length; i++) {
-                    var newDIV = document.createElement("div");
-                    newDIV.innerHTML = carnum[i];
-
-                    check = checkAndPush(newDIV.innerHTML);
-                    if (check.value == "success") {
-                        color = randomColor();
-                        var p = document.getElementById("searchDisplay");
-                        newDIV.setAttribute('class', 'newButton');
-                        newDIV.style.transition = "opacity 0.5s";
-                        newDIV.style.background = "linear-gradient(90deg," + color + " 100px, #ffffff 50px)";
-                        newDIV.style.margin = "3px 3px 3px 3px";
-                        newDIV.style.height = "60px";
-                        newDIV.style.borderRadius = "10px 10px 10px 10px";
-                        newDIV.style.lineHeight = "60px";
-                        newDIV.style.fontWeight = "bold";
-                        newDIV.style.cursor = "pointer";
-                        newDIV.style.border = "2px solid " + color;
-                        newDIV.style.position = 'relative';
-                        newDIV.setAttribute("class", "instance");
-
-                        // 버튼에 "클릭 이벤트" 삽입
-                        // 1. 클릭 시
-
-                        //  API에게 차량번호와 위도/경도를 전달
-                        // 2. 클릭 시 클릭한 버튼에 체크아이콘 삽입
-                        newDIV.onclick = function () {
-                            // alert("\"" + this.innerHTML + "\" 에 대한 Marker(들)를 생성합니다.");
-
-                            // 성환 + 현모 colaboration (DB에서 마킹할 정보가져오기)
-                            var carnumber = event.target.innerText;
-                            // alert(carnumber);
-
-                            alert("ajax 실행");
-                            $.ajax({
-                                type: 'GET',
-                                url: '/searchData',
-                                data: { id: carnumber },
-                                success: function (dic) {
-                                    // alert("결과 : " + result['carnum'] + "," + result['toggle']);
-                                    // alert('아작스 제출성공!');
-                                    alert(dic[0]['date']);
-                                },
-                                error: function (request, status, error) {
-                                    alert(request + ";" + status + ";" + error);
-                                    alert('ajax error!');
-                                }
-                            });
-                            alert('form 전송성공!');
-                            // addMarker(test_position);
-
-                            if (selectedCheck.length != 0) {
-                                // alert('배열이 비어있지 않습니다. 이전선택을 취소합니다.');
-                                var parent = selectedCheck[0].parentNode;
-                                var child = selectedCheck[0];
-
-                                parent.removeChild(child);
-                                selectedCheck.pop();
-                            }
-                            var checkIcon = document.createElement("i");
-                            checkIcon.setAttribute('class', 'material-icons md-45');
-                            // checkIcon.innerHTML = 'done';
-                            checkIcon.style.fontSize = '45px';
-                            checkIcon.style.position = 'absolute';
-                            checkIcon.style.left = '280px';
-                            checkIcon.style.color = 'rgba(255,0,0,1)';
-                            checkIcon.style.opacity = '0.3';
-
-                            // alert(checkIcon.innerHTML);
-                            this.appendChild(checkIcon);
-                            selectedCheck.push(checkIcon);
-
-
-
-                        }
-
-                        // 버튼에 "마우스오버 이벤트" 삽입
-                        newDIV.onmouseover = function () {
-                            event.target.style.transform = "scale(0.9)";
-                            event.target.style.transition = "all 0.3s";
-                        }
-
-                        // 버튼에 "마우스아웃 이벤트" 삽입
-                        newDIV.onmouseout = function () {
-                            event.target.style.transform = "scale(1)";
-                            event.target.style.transition = "all 0.3s";
-                        }
-                        hasButton.push(newDIV)
-                        p.appendChild(newDIV);
-                    } else {
-                        divFocus(check.div);
-                        blink(check.div);
-                        break;
-                    }
-
-                }
-                // alert('버튼추가완료!' + '   {{askInsert}}');
+            if (result == null) {
+                $("div").remove("#potentialRemove");
+                return true;
             } else {
-                alert('버튼추가실패!');
+                toggle = result['toggle'];
+                carnum = result['carnum'];
+                if (toggle == 1) {
+                    for (i = 0; i < carnum.length; i++) {
+                        var newDIV = document.createElement("div");
+                        newDIV.innerHTML = carnum[i];
+
+                        check = checkAndPush(newDIV.innerHTML);
+                        if (check.value == "success") {
+                            color = randomColor();
+                            var p = document.getElementById("searchDisplay");
+                            newDIV.setAttribute('id', 'potentialRemove');
+                            newDIV.setAttribute('class', 'newButton');
+                            newDIV.style.transition = "opacity 0.5s";
+                            newDIV.style.background = "linear-gradient(90deg," + color + " 100px, #ffffff 50px)";
+                            newDIV.style.margin = "3px 3px 3px 3px";
+                            newDIV.style.height = "60px";
+                            newDIV.style.borderRadius = "10px 10px 10px 10px";
+                            newDIV.style.lineHeight = "60px";
+                            newDIV.style.fontWeight = "bold";
+                            newDIV.style.cursor = "pointer";
+                            newDIV.style.border = "2px solid " + color;
+                            newDIV.style.position = 'relative';
+                            newDIV.setAttribute("class", "instance");
+
+                            // 버튼에 "클릭 이벤트" 삽입
+                            // 1. 클릭 시 마커생성
+
+                            //  API에게 차량번호와 위도/경도를 전달
+                            // 2. 클릭 시 클릭한 버튼에 체크아이콘 삽입
+                            newDIV.onclick = function () {
+                                // 성환 + 현모 colaboration (DB에서 마킹할 정보가져오기)
+                                var carnumber = event.target.innerText;
+                                if (selectedCarnum == carnumber) {
+                                    alert('이미 선택되어 있는 자료입니다.');
+                                } else {
+                                    if (markers.length != 0) {
+                                        deleteMarkers();
+                                        alert('기존에 지도에 표시되어있던 마커들을 모두 제거했습니다.');
+                                    }
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '/searchData',
+                                        data: { id: carnumber },
+                                        dataType: 'JSON',
+                                        success: function (result) {
+
+                                            addMarker(result);
+                                        },
+                                        error: function (request, status, error) {
+                                            alert(request + ";" + status + ";" + error);
+                                            alert('ajax error!');
+                                        }
+                                    });
+                                    selectedCarnum = carnumber;
+                                    if (selectedCheck.length != 0) {
+                                        alert('배열이 비어있지 않습니다. 이전선택을 취소합니다.');
+                                        var parent = selectedCheck[0].parentNode;
+                                        var child = selectedCheck[0];
+
+                                        parent.removeChild(child);
+                                        selectedCheck.pop();
+                                    }
+                                    var checkIcon = document.createElement("i");
+                                    checkIcon.setAttribute('class', 'material-icons md-45');
+                                    checkIcon.style.fontSize = '45px';
+                                    checkIcon.style.position = 'absolute';
+                                    checkIcon.style.left = '280px';
+                                    checkIcon.style.color = 'rgba(255,0,0,1)';
+                                    checkIcon.style.opacity = '0.3';
+                                    alert('선택을 실시합니다.');
+                                    this.appendChild(checkIcon);
+                                    selectedCheck.push(checkIcon);
+                                }
+                            }
+
+                            // 버튼에 "마우스오버 이벤트" 삽입
+                            newDIV.onmouseover = function () {
+                                event.target.style.transform = "scale(0.9)";
+                                event.target.style.transition = "all 0.3s";
+                            }
+
+                            // 버튼에 "마우스아웃 이벤트" 삽입
+                            newDIV.onmouseout = function () {
+                                event.target.style.transform = "scale(1)";
+                                event.target.style.transition = "all 0.3s";
+                            }
+                            hasButton.push(newDIV)
+                            p.appendChild(newDIV);
+                        } else {
+                            divFocus(check.div);
+                            blink(check.div);
+                            break;
+                        }
+
+                    }
+                    // alert('버튼추가완료!' + '   {{askInsert}}');
+                } else {
+                    alert('버튼추가실패!');
+                }
+                $('#input').val('');
             }
-            $('#input').val('');
-            // 현재 조회된 Button 개수
-            // alert("현재 버튼 개수 : " + hasButton.length + "개");
-            // for (i = 0; i < hasButton.length; i++) {
-            //     alert(hasButton[i].innerHTML);
-            // }
         }
 
         function checkAndPush(inputCarnum) {
             for (i = 0; i < hasButton.length; i++) {
-                // alert(hasButton[i].innerHTML);
                 if (hasButton[i].innerHTML == inputCarnum) {
                     alert(inputCarnum + " 이미 존재하는 버튼입니다.");
                     return {
@@ -570,20 +579,15 @@
         // 입력한 차량번호와 같은 차량번호튜플이 존재하는지 확인후, 있다면 버튼추가
         $(function () {
             $('#ajax').click(function () {
-                // alert('아작스 버튼이벤트 발생!');
                 var formEdit = $("#input").val();
-                // alert(formEdit + "를 전송합니다.")
-                alert(formEdit + " 입력");
                 if (formEdit == "") {
-                    alert("select * from class1을 위한 ajax 진입!")
+                    alert('전체차량번호를 조회합니다.');
                     $.ajax({
                         type: 'GET',
                         url: '/searchCar',
                         data: { id: formEdit },
                         dataType: 'JSON',
                         success: function (result) {
-                            // alert("결과 : " + result['carnum'] + "," + result['toggle']);
-                            // alert('아작스 제출성공!');
                             paintToDo(result);
                         },
                         error: function (request, status, error) {
@@ -598,8 +602,6 @@
                         data: { id: formEdit },
                         dataType: 'JSON',
                         success: function (result) {
-                            // alert("결과 : " + result['carnum'] + "," + result['toggle']);
-                            // alert('아작스 제출성공!');
                             paintToDo(result);
                         },
                         error: function (request, status, error) {
@@ -608,7 +610,6 @@
                         }
                     });
                 }
-                // alert('form 전송성공!');
             });
         });
         $('#input').keypress(function (keyNum) {
@@ -662,7 +663,7 @@
                 }
             });
             $('#ajax').click(function () {
-                alert('blink 강제 종료');
+                // alert('blink 강제 종료');
                 clearInterval(val);
                 val = null
                 $(div).removeClass("blink");
