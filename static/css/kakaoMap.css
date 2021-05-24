@@ -121,6 +121,7 @@
 
 /* 지도 사이즈 */
 #map{
+    z-index: 1;
     width:50%;
     height:800px;
     float: left;
@@ -310,7 +311,6 @@ hr{
     font-weight: bold;
     font-style: normal;
     font-size: 16px;
-
     color:gray
 }
 
@@ -326,16 +326,45 @@ hr{
 .imgBox{
     z-index: 1;
     cursor: not-allowed;
-    border: gray solid 3px;
-    transition: transform 0.3s, border 0.5s;
+    /* border: gray solid 3px; */
+    transition: all 0.3s;
+
+    position:absolute;
+    width: 300px;
+    height:200px;
+    background-color:gray;
+    left:30px;
+    top:20px;
+
+    /* text-align: center;
+    display:table;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center; */
 }
 
 .imgBox:hover{
     transform: scale(2.0,2.0);
-    border: black solid 2.5px;
     border-radius: 5px;
+}
+
+#carImage{
+    z-index: 2;
+    text-align: center;
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
 }
 
 .carnum{
     margin-top: 20px;
+}
+
+#jibun{
+    text-align: left;
+}
+
+#doro{
+    text-align: left;
 }
