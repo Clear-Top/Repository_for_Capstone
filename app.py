@@ -76,7 +76,8 @@ def search_carnum():
     json_string = json.dumps(json_object)
     return json_string
 
-@app.route('/searchData', methods=['GET', 'POST'])
+
+@app.route('/searchData', methods=['GET'])
 def searchData():
     temp = ""
     temp = request.args.get('id')
@@ -92,11 +93,15 @@ def searchData():
     j=0
     for i in range (data[1]):
         dic[i] = dict()
+        dic[i]['title'] = temp
         dic[i]['date'] = data[0][j]
         dic[i]['image'] = data[0][j+1] + data[0][j+2]
         dic[i]['lati'] = data[0][j+3]
         dic[i]['longt'] = data[0][j+4]
         j = j +5
+
+    print(dic[0]['date'])
+    return dic
 
 
 
