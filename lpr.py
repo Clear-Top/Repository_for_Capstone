@@ -4,7 +4,8 @@ from time import time
 import numpy as np
 import cv2
 import tensorflow as tf
-
+import logging
+logging.getLogger('tensorflow').disabled = True
 from model import LPRNet
 from loader import resize_and_normailze
 

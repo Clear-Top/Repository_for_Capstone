@@ -15,10 +15,10 @@ import cv2 as cv
 from flask import Flask, render_template, request
 import os
 import json
+from crnn_predict import crnn_predict
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-
-UPLOAD_FOLDER = './static/uploads/'
+UPLOAD_FOLDER = '/static/uploads/'
 RESULT_FOLDER = './static/result/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 ALLOWED_EXCEL = set(['xlsx', 'xls'])
@@ -186,6 +186,7 @@ def upload_page():
                     try:
                         print("[", i, "]", pic.shape)
                         lp, prob = lpr(pic)
+                        print(crnn_predict(pic))
                         plate_num.append(lp[0])
                         plate_prob.append(float(prob[0][0]))
                         #cv.imwrite("result/"+full_image[:-4]+"_lp"+str(i)+".jpg", pic.astype(np.uint8))
