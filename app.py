@@ -85,23 +85,28 @@ def searchData():
     conn = db.connect_db()
     curs = conn.cursor()
     
+    # print('지금' + temp)
     data = db.select_search(temp, conn, curs)
 
     dic = ['title','lati','longt','image', 'date']
 
     i=0
     j=0
+
     for i in range (data[1]):
         dic[i] = dict()
         dic[i]['title'] = temp
-        dic[i]['date'] = data[0][j]
+        dic[i]['date'] = str(data[0][j])
         dic[i]['image'] = data[0][j+1] + data[0][j+2]
         dic[i]['lati'] = data[0][j+3]
         dic[i]['longt'] = data[0][j+4]
         j = j +5
+        
 
     print(dic[0]['date'])
-    return dic
+    print(dic[0]['image'])
+
+    return json.dumps([dic])
 
 
 
