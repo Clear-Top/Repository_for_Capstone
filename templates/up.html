@@ -27,7 +27,7 @@
             <div id="right_box">upload : 이미지 업로드.<br>transform : 이미지 변환<br>download image : 변환된 이미지 저장<br>download excel : 전체 데이터 저장<hr>
                     
                     <form method=post enctype=multipart/form-data>
-                        <div class="filebox"><label for ="fb"><img src="/static/images/upload.png" alt="upload" style=" width:100px;height:100px;">upload</label><input multiple=multiple type=file name=file id="fb"></div>
+                        <div class="filebox"><label for ="fb"><img src="/static/images/upload.png" alt="upload" style=" width:100px;height:100px;">upload</label><input multiple=multiple type=file name=file[] id="fb"></div>
                         <div class="filebox"><label for ="sm"><img src="/static/images/transform.png" style="width:100px;height:100px;">transform</label><input type=submit value=upload id="sm"></div>
                     </form>
                 <button class="download_box btn" ><strong>download image</strong></button>
