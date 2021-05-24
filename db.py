@@ -77,3 +77,32 @@ def select_ALLdata(conn, curs):
     finally:
         # print("{"+sql + "}   조회완료")
         return listData
+
+
+def select_search(carnum, conn, curs):
+    try:
+        sql = "select date, image_path, image_name, lati, longt from class1 where carnum = \'" + \
+            str(carnum)+"\';"
+        curs.execute(sql)
+        conn.commit()
+        global rs
+        rs = curs.fetchall()
+
+        listData = []
+        result = []
+        count = 0
+
+        for i in rs:
+            j=0
+            while True:
+                if j == 5:
+                    break
+                listData.append(i[j])
+                j = j+1
+                count = count + 1
+                    
+    finally:
+        count = int(count/5)
+        result.append(listData)
+        result.append(count)
+        return result
