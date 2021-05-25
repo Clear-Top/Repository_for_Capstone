@@ -101,11 +101,21 @@ def searchData():
         ))
         j = j +5
 
-    print(list)
+    # print(list)
 
     return json.dumps(list)
 
+@app.route('/selectDate', methods=['GET'])
+def selectDate():
+    temp = ""
+    temp = request.args.get('id')
+    conn = db.connect_db()
+    curs = conn.cursor()
 
+    data = []
+    data = db.select_Date('12가3456', conn, curs)
+
+    return json.dumps(data)
 
 
 
@@ -126,7 +136,7 @@ def upload_excel():
             curs = conn.cursor()    # cursor생성
 
             db.insert_test(file.filename, conn)  # test삽입
-
+            # db.order_data(conn, curs)
             data = readDB.data(curs, conn)
             conn.close()
 
