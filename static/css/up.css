@@ -92,6 +92,7 @@ input{
   border-radius: .5em;
 }
 .in_left_box1{
+  overflow-y : scroll;
   background-color:white;
   height : 450px;
   width : 550px;
@@ -104,9 +105,11 @@ input{
   padding-right:20px;
   border-radius:.5em;
   float:left;
+  
 }
 
 .in_left_box2{
+  overflow-y : scroll;
   background-color:white;
   height : 450px;
   width : 380px;
@@ -120,9 +123,10 @@ input{
   padding-right:20px;
   border-radius:.5em;
   float :right;
-  overflow : auto;
+  
 }
 .in_left_box3{
+  overflow-y: scroll;
   background-color:white;
   height : 180px;
   width : 990px;
@@ -136,7 +140,6 @@ input{
   padding-right:20px;
   border-radius:.5em;
   float :right;
-  overflow : auto;
 }
 .filebox label{
   display : inline-block;
