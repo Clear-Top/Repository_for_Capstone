@@ -23,12 +23,14 @@ from PIL.ExifTags import TAGS
 
 def get_exif_time(filename):
     info = get_exif("static/uploads/"+filename)
-    if info[36867] is not None:
-        make_time = info[36867]
-        return make_time
-    else:
+    try:
+        if info[36867] is not None:
+            make_time = info[36867]
+            return make_time
+        else:
+            return None
+    except:
         return None
-
 
 # 인자 : 이미지경로 , 반환값 : 모든메타정보
 def get_exif(filename):

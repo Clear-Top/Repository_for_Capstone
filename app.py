@@ -179,8 +179,12 @@ def upload_page():
             # extract EXIF (위도,경도,시간 등등)
             info = extractExif.get_exif("static/uploads/"+file.filename)
             if info is not None:
-                time = extractExif.get_exif_time(file.filename)
-                lalo = extractExif.get_coordinates(extractExif.get_geotagging(info))
+                try:
+                    time = extractExif.get_exif_time(file.filename)
+                    lalo = extractExif.get_coordinates(extractExif.get_geotagging(info))
+                except:
+                    time = None
+                    lalo = None
             else:
                 time = None
                 lalo = None
@@ -195,6 +199,8 @@ def upload_page():
             plates = []
             # print(file.filename)
             print("[SYS] cars")
+
+            #Depend on Car Detection -> Wpod Net to stretch
             for i, c in enumerate(cars):
                 try:
                     img = wpod_inf(c)
@@ -203,15 +209,21 @@ def upload_page():
                     upload_source.append("./static/result/"+full_image[:-4]+"_wp"+str(i)+".jpg")
                     plates.append(img)
                 except Exception as e:
-                    try:
-                        n = 0
-                        for i in yolo_lp:
-                            cv.imwrite("./static/result/"+full_image[:-4]+"yv4"+str(n)+".jpg",i.astype(np.uint8))
-                            n+=1
-                    except Exception as ef:
-                        print("[ERROR]",e,ef)
+                    print("[ERROR]", e)
+
+            
+            #Depend on Yolo_lp Detection 
             if len(plates) == 0:
-                print("[NOT FOUND]")
+                n = 0
+                for lp in yolo_lp:
+                    try:
+                        cv.imwrite("./static/result/"+full_image[:-4]+"_yv4_"+str(n)+".jpg",lp.astype(np.uint8))
+                        plates.append(lp)
+                        upload_source.append("./static/result/"+full_image[:-4]+"_yv4_"+str(n)+".jpg")
+                        n+=1
+                    except:
+                        continue
+                print("[NOT FOUND], Using [Yolo] Instead")
             print("[SYS] lpr ")
             for i, pic in enumerate(plates):
                 if pic is not None:
@@ -221,7 +233,6 @@ def upload_page():
                         print(crnn_predict(pic))
                         plate_num.append(lp[0])
                         plate_prob.append(float(prob[0][0]))
-                        #cv.imwrite("result/"+full_image[:-4]+"_lp"+str(i)+".jpg", pic.astype(np.uint8))
                     except Exception as e:
                         print("[ERROR]", e)
 
@@ -232,20 +243,21 @@ def upload_page():
                         print("wrong assumption")
                         #TODO: Implement alternative algorithm for handling
                     else:
-                        if (len(plate_num[i]) == 6 or len(plate_num[i]) == 7):
+                        if (len(plate_num[i]) >= 7):
                             print("right length")
-                            writeExcel.write_excel(
-                                excel, plate_num[i], 'test', time, UPLOAD_FOLDER, file.filename, lalo)
+                            writeExcel.write_excel(excel, plate_num[i], 'test', time, UPLOAD_FOLDER, file.filename, lalo)
                         else:
                             #TODO: Implement alternative algorithm
                             print("wrong length")
                 except Exception as e:
                     print("[ERROR]", e)
+
+
+
             return render_template('up.html',
                                    msg='Successfully processed',
                                    extracted_text=full_image,
                                    img_src=UPLOAD_FOLDER + full_image,
-                                   lpd_src=RESULT_FOLDER + full_image.rsplit('.')[0]+"_wp0.jpg",
                                    car_num=plate_num,
                                    car_time=time,
                                    car_lalo=lalo,
