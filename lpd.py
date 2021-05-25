@@ -124,7 +124,7 @@ def lpd(file):
         if not hasFrame:
             print("Done processing !!!")
             print("Output file is stored as ", outputFile)
-            cv.waitKey(3000)
+            #cv.waitKey(3000)
             break
 
         # Create a 4D blob from a frame.
