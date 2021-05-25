@@ -8,22 +8,8 @@
 
 <body>
     <div class="container">
-        <div id="frame1">
-            <br>
-            <h1>Lorem Ipsum</h1>
-            <br>
-            <br>
-            <p></p>
-        </div>
-        <div id="frame2">
-            <br>
-            <h1>Lorem Ipsum</h1>
-            <br>
-            <br>
-            <p></p>
-        </div>
         <div id="frame3"><br>
-            <h1>Data Abstract</h1><hr>
+            <h1>Data Abstract</h1>
             <div id="right_box">upload : 이미지 업로드.<br>transform : 이미지 변환<br>download image : 변환된 이미지 저장<br>download excel : 전체 데이터 저장<hr>
                     
                     <form method=post enctype=multipart/form-data>
@@ -34,8 +20,8 @@
                 <button class="download_box btn" ><strong>download excel</strong></button>
             </div>
             <div id="left_box">
-                <div class="in_left_box1" style="overflow-y:scroll;">uploaded image {% if img_src %}{% for img in img_src %}<img src="{{ img }}" style="width:500px;">{% endfor %}{% endif %}</div>
-                <div class="in_left_box2" style="overflow-y:scroll;">transformed image {% if car_source %}{% for i in range(car_source|length) %}{% for j in range(car_source[i]|length) %}<img src="{{ car_source[i][j] }}" style=width:340px;height:80px; >{% endfor %}{% endfor %}{% endif %}</div>
+                <div class="in_left_box1" style="overflow-y:scroll;"><h2>uploaded image</h2>{% if img_src %}{% for img in img_src %}<img src="{{ img }}" style="width:500px;">{% endfor %}{% endif %}</div>
+                <div class="in_left_box2" style="overflow-y:scroll;"><h2>transformed image</h2>{% if car_source %}{% for i in range(car_source|length) %}{% for j in range(car_source[i]|length) %}<img src="{{ car_source[i][j] }}" style=width:340px;height:80px; >{% endfor %}{% endfor %}{% endif %}</div>
                 <div class="in_left_box3">{% for i in range(car_num | length) %}{% for j in range(car_num[i] | length) %}
                     {% if car_num[i][j] %}차량번호 : {{ car_num[i][j] }}{% endif %}
                     촬영 시간 :{% if car_time[i] %} {{car_time[i]}}{% else %} 존재하지 않습니다.{% endif %}
@@ -43,20 +29,6 @@
                     {% endfor %}{% endfor %}
                 </div>
             </div>
-        </div>
-        <div id="frame4">
-            <br>
-            <h1>Lorem Ipsum</h1>
-            <br>
-            <br>
-            <p></p>
-        </div>
-        <div id="frame5">
-            <br>
-            <h1>Lorem Ipsum</h1>
-            <br>
-            <br>
-            <p></p>
         </div>
         <div id="footer">
             <br>
