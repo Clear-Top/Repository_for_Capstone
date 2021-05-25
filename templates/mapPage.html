@@ -98,18 +98,11 @@
             </div>
             <hr />
             <div id="instanceBox">
-                <!-- 보류 -->
-                <!-- <div class="imgBox">
-                    <div class="imgBoxDiv">
-                        <img id="carImage" src="https://dasima.xyz/wp-content/uploads/2018/09/img-src-ufo-2.png"
-                            alt="dummyImage">
-                    </div>
-                </div> -->
+
+                <!-- 인스턴스조회 박스 -->
                 <div class="imgBox">
                     <img id="carImage" src="../static/images/dummyImage.PNG" alt="dummyImage">
                 </div>
-
-
                 <div class="inquiry line"
                     style="width: 330px; height: 2px; background-color: gray; margin: 20px 1px 1px 1px; left: 13px;">
                 </div>
@@ -121,7 +114,10 @@
                 </ul>
                 <div class="inquiry date">발견날짜 :</div>
                 <div class="inquiry time">발견시각 :</div>
-                <!-- 인스턴스조회 박스 -->
+                <div style="background-color: black; position: absolute;top: 500px;left: 250px;">
+                    <button type="button" id="sortData" onclick="sortData(this)"
+                        style="width: 100px;height: 30px;"></button>
+                </div>
             </div>
         </div>
         <!-- <script type=" text/javascript" src="../static/js/kakaoMap.js"></script> -->
@@ -386,6 +382,10 @@
                 var timeText = '<span style="font-size:18px ;font-weigth:bold; color:black;">&nbsp&nbsp&nbsp' + completeSplit[1] + '</span>';
                 date[0].innerHTML = '발견날짜 : ' + dateText;
                 time[0].innerHTML = '발견시각 : ' + timeText;
+
+                //버튼에 차량번호 삽입
+                var button = document.getElementById("sortData");
+                button.innerHTML = marker.getTitle();
 
             };
         }
@@ -672,6 +672,24 @@
         }
         function blinkMessage() {
             $(saveBlink).toggleClass("blink");
+        }
+
+        function sortData(a) {
+            $.ajax({
+                type: 'GET',
+                url: '/selectDate',
+                data: { id: a.innerHTML },
+                dataType: 'JSON',
+                success: function (result) {
+                    for (i = 0; i < result.length; i++) {
+                        alert(result[i]['title'] + " " + result[i]['date']);
+                    }
+                },
+                error: function (request, status, error) {
+                    alert(request + ";" + status + ";" + error);
+                    alert('ajax error!');
+                }
+            });
         }
     </script>
 </body>
