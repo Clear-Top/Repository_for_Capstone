@@ -39,9 +39,9 @@ def insert_test(excel_name, conn):
                 if i == 0:
                     break
                 else:
-                    sql = 'insert into class1 values(%s,%s,%s,%s,%s,%s,%s)'
+                    sql = 'insert into class1 values(%s,%s,%s,%s,%s,%s)'
                     curs.execute(
-                        sql, (list[0], list[1], list[2], list[3], list[4], list[5], list[6]))
+                        sql, (list[0], list[1], list[2], list[3], list[4], list[5]))
                     conn.commit()
                     i = i+1
     finally:
