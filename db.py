@@ -29,7 +29,7 @@ def insert_test(excel_name, conn):
             i = 2
             while True:
                 list = []
-                for j in range(2, 9):
+                for j in range(2, 8):
                     a = readExcel.read_excel(i, j, excel_name)
                     if a != 0:
                         list.append(a)
