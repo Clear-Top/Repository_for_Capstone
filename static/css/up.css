@@ -37,7 +37,7 @@ input{
   -webkit-apperance:none;
 }
 #right_box{
-  background-color: rgb(108,116,118);
+  background-color: rgb(152, 144, 129);
   height : 780px;
   width : 300px;
   padding-top : 20px;
@@ -48,7 +48,7 @@ input{
   border-radius: .5em;
 }
 #left_box{
-  background-color: rgb(108,116,118);
+  background-color: rgb(152, 144, 129);
   height : 780px;
   width : 1130px;
   padding-top: 20px;
