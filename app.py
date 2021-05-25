@@ -184,7 +184,7 @@ def upload_page():
                 print(file.filename)
                 continue
             file.save(os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
-            print(file.filename)
+            print("[SYS]",file.filename)
             # extract EXIF (위도,경도,시간 등등)
             info = extractExif.get_exif("static/uploads/"+file.filename)
             if info is not None:
@@ -195,6 +195,7 @@ def upload_page():
                     time_file.append(real_time)
                     lalo_file.append(real_lalo)
                     print(real_lalo)
+                    print(type(real_lalo))
                 except:
                     real_time = None
                     real_lalo = None
@@ -262,7 +263,7 @@ def upload_page():
                         if (len(plate_num[i]) >= 7):
                             print("right length")
                             writeExcel.write_excel(
-                                excel, plate_num[i], 'test', real_time, UPLOAD_FOLDER, file.filename, real_lalo)
+                                excel, plate_num[i], 'test', real_time, UPLOAD_FOLDER, file.filename, real_lalo[0],real_lalo[1])
                         else:
                             #TODO: Implement alternative algorithm
                             print("wrong length")
@@ -274,7 +275,6 @@ def upload_page():
         print(u_src)
         return render_template('up.html',
                                 msg='Successfully processed',
-                                extracted_text=full_image,
                                 img_src=u_src,
                                 car_num=plate_number,
                                 car_time=time_file,
