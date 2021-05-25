@@ -13,15 +13,15 @@ def lpd(file):
     inpWidth = 416  #608     #Width of network's input image
     inpHeight = 416 #608     #Height of network's input image
    
-    classesFile = "DL/model/lpd/classes.names";
+    classesFile = "DL/model/lpd/classes.names"
     classes = None
     with open(classesFile, 'rt') as f:
         classes = f.read().rstrip('\n').split('\n')
 
     # Give the configuration and weight files for the model and load the network using them.
 
-    modelConfiguration = "DL/model/lpd/yolov4-ANPR.cfg";
-    modelWeights = "DL/model/lpd/yolov4-ANPR.weights";
+    modelConfiguration = "DL/model/lpd/yolov4-ANPR.cfg"
+    modelWeights = "DL/model/lpd/yolov4-ANPR.weights"
 
     net = cv.dnn.readNetFromDarknet(modelConfiguration, modelWeights)
     net.setPreferableBackend(cv.dnn.DNN_BACKEND_OPENCV)
@@ -101,7 +101,7 @@ def lpd(file):
 
 
     # Process inputs
-    f=os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename);
+    f=os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename)
 
     if (f):
         # Open the image file
@@ -146,5 +146,5 @@ def lpd(file):
 
         # Write the frame with the detection boxes
         if (f):
-            cv.imwrite(outputFile, frame.astype(np.uint8));
-    return out_image,License_list,Car_list;
+            cv.imwrite(outputFile, frame.astype(np.uint8))
+    return out_image,License_list,Car_list
