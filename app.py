@@ -15,6 +15,7 @@ import cv2 as cv
 from flask import Flask, render_template, request
 import os
 import json
+import time
 from crnn_predict import crnn_predict
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -169,13 +170,14 @@ def search_carnum():
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_page():
     if request.method == 'POST':
-
+        nowtime=time.strftime('%y_%m_%d_%H_%M_%S')
         files = request.files.getlist("file[]")
         excel = writeExcel.write_excel_prepare()
         writeExcel.write_excel_init(excel)
         u_src=[]
         time_file = []
         lalo_file = []
+        lalo_excel = []
         plate_number = []
         plate_picture = []
         for file in files :
@@ -184,7 +186,8 @@ def upload_page():
                 print(file.filename)
                 continue
             file.save(os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
-            print("[SYS]",file.filename)
+
+            print("[SYS]",os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
             # extract EXIF (위도,경도,시간 등등)
             info = extractExif.get_exif("static/uploads/"+file.filename)
             if info is not None:
@@ -194,18 +197,23 @@ def upload_page():
             
                     time_file.append(real_time)
                     lalo_file.append(real_lalo)
+                    lalo_excel[0]=real_lalo[0]
+                    lalo_excel[1]=real_lalo[1]
                     print(real_lalo)
                     print(type(real_lalo))
                 except:
-                    real_time = None
-                    real_lalo = None
-                    time_file.append(None)
-                    lalo_file.append(None)
+                    real_time='None'
+                    lalo_excel.append('None')
+                    lalo_excel.append('None') 
+                    
+                    time_file.append('None')
+                    lalo_file.append('None')
             else:
-                real_time = None
-                real_lalo = None
-                time_file.append(None)
-                lalo_file.append(None)
+                real_time='None'
+                lalo_excel.append('None')
+                lalo_excel.append('None')
+                time_file.append('None')
+                lalo_file.append('None')
             # print(time)
             # print(lalo)
 
@@ -262,8 +270,7 @@ def upload_page():
                     else:
                         if (len(plate_num[i]) >= 7):
                             print("right length")
-                            writeExcel.write_excel(
-                                excel, plate_num[i], 'test', real_time, UPLOAD_FOLDER, file.filename, real_lalo[0],real_lalo[1])
+                            writeExcel.write_excel(excel, plate_num[i], 'test', real_time, UPLOAD_FOLDER, file.filename, lalo_excel[0],lalo_excel[1],nowtime)
                         else:
                             #TODO: Implement alternative algorithm
                             print("wrong length")
@@ -271,8 +278,8 @@ def upload_page():
                     print("[ERROR]", e)
             plate_number.append(plate_num)
             plate_picture.append(upload_source)
-            u_src.append(os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
-        print(u_src)
+            u_src.append(UPLOAD_FOLDER + full_image)
+            print(full_image)
         return render_template('up.html',
                                 msg='Successfully processed',
                                 img_src=u_src,
