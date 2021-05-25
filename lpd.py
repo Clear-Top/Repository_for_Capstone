@@ -110,8 +110,8 @@ def lpd(file):
             sys.exit(1)
         cap = cv.VideoCapture(f)
         #print(cap)
-        outputFile = f[:-4]+'.jpg'
-        out_image=file.filename[:-4]+'.jpg'
+        outputFile = f.rsplit(".")[0]+'.jpg'
+        out_image=file.filename.rsplit(".")[0]+'.jpg'
 
     License_list= []
     Car_list=[]

@@ -194,6 +194,7 @@ def upload_page():
             
                     time_file.append(real_time)
                     lalo_file.append(real_lalo)
+                    print(real_lalo)
                 except:
                     real_time = None
                     real_lalo = None
