@@ -219,9 +219,9 @@ def upload_page():
             for i, c in enumerate(cars):
                 try:
                     img = wpod_inf(c)
-                    cv.imwrite("./static/result/"+full_image[:-4]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
-                    cv.imwrite("./static/result/"+full_image[:-4]+"_car"+str(i)+".jpg", c.astype(np.uint8))
-                    upload_source.append("/static/result/"+full_image[:-4]+"_wp"+str(i)+".jpg")
+                    cv.imwrite("./static/result/"+full_image.rsplit(".")[0]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
+                    cv.imwrite("./static/result/"+full_image.rsplit(".")[0]+"_car"+str(i)+".jpg", c.astype(np.uint8))
+                    upload_source.append("/static/result/"+full_image.rsplit(".")[0]+"_wp"+str(i)+".jpg")
                     plates.append(img)
                 except Exception as e:
                     print("[ERROR]", e)
@@ -232,9 +232,9 @@ def upload_page():
                 n = 0
                 for lp in yolo_lp:
                     try:
-                        cv.imwrite("./static/result/"+full_image[:-4]+"_yv4_"+str(n)+".jpg",lp.astype(np.uint8))
+                        cv.imwrite("./static/result/"+full_image.rsplit(".")[0]+"_yv4_"+str(n)+".jpg",lp.astype(np.uint8))
                         plates.append(lp)
-                        upload_source.append("/static/result/"+full_image[:-4]+"_yv4_"+str(n)+".jpg")
+                        upload_source.append("/static/result/"+full_image.rsplit(".")[0]+"_yv4_"+str(n)+".jpg")
                         n+=1
                     except:
                         continue
