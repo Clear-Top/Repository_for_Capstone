@@ -110,8 +110,8 @@ def lpd(file):
             sys.exit(1)
         cap = cv.VideoCapture(f)
         #print(cap)
-        outputFile = f[:-4]+'_yolo_out_py.jpg'
-        out_image=file.filename[:-4]+'_yolo_out_py.jpg'
+        outputFile = f[:-4]+'.jpg'
+        out_image=file.filename[:-4]+'.jpg'
 
     License_list= []
     Car_list=[]
