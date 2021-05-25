@@ -29,7 +29,7 @@ def insert_test(excel_name, conn):
             i = 2
             while True:
                 list = []
-                for j in range(2, 9):
+                for j in range(2, 8):
                     a = readExcel.read_excel(i, j, excel_name)
                     if a != 0:
                         list.append(a)
@@ -39,9 +39,9 @@ def insert_test(excel_name, conn):
                 if i == 0:
                     break
                 else:
-                    sql = 'insert into class1 values(%s,%s,%s,%s,%s,%s,%s)'
+                    sql = 'insert into class1 values(%s,%s,%s,%s,%s,%s)'
                     curs.execute(
-                        sql, (list[0], list[1], list[2], list[3], list[4], list[5], list[6]))
+                        sql, (list[0], list[1], list[2], list[3], list[4], list[5]))
                     conn.commit()
                     i = i+1
     finally:
