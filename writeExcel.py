@@ -23,12 +23,12 @@ def write_excel_init(excel):
     excel[1]['H1'] = '경도'
 
 
-def write_excel(excel, carnum, gps, date, image_path, image_name, lalo):
+def write_excel(excel, carnum, gps, date, image_path, image_name, lalo1,lalo2):
     # write_ws = write_wb.active
 
     # 행 단위로 추가
     excel[1].append([excel[2], carnum, gps, date,
-                    image_path, image_name, lalo])
+                    image_path, image_name, lalo1,lalo2])
 
     # 셀 단위로 추가
     excel[0].save('static/excel/download.xlsx')
