@@ -64,7 +64,7 @@ def select_data(carnum, conn, curs):
 
 def select_ALLdata(conn, curs):
     try:
-        sql = "select distinct carnum from class1;"
+        sql = "select distinct carnum from class1 order by carnum asc;"
         curs.execute(sql)
         conn.commit()
         global rs
@@ -122,7 +122,7 @@ def select_Date(carnum, conn, curs):
         for i in rs:
             listData.append(dict(
             title=i[0],
-            date=i[1]
+            date=str(i[1])
             ))
     finally:
         # print(listData)
