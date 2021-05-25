@@ -16,6 +16,7 @@ from flask import Flask, render_template, request
 import os
 import json
 import time
+import zipfile
 from crnn_predict import crnn_predict
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -170,7 +171,7 @@ def search_carnum():
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_page():
     if request.method == 'POST':
-        nowtime=time.strftime('%y_%m_%d_%H_%M_%S')
+        nowtime=time.strftime('%y%m%d_%H%M%S')
         files = request.files.getlist("file[]")
         excel = writeExcel.write_excel_prepare()
         writeExcel.write_excel_init(excel)
@@ -219,6 +220,7 @@ def upload_page():
 
             full_image, yolo_lp, cars = lpd(file)
             upload_source = []
+            zipname = []
             plate_num = []
             plate_prob = []
             plates = []
@@ -279,17 +281,20 @@ def upload_page():
             plate_number.append(plate_num)
             plate_picture.append(upload_source)
             u_src.append(UPLOAD_FOLDER + full_image)
-            print(full_image)
+            myzip=zipfile.ZipFile('./static/all_transformed.zip','w')
+            for i in range(len(plate_picture)):
+                for j in range(len(plate_picture[i])):
+                    myzip.write('.'+plate_picture[i][j])
+            myzip.close()
         return render_template('up.html',
-                                msg='Successfully processed',
                                 img_src=u_src,
                                 car_num=plate_number,
                                 car_time=time_file,
                                 car_lalo=lalo_file,
-                                car_source=plate_picture)
+                                car_source=plate_picture,
+                                nowtime=nowtime)
     elif request.method == 'GET':
         return render_template('up.html')
-
 
 if __name__ == '__main__':
     app.run(debug=True)
