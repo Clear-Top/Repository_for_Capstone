@@ -65,8 +65,8 @@ def get_decimal_from_dms(dms, ref):
         degrees = -degrees
         minutes = -minutes
         seconds = -seconds
-    return round(degrees + minutes + seconds, 5)
-
+    return round(degrees + minutes + seconds, 10)
+    #return (degrees + minutes + seconds)
 
 def get_coordinates(geotags):
     lat = get_decimal_from_dms(
