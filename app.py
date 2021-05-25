@@ -270,7 +270,7 @@ def upload_page():
                     else:
                         if (len(plate_num[i]) >= 7):
                             print("right length")
-                            writeExcel.write_excel(excel, plate_num[i], 'test', real_time, UPLOAD_FOLDER, file.filename, lalo_excel[0],lalo_excel[1],nowtime)
+                            writeExcel.write_excel(excel, plate_num[i], real_time, UPLOAD_FOLDER, file.filename, lalo_excel[0],lalo_excel[1],nowtime)
                         else:
                             #TODO: Implement alternative algorithm
                             print("wrong length")

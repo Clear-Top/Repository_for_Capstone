@@ -15,19 +15,18 @@ def write_excel_prepare():
 
 def write_excel_init(excel):
     excel[1]['B1'] = '번호판'
-    excel[1]['C1'] = '위치'
-    excel[1]['D1'] = '날짜/시각'
-    excel[1]['E1'] = '사진경로'
-    excel[1]['F1'] = '사진이름'
-    excel[1]['G1'] = '위도'
-    excel[1]['H1'] = '경도'
+    excel[1]['C1'] = '날짜/시각'
+    excel[1]['D1'] = '사진경로'
+    excel[1]['E1'] = '사진이름'
+    excel[1]['F1'] = '위도'
+    excel[1]['G1'] = '경도'
 
 
-def write_excel(excel, carnum, gps, date, image_path, image_name, lalo1,lalo2,nowtime):
+def write_excel(excel, carnum, date, image_path, image_name, lalo1,lalo2,nowtime):
     # write_ws = write_wb.active
 
     # 행 단위로 추가
-    excel[1].append([excel[2], carnum, gps, date,
+    excel[1].append([excel[2], carnum, date,
                     image_path, image_name, lalo1,lalo2])
     
     # 셀 단위로 추가
