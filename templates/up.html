@@ -3,6 +3,7 @@
 
 <head>
     <link href="{{url_for('static',filename='css/up.css')}}" rel="stylesheet" >
+    <script type=" text/javascript" src="../static/js/btnactive.js"></script>
     <title>upload</title>
 </head>
 
@@ -15,12 +16,12 @@
                     <div class="filebox"><label for ="fb"><img src="/static/images/upload.png" alt="upload" style=" width:100px;height:100px;">upload</label><input multiple=multiple type=file name=file[] id="fb"></div>
                     <div class="filebox"><label for ="sm"><img src="/static/images/transform.png" style="width:100px;height:100px;">transform</label><input type=submit value=upload id="sm"></div>
                 </form>
-                <button class="download_box btn" ><strong>download image</strong></button>
+                <a href="./static/all_transformed.zip" download="all_transformed"><button class="download_box btn" ><strong>download images</strong></button></a>
                 <button class="download_box btn" ><strong>download excel</strong></button>
             </div>
             <div id="left_box">
                 <div class="in_left_box1" style="overflow-y:scroll;"><h2>uploaded image</h2>{% if img_src %}{% for img in img_src %}<img src="{{ img }}" style="width:500px;">{% endfor %}{% endif %}</div>
-                <div class="in_left_box2" style="overflow-y:scroll;"><h2>transformed image</h2>{% if car_source %}{% for i in range(car_source|length) %}{% for j in range(car_source[i]|length) %}<img src="{{ car_source[i][j] }}" style=width:340px;height:80px; >{% endfor %}{% endfor %}{% endif %}</div>
+                <div class="in_left_box2" style="overflow-y:scroll;"><h2>transformed image</h2>{% if car_source %}{% for i in range(car_source|length) %}{% for j in range(car_source[i]|length) %}<a href="{{car_source[i][j]}}" download="{{nowtime}}{{i}}{{j}}"><img src="{{ car_source[i][j] }}" style=width:340px;height:80px;></a>{% endfor %}{% endfor %}{% endif %}</div>
                 <div class="in_left_box3">{% for i in range(car_num | length) %}{% for j in range(car_num[i] | length) %}
                     {% if car_num[i][j] %}차량번호 : {{ car_num[i][j] }}{% endif %}
                     촬영 시간 :{% if car_time[i] %} {{car_time[i]}}{% else %} 존재하지 않습니다.{% endif %}
