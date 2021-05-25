@@ -101,7 +101,7 @@ def searchData():
         ))
         j = j +5
 
-    # print(list)
+    print(list)
 
     return json.dumps(list)
 
@@ -135,7 +135,7 @@ def upload_excel():
             curs = conn.cursor()    # cursor생성
 
             db.insert_test(file.filename, conn)  # test삽입
-            # db.order_data(conn, curs)
+
             data = readDB.data(curs, conn)
             conn.close()
 
@@ -221,7 +221,7 @@ def upload_page():
                     img = wpod_inf(c)
                     cv.imwrite("./static/result/"+full_image[:-4]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
                     cv.imwrite("./static/result/"+full_image[:-4]+"_car"+str(i)+".jpg", c.astype(np.uint8))
-                    upload_source.append("./static/result/"+full_image[:-4]+"_wp"+str(i)+".jpg")
+                    upload_source.append("/static/result/"+full_image[:-4]+"_wp"+str(i)+".jpg")
                     plates.append(img)
                 except Exception as e:
                     print("[ERROR]", e)
@@ -234,7 +234,7 @@ def upload_page():
                     try:
                         cv.imwrite("./static/result/"+full_image[:-4]+"_yv4_"+str(n)+".jpg",lp.astype(np.uint8))
                         plates.append(lp)
-                        upload_source.append("./static/result/"+full_image[:-4]+"_yv4_"+str(n)+".jpg")
+                        upload_source.append("/static/result/"+full_image[:-4]+"_yv4_"+str(n)+".jpg")
                         n+=1
                     except:
                         continue
