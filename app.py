@@ -101,7 +101,7 @@ def searchData():
         ))
         j = j +5
 
-    # print(list)
+    print(list)
 
     return json.dumps(list)
 
@@ -135,7 +135,7 @@ def upload_excel():
             curs = conn.cursor()    # cursor생성
 
             db.insert_test(file.filename, conn)  # test삽입
-            # db.order_data(conn, curs)
+
             data = readDB.data(curs, conn)
             conn.close()
 
@@ -170,34 +170,40 @@ def search_carnum():
 def upload_page():
     if request.method == 'POST':
 
+        files = request.files.getlist("file[]")
+        excel = writeExcel.write_excel_prepare()
+        writeExcel.write_excel_init(excel)
+        u_src=[]
+        time_file = []
+        lalo_file = []
+        plate_number = []
+        plate_picture = []
+        for file in files :
         # check if the post request has the file part
-        if 'file' not in request.files:
-            return render_template('up.html', msg='No file selected')
-        file = request.files['file']
-        if file.filename == '':
-            return render_template('up.html', msg='No file selected')
-
-        if file and allowed_file(file.filename):
-            # make excel pointer in advance
-            excel = writeExcel.write_excel_prepare()
-            writeExcel.write_excel_init(excel)
-
+            if file and not allowed_file(file.filename):
+                print(file.filename)
+                continue
             file.save(os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
             print(file.filename)
-
             # extract EXIF (위도,경도,시간 등등)
             info = extractExif.get_exif("static/uploads/"+file.filename)
             if info is not None:
                 try:
-                    time = extractExif.get_exif_time(file.filename)
-                    lalo = extractExif.get_coordinates(extractExif.get_geotagging(info))
+                    real_time=extractExif.get_exif_time(file.filename)
+                    real_lalo=extractExif.get_coordinates(extractExif.get_geotagging(info))
+            
+                    time_file.append(real_time)
+                    lalo_file.append(real_lalo)
                 except:
-                    time = None
-                    lalo = None
+                    real_time = None
+                    real_lalo = None
+                    time_file.append(None)
+                    lalo_file.append(None)
             else:
-                time = None
-                lalo = None
-
+                real_time = None
+                real_lalo = None
+                time_file.append(None)
+                lalo_file.append(None)
             # print(time)
             # print(lalo)
 
@@ -215,7 +221,7 @@ def upload_page():
                     img = wpod_inf(c)
                     cv.imwrite("./static/result/"+full_image[:-4]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
                     cv.imwrite("./static/result/"+full_image[:-4]+"_car"+str(i)+".jpg", c.astype(np.uint8))
-                    upload_source.append("./static/result/"+full_image[:-4]+"_wp"+str(i)+".jpg")
+                    upload_source.append("/static/result/"+full_image[:-4]+"_wp"+str(i)+".jpg")
                     plates.append(img)
                 except Exception as e:
                     print("[ERROR]", e)
@@ -228,7 +234,7 @@ def upload_page():
                     try:
                         cv.imwrite("./static/result/"+full_image[:-4]+"_yv4_"+str(n)+".jpg",lp.astype(np.uint8))
                         plates.append(lp)
-                        upload_source.append("./static/result/"+full_image[:-4]+"_yv4_"+str(n)+".jpg")
+                        upload_source.append("/static/result/"+full_image[:-4]+"_yv4_"+str(n)+".jpg")
                         n+=1
                     except:
                         continue
@@ -254,24 +260,25 @@ def upload_page():
                     else:
                         if (len(plate_num[i]) >= 7):
                             print("right length")
-                            writeExcel.write_excel(excel, plate_num[i], 'test', time, UPLOAD_FOLDER, file.filename, lalo)
+                            writeExcel.write_excel(
+                                excel, plate_num[i], 'test', real_time, UPLOAD_FOLDER, file.filename, real_lalo)
                         else:
                             #TODO: Implement alternative algorithm
                             print("wrong length")
                 except Exception as e:
                     print("[ERROR]", e)
-
-
-
-            return render_template('up.html',
-                                   msg='Successfully processed',
-                                   extracted_text=full_image,
-                                   img_src=UPLOAD_FOLDER + full_image,
-                                   car_num=plate_num,
-                                   car_time=time,
-                                   car_lalo=lalo,
-                                   car_filename=file.filename,
-                                   car_source=upload_source)
+            plate_number.append(plate_num)
+            plate_picture.append(upload_source)
+            u_src.append(UPLOAD_FOLDER + full_image)
+        
+        return render_template('up.html',
+                                msg='Successfully processed',
+                                extracted_text=full_image,
+                                img_src=u_src,
+                                car_num=plate_number,
+                                car_time=time_file,
+                                car_lalo=lalo_file,
+                                car_source=plate_picture)
     elif request.method == 'GET':
         return render_template('up.html')
 

@@ -34,13 +34,13 @@
                 <button class="download_box btn" ><strong>download excel</strong></button>
             </div>
             <div id="left_box">
-                <div class="in_left_box1">uploaded image <br><br>{% if img_src %}<img src="{{ img_src }}" style=width:500px>{% endif %}</div>
-                <div class="in_left_box2">transformed image <br><br>{% if car_source %}{% for uploaded_s in car_source %}<img src="{{ uploaded_s }}" style=width:340px;height:80px; >{% endfor %}{% endif %}</div>
-                <div class="in_left_box3">{% for number in car_num %}
-                    {% if car_num %}차량번호 : {{number}}{% endif %}
-                    촬영 시간 :{% if car_time %} {{car_time}}{% else %} 존재하지 않습니다.{% endif %}
-                    위도 정보 :{% if car_lalo %} {{car_lalo}}{% else %} 존재하지 않습니다.{% endif %}<hr>
-                    {% endfor %}
+                <div class="in_left_box1">uploaded image <br><br>{% if img_src %}{% for img in img_src %}<img src="{{ img }}" style=width:500px>{% endfor %}{% endif %}</div>
+                <div class="in_left_box2">transformed image <br><br>{% if car_source %}{% for i in range(car_source|length) %}{% for j in range(car_source[i]|length) %}<img src="{{ car_source[i][j] }}" style=width:340px;height:80px; >{% endfor %}{% endfor %}{% endif %}</div>
+                <div class="in_left_box3">{% for i in range(car_num | length) %}{% for j in range(car_num[i] | length) %}
+                    {% if car_num[i][j] %}차량번호 : {{ car_num[i][j] }}{% endif %}
+                    촬영 시간 :{% if car_time[i] %} {{car_time[i]}}{% else %} 존재하지 않습니다.{% endif %}
+                    위도 정보 :{% if car_lalo[i] %} {{car_lalo[i]}}{% else %} 존재하지 않습니다.{% endif %}<hr>
+                    {% endfor %}{% endfor %}
                 </div>
             </div>
         </div>
