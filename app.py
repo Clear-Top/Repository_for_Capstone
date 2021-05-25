@@ -270,8 +270,8 @@ def upload_page():
                     print("[ERROR]", e)
             plate_number.append(plate_num)
             plate_picture.append(upload_source)
-            u_src.append(UPLOAD_FOLDER + full_image)
-        
+            u_src.append(os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
+        print(u_src)
         return render_template('up.html',
                                 msg='Successfully processed',
                                 extracted_text=full_image,
