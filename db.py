@@ -98,6 +98,7 @@ def select_search(carnum, conn, curs):
                 if j == 5:
                     break
                 listData.append(i[j])
+                # print(i[j])
                 j = j+1
                 count = count + 1
                     
@@ -106,3 +107,28 @@ def select_search(carnum, conn, curs):
         result.append(listData)
         result.append(count)
         return result
+
+def select_Date(carnum, conn, curs):
+    try:
+        sql = "select carnum,date from class1 where carnum = '" + str(carnum) + "' order by date asc;"
+        curs.execute(sql)
+        conn.commit()
+        global rs
+        rs = curs.fetchall()
+
+        listData = []
+        # dic = {'carnum','date'} 딕셔너리 속성 값
+
+        for i in rs:
+            listData.append(dict(
+            title=i[0],
+            date=i[1]
+            ))
+    finally:
+        # print(listData)
+        return listData
+
+
+# 날짜 분리구문(년월일/시간)
+# select carnum, date_format(date,'%Y-%m-%d'),date_format(date,'%h:%i:%s') from class1 where carnum = '12가3456' order by date asc ;
+
