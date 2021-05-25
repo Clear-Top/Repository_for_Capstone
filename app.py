@@ -111,9 +111,8 @@ def selectDate():
     temp = request.args.get('id')
     conn = db.connect_db()
     curs = conn.cursor()
-
     data = []
-    data = db.select_Date('12가3456', conn, curs)
+    data = db.select_Date(temp, conn, curs)
 
     return json.dumps(data)
 
