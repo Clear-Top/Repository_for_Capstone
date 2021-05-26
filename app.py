@@ -20,7 +20,7 @@ import zipfile
 from crnn_predict import crnn_predict
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-UPLOAD_FOLDER = '/static/uploads/'
+UPLOAD_FOLDER = '\\static\\uploads\\'
 RESULT_FOLDER = './static/result/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 ALLOWED_EXCEL = set(['xlsx', 'xls'])
@@ -181,13 +181,16 @@ def upload_page():
         lalo_excel = []
         plate_number = []
         plate_picture = []
+        zipname = []
+        
+        print(os.getcwd())
         for file in files :
         # check if the post request has the file part
             if file and not allowed_file(file.filename):
                 print(file.filename)
                 continue
             file.save(os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
-
+            
             print("[SYS]",os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
             # extract EXIF (위도,경도,시간 등등)
             info = extractExif.get_exif("static/uploads/"+file.filename)
@@ -200,8 +203,8 @@ def upload_page():
                     lalo_file.append(real_lalo)
                     lalo_excel[0]=real_lalo[0]
                     lalo_excel[1]=real_lalo[1]
-                    print(real_lalo)
-                    print(type(real_lalo))
+                    #print(real_lalo)
+                    #print(type(real_lalo))
                 except:
                     real_time='None'
                     lalo_excel.append('None')
@@ -220,11 +223,10 @@ def upload_page():
 
             full_image, yolo_lp, cars = lpd(file)
             upload_source = []
-            zipname = []
             plate_num = []
             plate_prob = []
             plates = []
-            # print(file.filename)
+
             print("[SYS] cars")
 
             #Depend on Car Detection -> Wpod Net to stretch
@@ -234,6 +236,7 @@ def upload_page():
                     cv.imwrite("./static/result/"+full_image.rsplit(".")[0]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
                     cv.imwrite("./static/result/"+full_image.rsplit(".")[0]+"_car"+str(i)+".jpg", c.astype(np.uint8))
                     upload_source.append("/static/result/"+full_image.rsplit(".")[0]+"_wp"+str(i)+".jpg")
+                    zipname.append(full_image.rsplit(".")[0]+"_wp"+str(i)+".jpg")
                     plates.append(img)
                 except Exception as e:
                     print("[ERROR]", e)
@@ -247,6 +250,7 @@ def upload_page():
                         cv.imwrite("./static/result/"+full_image.rsplit(".")[0]+"_yv4_"+str(n)+".jpg",lp.astype(np.uint8))
                         plates.append(lp)
                         upload_source.append("/static/result/"+full_image.rsplit(".")[0]+"_yv4_"+str(n)+".jpg")
+                        zipname.append(full_image.rsplit(".")[0]+"_yv4_"+str(n)+".jpg")
                         n+=1
                     except:
                         continue
@@ -281,11 +285,13 @@ def upload_page():
             plate_number.append(plate_num)
             plate_picture.append(upload_source)
             u_src.append(UPLOAD_FOLDER + full_image)
-            myzip=zipfile.ZipFile('./static/all_transformed.zip','w')
-            for i in range(len(plate_picture)):
-                for j in range(len(plate_picture[i])):
-                    myzip.write('.'+plate_picture[i][j])
-            myzip.close()
+        myzip=zipfile.ZipFile('./static/result/transformed_'+nowtime+'.zip','w')
+        path=os.getcwd()
+        os.chdir("./static/result")
+        for i in zipname: 
+            myzip.write(i)
+        myzip.close()
+        os.chdir(path)
         return render_template('up.html',
                                 img_src=u_src,
                                 car_num=plate_number,
