@@ -4,8 +4,8 @@ import app
 
 
 def connect_db():
-    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root',
-                           passwd='root', db='capstone', charset='utf8')
+    conn = pymysql.connect(host='127.0.0.1', port=3307, user='root',
+                           passwd='1234', db='capstone', charset='utf8')
     # print('DB 연결성공')
     return conn
 
@@ -82,7 +82,7 @@ def select_ALLdata(conn, curs):
 def select_search(carnum, conn, curs):
     try:
         sql = "select date, image_path, image_name, lati, longt from class1 where carnum = \'" + \
-            str(carnum)+"\';"
+            str(carnum)+"\' order by date asc;"
         curs.execute(sql)
         conn.commit()
         global rs
