@@ -6,6 +6,8 @@
 <head>
     <meta charset="UTP-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- <script src="../static/js/html2canvas.js"></script> -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4a81af8fef0943a32040477087ec034a&libraries=services,clusterer"></script>
     <!-- <script type=" text/javascript" src="../static/js/kakaoMap.js"></script> -->
@@ -63,13 +65,21 @@
             </div>
         </div>
         <div id="map">
+            <div class="option"
+                style="background-color: gray; border-radius: 5px; height: 30px;line-height: 30px;cursor: pointer;"
+                onclick="slideUpDown()">
+                <div id="title" style="color: white;">
+                    시간별 마커목록 조회
+                </div>
+            </div>
             <div id="menu_wrap" class="bg_white">
-                <div class="option" style="background-color: gray; border-radius: 5px; height: 30px;line-height: 30px;">
+                <div class="ifClick"
+                    style="background-color: gray; border-radius: 5px; height: 30px;line-height: 30px;">
                     <div id="title" style="color: white;">
-                        시간별 마커목록 조회
+                        클릭 시 인스턴스조회
                     </div>
                 </div>
-                <hr>
+                <hr class="hhrr">
                 <ul id="placesList"></ul>
                 <div id="pagination"></div>
             </div>
@@ -115,7 +125,6 @@
             </div>
             <hr />
             <div id="instanceBox">
-
                 <!-- 인스턴스조회 박스 -->
                 <div class="imgBox">
                     <img id="carImage" src="../static/images/dummyImage.PNG" alt="dummyImage">
@@ -132,8 +141,10 @@
                 <div class="inquiry date">발견날짜 :</div>
                 <div class="inquiry time">발견시각 :</div>
                 <div style="position: absolute;top: 510px;left: 250px;">
-                    <button disabled="disabled" type="button" id="sortData" onclick="sortData(this)"
-                        style="width: 100px;height: 30px;border-radius: 5px;"></button>
+                    <!-- onclick="sortData(this)" -->
+                    <button disabled="disabled" type="button" id="sortData" onclick="capture()"
+                        style="width: 100px;height: 30px;border-radius: 5px;"
+                        data-html2canvas-ignore="true">캡쳐실행</button>
                 </div>
             </div>
         </div>
@@ -158,6 +169,7 @@
         // var selectedLocation = [];
         var selectedDoro;
         var selectedJibun;
+        var carnumForCapture;
 
         var imgBox = document.getElementsByClassName('imgBox');
         var msg = '{{ msg }}';
@@ -257,6 +269,11 @@
                 kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(overlay));
                 kakao.maps.event.addListener(marker, 'click', makeClickListener(marker, imagePath, dateAndTime));
 
+                itemEl.addEventListener("mouseover", makeOverListener(map, marker, imagePath, overlay, dateAndTime));
+                itemEl.addEventListener("mouseout", makeOutListener(overlay));
+                itemEl.addEventListener("click", makeClickListener(marker, imagePath, dateAndTime));
+
+
                 clusterer.addMarker(marker);
                 //정렬부분추가
                 if (i > 14)
@@ -267,6 +284,16 @@
             // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
             listEl.appendChild(fragment);
             menuEl.scrollTop = 0;
+            $(menuEl).scroll(function () {
+                // console.log($(this).scrollTop());
+                if ($(this).scrollTop() > 0) {
+                    console.log('title 상단고정!');
+                    $('.ifClick').addClass('title-fixed');
+                } else {
+                    console.log('title 상단고정해제!');
+                    $('.ifClick').removeClass('title-fixed');
+                }
+            });
             // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
             map.setBounds(bounds);
         };
@@ -290,7 +317,6 @@
 
             el.innerHTML = itemStr;
             el.className = 'item';
-
             return el;
         }
 
@@ -306,6 +332,8 @@
         function makeOverListener(map, marker, imagePath, overlay, dateAndTime) {
             return function () {
                 // alert("Marker 마우스오버이벤트 발생!");
+                // console.log('마우스오버 발생!');
+                // console.log('위도 : ' + marker.getPosition().getLat() + "\n경도 : " + marker.getPosition().getLng());
                 searchDetailAddrFromCoords(marker.getPosition(), function (result, status) {
                     if (status === kakao.maps.services.Status.OK) {
                         // alert("리버스지오코딩된 결과물 반환!");
@@ -332,6 +360,7 @@
                             selectedDoro = '';
                         }
                         detailAddr = detailAddr1 + detailAddr2;
+                        // console.log(detailAddr + "\n" + marker.title + "\n" + imagePath + "\n" + dateAndTime + "\n" + marker.getPosition().getLat() + "\n" + marker.getPosition().getLng());
                     }
                     overlay.setContent(
                         '<div class=\"wrap\">' +
@@ -373,7 +402,6 @@
             return function () {
                 // marker.getTitle : 클릭한 마커의 차량번호
                 // imagePath : 클릭한 마커에 등록된 차량이미지경로
-                alert('클릭발생!');
                 var Box = document.getElementById('instanceBox');
                 Box.style.border = saveColor + 'solid 5px';
                 saveColor = "";
@@ -381,10 +409,11 @@
                 var carnum = document.getElementsByClassName("carnum");
                 var carnumText = '<span style="font-size:18px ;font-weigth:bold; color:black;">&nbsp&nbsp&nbsp' + marker.getTitle() + '</span>';
                 carnum[0].innerHTML = "차량번호 : " + carnumText;
+                carnumForCapture = marker.getTitle();
 
                 // 이미지 삽입
                 var carImage = document.getElementById('carImage');
-                alert("이미지위치 : " + imagePath);
+                // alert("이미지위치 : " + imagePath);
                 carImage.setAttribute('src', '../static' + imagePath);
 
                 // 발견위치 삽입
@@ -411,11 +440,16 @@
 
                 //버튼에 차량번호 삽입
                 var button = document.getElementById("sortData");
-                button.innerHTML = marker.getTitle();
                 button.style.fontWeight = 'bold';
                 button.disabled = false;
                 button.style.cursor = 'pointer';
             };
+        }
+
+
+        function makeScrollListener() {
+            var value = $('.menu-wrap').scrollTop();
+            console.log(value);
         }
 
         // 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
@@ -554,7 +588,7 @@
                                     checkIcon.style.left = '280px';
                                     checkIcon.style.color = 'rgba(255,0,0,1)';
                                     checkIcon.style.opacity = '0.3';
-                                    alert('선택을 실시합니다.');
+                                    // alert('선택을 실시합니다.');
                                     this.appendChild(checkIcon);
                                     selectedCheck.push(checkIcon);
                                 }
@@ -703,6 +737,31 @@
             $(saveBlink).toggleClass("blink");
         }
 
+        function capture() {
+            alert('캡쳐실행!');
+            var target = document.getElementById('instanceBox');
+            var bordStyle = target.style.border;
+            alert(bordStyle);
+            target.style.border = 'none';
+            html2canvas(document.getElementById("instanceBox")).then(function (canvas) {
+                saveAs(canvas.toDataURL(), carnumForCapture + '.jpg');
+            });
+            target.style.border = bordStyle;
+        }
+        function saveAs(uri, filename) {
+            alert(filename + ' 저장실행 중...');
+            var link = document.createElement('a');
+            if (typeof link.download === 'string') {
+                link.href = uri;
+                link.download = filename;
+                link.click();
+                alert(filename + ' 저장완료!');
+            } else {
+                window.open(uri);
+                alert('저장실패!');
+            }
+        }
+
         function sortData(a) {
             $.ajax({
                 type: 'GET',
@@ -719,6 +778,10 @@
                     alert('ajax error!');
                 }
             });
+        }
+
+        function slideUpDown() {
+            $('#menu_wrap').slideToggle();
         }
     </script>
 </body>
