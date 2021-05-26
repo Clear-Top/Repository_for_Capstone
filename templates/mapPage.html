@@ -9,15 +9,19 @@
     <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4a81af8fef0943a32040477087ec034a&libraries=services,clusterer"></script>
     <!-- <script type=" text/javascript" src="../static/js/kakaoMap.js"></script> -->
-    <script type=" text/javascript" src="../static/js/mouseEvent.js"></script>
+    <!-- <script type=" text/javascript" src="../static/js/mouseEvent.js"></script> -->
     <link rel="stylesheet" type="text/css" href="../static/css/kakaoMap.css">
     <link rel="stylesheet" type="text/css" href="../static/css/overlay.css">
+    <link rel="stylesheet" href="../static/css/sorting.css">
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/kakaoMap.css') }}"> -->
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/overlay.css') }}"> -->
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <!-- favicon 에러 제거용코드 -->
+    <link rel="shortcut icon" href="#">
+
 
     <title>맵 Test</title>
 
@@ -35,6 +39,7 @@
     <p>{{i}}</p>
     {% endfor%} -->
     <!-- db데이터 쓰기-->
+
 
     <div class="container">
         <h1 style="text-align:center; font-size: 50px;">Map test</h1>
@@ -57,8 +62,18 @@
                 <!-- 버튼컴포넌트 삽입영역 -->
             </div>
         </div>
-
-        <div id="map"></div>
+        <div id="map">
+            <div id="menu_wrap" class="bg_white">
+                <div class="option" style="background-color: gray; border-radius: 5px; height: 30px;line-height: 30px;">
+                    <div id="title" style="color: white;">
+                        시간별 마커목록 조회
+                    </div>
+                </div>
+                <hr>
+                <ul id="placesList"></ul>
+                <div id="pagination"></div>
+            </div>
+        </div>
         <div id="right">
             <div id="excelAdd">Button of Adding and Uploading File
                 <form action="http://localhost:5000/xlupload" method="post" enctype="multipart/form-data">
@@ -116,9 +131,9 @@
                 </ul>
                 <div class="inquiry date">발견날짜 :</div>
                 <div class="inquiry time">발견시각 :</div>
-                <div style="background-color: black; position: absolute;top: 500px;left: 250px;">
-                    <button type="button" id="sortData" onclick="sortData(this)"
-                        style="width: 100px;height: 30px;"></button>
+                <div style="position: absolute;top: 510px;left: 250px;">
+                    <button disabled="disabled" type="button" id="sortData" onclick="sortData(this)"
+                        style="width: 100px;height: 30px;border-radius: 5px;"></button>
                 </div>
             </div>
         </div>
@@ -131,53 +146,6 @@
 
 
     <script>
-        // test data of '12가3456'
-        // 클릭시에 위도경도값을 동적으로 생성하여 만들어야함
-        // var test_position = [
-        //     {
-        //         title: '12가1111',
-        //         latlng: new kakao.maps.LatLng(37.55222645660858, 127.07402497111372),
-        //         image: '../static/images/영실관.jpg',
-        //         date: '2021-05-24 09:09:09'
-        //     },
-        //     {
-        //         title: '12가2222',
-        //         latlng: new kakao.maps.LatLng(37.55236254929694, 127.0733490544685),
-        //         image: '../static/images/충무관.jpg',
-        //         date: '2021-05-25 09:09:09'
-        //     },
-        //     {
-        //         title: '12가3333',
-        //         latlng: new kakao.maps.LatLng(37.551894729639535, 127.07405715762066),
-        //         image: '../static/images/율곡관.jpg',
-        //         date: '2021-05-26 09:09:09'
-        //     },
-        //     {
-        //         title: '12가4444',
-        //         latlng: new kakao.maps.LatLng(37.551666484410134, 127.07433172732024),
-        //         image: '../static/images/학술정보원.jpg',
-        //         date: '2021-05-27 09:09:09'
-        //     },
-        //     {
-        //         title: '12가5555',
-        //         latlng: new kakao.maps.LatLng(37.55040370778018, 127.0732566803555),
-        //         image: '../static/images/광개토관.jpg',
-        //         date: '2021-05-28 09:09:09'
-        //     },
-        //     {
-        //         title: '12가6666',
-        //         latlng: new kakao.maps.LatLng(37.549956632654954, 127.07453618415181),
-        //         image: '../static/images/세종관.jpg',
-        //         date: '2021-05-29 09:09:09'
-        //     },
-        //     {
-        //         title: '12가7777',
-        //         latlng: new kakao.maps.LatLng(37.568, 127.08453618415181),
-        //         image: '../static/images/세종관.jpg',
-        //         date: '2021-05-30 09:09:09'
-        //     }
-        // ];
-
         //======================================(Regrading of API)======================================
         // 조회된 버튼들을 관리
         hasButton = [];
@@ -185,9 +153,13 @@
         var selectedCarnum;
         // 지도에 표시된 마커 객체를 가지고 있을 배열입니다
         var markers = [];
+        var saveColor;
+        var seletedLatLng;
+        // var selectedLocation = [];
+        var selectedDoro;
+        var selectedJibun;
 
         var imgBox = document.getElementsByClassName('imgBox');
-        var Box = document.getElementById('instanceBox');
         var msg = '{{ msg }}';
         if (msg == '[제출실패]') {
             alert('Excel파일을 제출해주세요..');
@@ -199,16 +171,18 @@
                 level: 6 // 지도의 확대 레벨
             };
 
-        // 지도를 생성합니다
+        // 지도객체 생성
         var map = new kakao.maps.Map(mapContainer, mapOption);
+
+        // 사용자 줌인 컨트롤러를 추가
+        var zoomControl = new kakao.maps.ZoomControl();
+        map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
         // 지도를 클릭했을때, 해당 좌표를 반환합니다.
         kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
             // 클릭한 위치에 마커를 표시합니다
             alert('< Return the location Info you clicked >\n' + 'latitude : ' + mouseEvent.latLng.getLat() + '\nlongitude : ' + mouseEvent.latLng.getLng());   // 위/경도 얻기
         });
-
-
 
         var clusterer = new kakao.maps.MarkerClusterer({
             map: map,
@@ -217,12 +191,26 @@
             disableClickZoom: true
         });
 
+        kakao.maps.event.addListener(clusterer, 'clusterclick', function (cluster) {
+            // 클러스터러 클릭시 1씩 확대
+            var level = map.getLevel() - 1;
 
+            // 클릭된 클러스터러의 위치를 기준으로 확대진행
+            map.setLevel(level, { anchor: cluster.getCenter() });
+        });
 
         // 리버스 지오코딩 서비스
         var geocoder = new kakao.maps.services.Geocoder();
+
         // 마커를 생성하고 지도위에 표시하는 함수
         function addMarker(position) {
+            // 정렬부분추가
+            var listEl = document.getElementById('placesList'),
+                menuEl = document.getElementById('menu_wrap'),
+                fragment = document.createDocumentFragment(),
+                bounds = new kakao.maps.LatLngBounds(),
+                listStr = '';
+
             // alert(position.length + "개의 마커를 생성합니다.");
             // 마커생성
             for (i = 0; i < position.length; i++) {
@@ -237,6 +225,10 @@
                     title: position[i].title
                     // clickable: true //마커클릭시 지도클릭 이벤트방지용
                 });
+
+                // 정렬부분추가
+                var itemEl = getListItem(i, position[i]);
+                bounds.extend(latlng);
 
                 // 마커를 지도 위에 표시
                 marker.setMap(map);
@@ -256,7 +248,7 @@
                 var overlay = new kakao.maps.CustomOverlay({
                     content: testContent,
                     position: latlng
-                })
+                });
 
                 // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
                 // 이벤트 리스너로는 클로저를 만들어 등록합니다 
@@ -266,19 +258,41 @@
                 kakao.maps.event.addListener(marker, 'click', makeClickListener(marker, imagePath, dateAndTime));
 
                 clusterer.addMarker(marker);
-                kakao.maps.event.addListener(clusterer, 'clusterclick', function (cluster) {
-                    // 클러스터러 클릭시 1씩 확대
-                    var level = map.getLevel() - 1;
+                //정렬부분추가
+                if (i > 14)
+                    continue;
+                fragment.appendChild(itemEl);
+            };
+            // 정렬부분추가
+            // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+            listEl.appendChild(fragment);
+            menuEl.scrollTop = 0;
+            // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+            map.setBounds(bounds);
+        };
 
-                    // 클릭된 클러스터러의 위치를 기준으로 확대진행
-                    map.setLevel(level, { anchor: cluster.getCenter() });
-                });
-            }
+        // 정렬부분추가
+        function getListItem(index, places) {
+
+            var el = document.createElement('li'),
+                itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
+                    '<div class="info">' +
+                    '   <h5>' + places.title + '</h5>';
+
+
+            itemStr += '    <span>' + places.lati + '</span>' +
+                '   <span class="jibun gray">' + places.longt + '</span>';
+
+
+
+            itemStr += '  <span class="tel">' + places.date + '</span>' +
+                '</div>';
+
+            el.innerHTML = itemStr;
+            el.className = 'item';
+
+            return el;
         }
-
-        // function startReverseGeocoding() {
-        //     alert('리버스지오코딩!');
-        // }
 
         function searchDetailAddrFromCoords(coords, callback) {
             // alert(coords.getLat() + "  " + coords.getLng());
@@ -287,7 +301,7 @@
         }
 
 
-        var selectedLocation = [];
+
         // mouseon 일 경우, 커스텀오버레이 발생 
         function makeOverListener(map, marker, imagePath, overlay, dateAndTime) {
             return function () {
@@ -303,15 +317,19 @@
 
                         var detailAddr1 = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
                         if (!!result[0].road_address) {
-                            selectedLocation.push(result[0].road_address.address_name); // 도로명(건물)index : 0
+                            // selectedLocation.push(result[0].road_address.address_name); // 도로명(건물)index : 0
+                            selectedDoro = result[0].road_address.address_name;
                         } else {
-                            selectedLocation.push('');
+                            // selectedLocation.push('');
+                            selectedJibun = '';
                         }
                         var detailAddr2 = !!result[0].address ? '<div>지번 주소 : ' + result[0].address.address_name + '</div>' : '';
                         if (!!result[0].address) {
-                            selectedLocation.push(result[0].address.address_name); // 지번(도로변)index : 1
+                            // selectedLocation.push(result[0].address.address_name); // 지번(도로변)index : 1
+                            selectedJibun = result[0].address.address_name;
                         } else {
-                            selectedLocation.push('');
+                            // selectedLocation.push('');
+                            selectedDoro = '';
                         }
                         detailAddr = detailAddr1 + detailAddr2;
                     }
@@ -343,8 +361,8 @@
         function makeOutListener(overlay) {
             return function () {
                 overlay.setMap(null)
-                selectedLocation.pop();
-                selectedLocation.pop();
+                // selectedLocation.pop();
+                // selectedLocation.pop();
             };
         }
 
@@ -355,7 +373,10 @@
             return function () {
                 // marker.getTitle : 클릭한 마커의 차량번호
                 // imagePath : 클릭한 마커에 등록된 차량이미지경로
-
+                alert('클릭발생!');
+                var Box = document.getElementById('instanceBox');
+                Box.style.border = saveColor + 'solid 5px';
+                saveColor = "";
                 // 차량번호 삽입
                 var carnum = document.getElementsByClassName("carnum");
                 var carnumText = '<span style="font-size:18px ;font-weigth:bold; color:black;">&nbsp&nbsp&nbsp' + marker.getTitle() + '</span>';
@@ -363,16 +384,18 @@
 
                 // 이미지 삽입
                 var carImage = document.getElementById('carImage');
-                imagePath = '../static' + imagePath;
-                carImage.setAttribute('src', imagePath);
+                alert("이미지위치 : " + imagePath);
+                carImage.setAttribute('src', '../static' + imagePath);
 
                 // 발견위치 삽입
                 var jibun = document.getElementById('jibun');
                 var doro = document.getElementById('doro');
-                var jibunText = '<span style="font-size:18px ;font-weigth:bold; color:black;">&nbsp&nbsp&nbsp' + selectedLocation[1] + '</span>';
-                var doroText = '<span style="font-size:18px ;font-weigth:bold; color:black;">&nbsp&nbsp&nbsp' + selectedLocation[0] + '</span>';
+                var jibunText = '<span style="font-size:18px ;font-weigth:bold; color:black;">&nbsp&nbsp&nbsp' + selectedJibun + '</span>';
+                var doroText = '<span style="font-size:18px ;font-weigth:bold; color:black;">&nbsp&nbsp&nbsp' + selectedDoro + '</span>';
                 jibun.innerHTML = "지번주소 : " + jibunText;
                 doro.innerHTML = "도로명주소 : " + doroText;
+                // selectedLocation.pop();
+                // selectedLocation.pop();
 
                 // 발견시각, 발견날짜 삽입
                 var pleaseSplit = dateAndTime;
@@ -389,7 +412,9 @@
                 //버튼에 차량번호 삽입
                 var button = document.getElementById("sortData");
                 button.innerHTML = marker.getTitle();
-
+                button.style.fontWeight = 'bold';
+                button.disabled = false;
+                button.style.cursor = 'pointer';
             };
         }
 
@@ -494,6 +519,8 @@
                                 if (selectedCarnum == carnumber) {
                                     alert('이미 선택되어 있는 자료입니다.');
                                 } else {
+                                    saveColor = this.style.background.slice(23, 40);
+                                    // alert(saveColor);
                                     if (markers.length != 0) {
                                         deleteMarkers();
                                         alert('기존에 지도에 표시되어있던 마커들을 모두 제거했습니다.');
@@ -504,7 +531,6 @@
                                         data: { id: carnumber },
                                         dataType: 'JSON',
                                         success: function (result) {
-
                                             addMarker(result);
                                         },
                                         error: function (request, status, error) {
