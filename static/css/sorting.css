@@ -1,18 +1,20 @@
 
         #menu_wrap {
-            position: absolute;
+            display: none;
+            position: relative;
             top: 0;
             left: 0;
             bottom: 0;
             width: 280px;
-            height: 750px;
-            margin: 10px 0 30px 10px;
+            height: 720px;
+            margin: 40px 0 30px 10px;
             padding: 5px;
             overflow-y: auto;
             background: rgba(255, 255, 255, 0.7);
             z-index: 2;
             font-size: 15px;
             border-radius: 10px;
+            overflow-x: hidden;
         }
 
         .bg_white {
@@ -20,27 +22,33 @@
         }
 
         #menu_wrap hr {
-            position: absolute;
+            position: sticky;
             display: block; 
             height: 1px;
             border: 0; 
-            border-top: 2px solid #5F5F5F;
+            border-top: 2px solid gray;
             width: 260px;
             top:40px;
-            margin:5px auto;
-            margin-left: 3px;
             margin-bottom: 0px;
         }
 
-        #menu_wrap .option {
+        .option {
+            position: absolute;
+            width: 250px;
+            margin: 5px 0 5px 10px;
             text-align: center;
+            z-index: 2;
+            line-height: 15px;
         }
 
-        #menu_wrap .option p {
+        #menu_wrap .ifClick{text-align: center;z-index: 2;}
+        #menu_wrap .ifClick p {margin:10px 0;}  
+        #menu_wrap .ifClick button {margin-left:5px;}
+        .option p {
             margin: 10px 0;
         }
 
-        #menu_wrap .option button {
+        .option button {
             margin-left: 5px;
         }
 
@@ -190,6 +198,9 @@
             font-family: 'Noto Sans KR', sans-serif;
             font-size: 15px;
             font-weight: bold;
-            margin-top: 5px;
+        }
 
+        .title-fixed{
+            position: sticky;
+            top:0px;
         }
