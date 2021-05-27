@@ -20,7 +20,7 @@ import zipfile
 from crnn_predict import crnn_predict
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-UPLOAD_FOLDER = '\\static\\uploads\\'
+UPLOAD_FOLDER = r'/static/uploads/'
 RESULT_FOLDER = './static/result/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 ALLOWED_EXCEL = set(['xlsx', 'xls'])
@@ -264,7 +264,7 @@ def upload_page():
                     try:
                         print("[", i, "]", pic.shape)
                         lp, prob = lpr(pic)
-                        print(crnn_predict(pic))
+                        print("[CRNN]",crnn_predict(pic))
                         plate_num.append(lp[0])
                         plate_prob.append(float(prob[0][0]))
                     except Exception as e:
