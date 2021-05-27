@@ -157,6 +157,7 @@ def search_carnum():
 
         print(data)
 
+
         conn.close()
         if(data == "No"):
             # print('검출실패!')
@@ -166,6 +167,7 @@ def search_carnum():
             # print('검출성공!')
             toggle = 1
             return render_template('mapPage.html', carnum=data, askInsert=toggle)
+
 
 @app.route('/',methods=['GET','POST'])
 @app.route('/upload', methods=['GET', 'POST'])
@@ -183,6 +185,7 @@ def upload_page():
         plate_picture = []
         zipname = []
         
+
         print(os.getcwd())
         for file in files :
         # check if the post request has the file part
@@ -201,8 +204,8 @@ def upload_page():
             
                     time_file.append(real_time)
                     lalo_file.append(real_lalo)
-                    lalo_excel[0]=real_lalo[0]
-                    lalo_excel[1]=real_lalo[1]
+                    lalo_excel.append(real_lalo[0])
+                    lalo_excel.append(real_lalo[1])
                     #print(real_lalo)
                     #print(type(real_lalo))
                 except:
@@ -269,7 +272,7 @@ def upload_page():
 
             for i in range(len(plate_num)):
                 try:
-                    print("[PROB ", i, "]", plate_num[i], len(plate_num[i]))
+                    print("[PROB ", i, "]", plate_num[i],len(plate_num[i]))
                     if plate_num[i][-5] not in kor_dict:
                         print("wrong assumption")
                         #TODO: Implement alternative algorithm for handling
@@ -288,7 +291,7 @@ def upload_page():
         myzip=zipfile.ZipFile('./static/result/transformed_'+nowtime+'.zip','w')
         path=os.getcwd()
         os.chdir("./static/result")
-        for i in zipname: 
+        for i in zipname:
             myzip.write(i)
         myzip.close()
         os.chdir(path)
