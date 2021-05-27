@@ -1,6 +1,18 @@
 * {
 	box-sizing: border-box;
+    
 }
+
+body{
+    background-image : linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.5)),url("../images/7.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    z-index:-10;
+    background-size : cover;
+    background-attachment: fixed;
+
+}
+
 
 
 .container{
