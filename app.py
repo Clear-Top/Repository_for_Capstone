@@ -173,137 +173,146 @@ def search_carnum():
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_page():
     if request.method == 'POST':
-        nowtime=time.strftime('%y%m%d_%H%M%S')
-        files = request.files.getlist("file[]")
-        excel = writeExcel.write_excel_prepare()
-        writeExcel.write_excel_init(excel)
-        u_src=[]
-        time_file = []
-        lalo_file = []
-        lalo_excel = []
-        plate_number = []
-        plate_picture = []
-        zipname = []
-        
+        try :   
+            nowtime=time.strftime('%y%m%d_%H%M%S')
+            files = request.files.getlist("file[]")
+            excel = writeExcel.write_excel_prepare()
+            writeExcel.write_excel_init(excel)
+            u_src=[]
+            time_file = []
+            lalo_file = []
+            lalo_excel = []
+            plate_number = []
+            plate_picture = []
+            zipname = []
+            
 
-        print(os.getcwd())
-        for file in files :
-        # check if the post request has the file part
-            if file and not allowed_file(file.filename):
-                print(file.filename)
-                continue
-            file.save(os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
-            
-            print("[SYS]",os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
-            # extract EXIF (위도,경도,시간 등등)
-            info = extractExif.get_exif("static/uploads/"+file.filename)
-            if info is not None:
-                try:
-                    real_time=extractExif.get_exif_time(file.filename)
-                    real_lalo=extractExif.get_coordinates(extractExif.get_geotagging(info))
-            
-                    time_file.append(real_time)
-                    lalo_file.append(real_lalo)
-                    lalo_excel.append(real_lalo[0])
-                    lalo_excel.append(real_lalo[1])
-                    #print(real_lalo)
-                    #print(type(real_lalo))
-                except:
+            print(os.getcwd())
+            for file in files :
+            # check if the post request has the file part
+                if file and not allowed_file(file.filename):
+                    print(file.filename)
+                    continue
+                file.save(os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
+                
+                print("[SYS]",os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
+                # extract EXIF (위도,경도,시간 등등)
+                info = extractExif.get_exif("static/uploads/"+file.filename)
+                if info is not None:
+                    try:
+                        real_time=extractExif.get_exif_time(file.filename)
+                        real_lalo=extractExif.get_coordinates(extractExif.get_geotagging(info))
+                
+                        time_file.append(real_time)
+                        lalo_file.append(real_lalo)
+                        lalo_excel.append(real_lalo[0])
+                        lalo_excel.append(real_lalo[1])
+                        #print(real_lalo)
+                        #print(type(real_lalo))
+                    except:
+                        real_time='None'
+                        lalo_excel.append('None')
+                        lalo_excel.append('None') 
+                        
+                        time_file.append('None')
+                        lalo_file.append('None')
+                else:
                     real_time='None'
                     lalo_excel.append('None')
-                    lalo_excel.append('None') 
-                    
+                    lalo_excel.append('None')
                     time_file.append('None')
                     lalo_file.append('None')
-            else:
-                real_time='None'
-                lalo_excel.append('None')
-                lalo_excel.append('None')
-                time_file.append('None')
-                lalo_file.append('None')
-            # print(time)
-            # print(lalo)
+                # print(time)
+                # print(lalo)
 
-            full_image, yolo_lp, cars = lpd(file)
-            upload_source = []
-            plate_num = []
-            plate_prob = []
-            plates = []
+                full_image, yolo_lp, cars = lpd(file)
+                upload_source = []
+                plate_num = []
+                plate_prob = []
+                plates = []
 
-            print("[SYS] cars")
+                print("[SYS] cars")
 
-            #Depend on Car Detection -> Wpod Net to stretch
-            for i, c in enumerate(cars):
-                try:
-                    img = wpod_inf(c)
-                    cv.imwrite("./static/result/"+full_image.rsplit(".")[0]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
-                    cv.imwrite("./static/result/"+full_image.rsplit(".")[0]+"_car"+str(i)+".jpg", c.astype(np.uint8))
-                    upload_source.append("/static/result/"+full_image.rsplit(".")[0]+"_wp"+str(i)+".jpg")
-                    zipname.append(full_image.rsplit(".")[0]+"_wp"+str(i)+".jpg")
-                    plates.append(img)
-                except Exception as e:
-                    print("[ERROR]", e)
-
-            
-            #Depend on Yolo_lp Detection 
-            if len(plates) == 0:
-                n = 0
-                for lp in yolo_lp:
+                #Depend on Car Detection -> Wpod Net to stretch
+                for i, c in enumerate(cars):
                     try:
-                        cv.imwrite("./static/result/"+full_image.rsplit(".")[0]+"_yv4_"+str(n)+".jpg",lp.astype(np.uint8))
-                        plates.append(lp)
-                        upload_source.append("/static/result/"+full_image.rsplit(".")[0]+"_yv4_"+str(n)+".jpg")
-                        zipname.append(full_image.rsplit(".")[0]+"_yv4_"+str(n)+".jpg")
-                        n+=1
-                    except:
-                        continue
-                print("[NOT FOUND], Using [Yolo] Instead")
-            print("[SYS] lpr ")
-            for i, pic in enumerate(plates):
-                if pic is not None:
-                    try:
-                        print("[", i, "]", pic.shape)
-                        lp, prob = lpr(pic)
-                        print(crnn_predict(pic))
-                        plate_num.append(lp[0])
-                        plate_prob.append(float(prob[0][0]))
+                        img = wpod_inf(c)
+                        cv.imwrite("./static/result/"+full_image.rsplit(".")[0]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
+                        cv.imwrite("./static/result/"+full_image.rsplit(".")[0]+"_car"+str(i)+".jpg", c.astype(np.uint8))
+                        upload_source.append("/static/result/"+full_image.rsplit(".")[0]+"_wp"+str(i)+".jpg")
+                        zipname.append(full_image.rsplit(".")[0]+"_wp"+str(i)+".jpg")
+                        plates.append(img)
                     except Exception as e:
                         print("[ERROR]", e)
 
-            for i in range(len(plate_num)):
-                try:
-                    print("[PROB ", i, "]", plate_num[i],len(plate_num[i]))
-                    if plate_num[i][-5] not in kor_dict:
-                        print("wrong assumption")
-                        #TODO: Implement alternative algorithm for handling
-                    else:
-                        if (len(plate_num[i]) >= 7):
-                            print("right length")
-                            writeExcel.write_excel(excel, plate_num[i], real_time, UPLOAD_FOLDER, file.filename, lalo_excel[0],lalo_excel[1],nowtime)
+                
+                #Depend on Yolo_lp Detection 
+                if len(plates) == 0:
+                    n = 0
+                    for lp in yolo_lp:
+                        try:
+                            cv.imwrite("./static/result/"+full_image.rsplit(".")[0]+"_yv4_"+str(n)+".jpg",lp.astype(np.uint8))
+                            plates.append(lp)
+                            upload_source.append("/static/result/"+full_image.rsplit(".")[0]+"_yv4_"+str(n)+".jpg")
+                            zipname.append(full_image.rsplit(".")[0]+"_yv4_"+str(n)+".jpg")
+                            n+=1
+                        except:
+                            continue
+                    print("[NOT FOUND], Using [Yolo] Instead")
+                print("[SYS] lpr ")
+                for i, pic in enumerate(plates):
+                    if pic is not None:
+                        try:
+                            print("[", i, "]", pic.shape)
+                            lp, prob = lpr(pic)
+                            print(crnn_predict(pic))
+                            plate_num.append(lp[0])
+                            plate_prob.append(float(prob[0][0]))
+                        except Exception as e:
+                            print("[ERROR]", e)
+
+                for i in range(len(plate_num)):
+                    try:
+                        print("[PROB ", i, "]", plate_num[i],len(plate_num[i]))
+                        if plate_num[i][-5] not in kor_dict:
+                            print("wrong assumption")
+                            #TODO: Implement alternative algorithm for handling
                         else:
-                            #TODO: Implement alternative algorithm
-                            print("wrong length")
-                except Exception as e:
-                    print("[ERROR]", e)
-            plate_number.append(plate_num)
-            plate_picture.append(upload_source)
-            u_src.append(UPLOAD_FOLDER + full_image)
-        myzip=zipfile.ZipFile('./static/result/transformed_'+nowtime+'.zip','w')
-        path=os.getcwd()
-        os.chdir("./static/result")
-        for i in zipname:
-            myzip.write(i)
-        myzip.close()
-        os.chdir(path)
-        return render_template('up.html',
-                                img_src=u_src,
-                                car_num=plate_number,
-                                car_time=time_file,
-                                car_lalo=lalo_file,
-                                car_source=plate_picture,
-                                nowtime=nowtime)
+                            if (len(plate_num[i]) >= 7):
+                                print("right length")
+                                writeExcel.write_excel(excel, plate_num[i], real_time, UPLOAD_FOLDER, file.filename, lalo_excel[0],lalo_excel[1],nowtime)
+                            else:
+                                #TODO: Implement alternative algorithm
+                                print("wrong length")
+                    except Exception as e:
+                        print("[ERROR]", e)
+                plate_number.append(plate_num)
+                plate_picture.append(upload_source)
+                u_src.append(UPLOAD_FOLDER + full_image)
+            myzip=zipfile.ZipFile('./static/result/transformed_'+nowtime+'.zip','w')
+            path=os.getcwd()
+            os.chdir("./static/result")
+            for i in zipname:
+                myzip.write(i)
+            myzip.close()
+            os.chdir(path)
+            if(len(plate_picture)>0):active=1
+            else :active=0
+            return render_template('up.html',
+                                    img_src=u_src,
+                                    car_num=plate_number,
+                                    car_time=time_file,
+                                    car_lalo=lalo_file,
+                                    car_source=plate_picture,
+                                    nowtime=nowtime,
+                                    active=active)
+        except:
+            alert=-1
+            active=0
+            return render_template('up.html',alert=alert,active=active)
     elif request.method == 'GET':
-        return render_template('up.html')
+        active=0
+        return render_template('up.html',active=active)
 
 if __name__ == '__main__':
     app.run(debug=True)
