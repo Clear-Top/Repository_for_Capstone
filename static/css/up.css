@@ -9,6 +9,7 @@ body{
 .container{
   margin: 0 auto;
   width: 1500px;
+  position : relative;
 
   text-align: center;
 }
@@ -20,13 +21,14 @@ body{
   background-color:rgb(208,198 ,177 );
   padding-left: 20px;
   padding-right: 20px;
+  
   height: 900px;
 }
 
 
 #footer{
   position: relative;
-  background-color:rgb(208,198 ,177 );
+  background-color:yellow;
   padding-left: 20px;
   padding-right: 20px;
   top:0px;
