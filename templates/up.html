@@ -8,17 +8,21 @@
 </head>
 
 <body>
-    {% if alert %}<script>alert("이미지를 업로드 해주세요")</script>{% endif %}
+    {% if alert %}<script>alert("이미지를 먼저 업로드 해주세요!")</script>{% endif %}
     <div class="container">
         <div id="frame3"><br>
             <h1>Data Abstract   <input type="button" value="버튼" onClick="location.href='http://localhost:5000/xlupload'"><input type="button" value="버튼" onClick="location.href='http://localhost:5000/'"></h1>
             <div id="right_box">
                 <form method=post enctype=multipart/form-data>
-                    <div class="filebox"><label for ="fb"><img src="/static/images/upload.png" alt="upload" style=" width:100px;height:100px;">upload</label><input multiple=multiple type=file name=file[] id="fb"></div>
-                    <div class="filebox"><label for ="sm"><img src="/static/images/transform.png" style="width:100px;height:100px;">transform</label><input type=submit value=upload id="sm"></div>
+                    <div class="filebox">
+                        <label for ="fb"><img src="/static/images/upload.png" style=" width:100px;height:100px;"><strong>   upload</strong></label>
+                        <input multiple=multiple type=file name=file[] id="fb"></div>
+                    <div class="filebox">
+                        <label for ="sm"><img src="/static/images/transform.png" style="width:100px;height:100px;"><strong> transform</strong></label>
+                        <input type=submit value=upload id="sm"></div>
                 </form>
-                {% if active==0 %}<button class="download_box btn" onClick="alert('이미지를 먼저 업로드해주세요!')"><strong>download images</strong></button>{% elif active==1 %}<a href="./static/result/transformed_{{nowtime}}.zip" download="transformed_{{nowtime}}"><button class="download_box btn" alert="모든 이미지 저장 완료!" ><strong>download images</strong></button></a>{% endif %}
-                {% if active==0 %}<button class="download_box btn" onClick="alert('이미지를 먼저 업로드해주세요!')"><strong>download excel</strong></button>{% elif active==1 %}<a href="./static/excel/excel{{nowtime}}.xlsx" download="excel{{nowtime}}"><button class="download_box btn" alert="엑셀 저장 완료!"><strong>download excel</strong></button></a>{% endif %}
+                {% if active==0 %}<button class="download_box" onClick="alert('이미지를 먼저 업로드 해주세요!')"><strong>download images</strong></button>{% elif active==1 %}<a href="./static/result/transformed_{{nowtime}}.zip" download="transformed_{{nowtime}}"><button class="download_box btn" alert="모든 이미지 저장 완료!" ><strong>download images</strong></button></a>{% endif %}
+                {% if active==0 %}<button class="download_box" onClick="alert('이미지를 먼저 업로드 해주세요!')"><strong>download excel</strong></button>{% elif active==1 %}<a href="./static/excel/excel{{nowtime}}.xlsx" download="excel{{nowtime}}"><button class="download_box btn" alert="엑셀 저장 완료!"><strong>download excel</strong></button></a>{% endif %}
             </div>
             <div id="left_box">
                 <div class="in_left_box1" style="overflow-y:scroll;"><h2>uploaded image</h2>{% if img_src %}{% for img in img_src %}<img src="{{ img }}" style="width:500px;">{% endfor %}{% endif %}</div>
