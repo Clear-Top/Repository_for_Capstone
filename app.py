@@ -20,7 +20,7 @@ import zipfile
 from crnn_predict import crnn_predict
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-UPLOAD_FOLDER = r'/static/uploads/'
+UPLOAD_FOLDER = '/static/uploads/'
 RESULT_FOLDER = './static/result/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 ALLOWED_EXCEL = set(['xlsx', 'xls'])
