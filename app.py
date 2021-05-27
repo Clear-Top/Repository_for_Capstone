@@ -266,6 +266,7 @@ def upload_page():
                             print("[", i, "]", pic.shape)
                             lp, prob = lpr(pic)
                             print("[CRNN]",crnn_predict(pic))
+                            print("[LPRNet]",lp[0])
                             plate_num.append(lp[0])
                             plate_prob.append(float(prob[0][0]))
                         except Exception as e:
