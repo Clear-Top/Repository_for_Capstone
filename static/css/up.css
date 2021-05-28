@@ -25,15 +25,6 @@ body{
   height: 900px;
 }
 
-
-#footer{
-  position: relative;
-  background-color:yellow;
-  padding-left: 20px;
-  padding-right: 20px;
-  top:0px;
-  height: 900px;
-}
 input{
   appearance:none;
   -webkit-apperance:none;
