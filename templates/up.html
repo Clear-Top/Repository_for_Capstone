@@ -2,43 +2,102 @@
 <html>
 
 <head>
-    <link href="{{url_for('static',filename='css/up.css')}}" rel="stylesheet" >
+    <link href="{{url_for('static',filename='css/up.css')}}" rel="stylesheet">
     <script type=" text/javascript" src="../static/js/btnactive.js"></script>
+    <script type="text/javascript" src="../static/js/navigation.js"></script>
 
     <script src="https://kit.fontawesome.com/98399ba990.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../static/css/mainfooter.css">
+    <link rel="stylesheet" href="../static/css/navigation.css">
+    <link rel="shortcut icon" href="#">
     <title>upload</title>
 </head>
 
 <body>
-    {% if alert==-1 %}<script>alert("이미지를 먼저 업로드 해주세요!")</script>{% endif %}
+    <div class="header" style="background-color: gray;margin: 0;"></div>
+    <div class="nav-container">
+        <ul class="nav">
+            <li class="dropdown">
+                <a href="#home">서비스소개</a>
+                <div class="dropdown-content">
+                    <a href="#">번호인식 서비스</a>
+                    <a href="#">맵 조회 서비스</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="#news">서비스구성</a>
+                <div class="dropdown-content">
+                    <a href="#">Model</a>
+                    <a href="#">Web</a>
+                    <a href="#">Server</a>
+                    <a href="#">API</a>
+                    <a href="#">DB</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">서비스 이용방법</a>
+                <div class="dropdown-content">
+                    <a href="#">리스트 조회</a>
+                    <a href="#">맵 조회</a>
+                    <a href="#">파일 로컬저장</a>
+                    <a href="#">유의사항</a>
+                </div>
+            </li>
+            <li class="dropdown"><a href="#developer">개발자</a></li>
+        </ul>
+    </div>
+    {% if alert==-1 %}
+    <script>alert("이미지를 먼저 업로드 해주세요!")</script>{% endif %}
     <div class="container">
         <div id="frame3"><br>
-            <h1>Data Abstract   <input type="button" value="버튼" onClick="location.href='http://localhost:5000/xlupload'"><input type="button" value="버튼" onClick="location.href='http://localhost:5000/'"></h1>
+            <h1>Data Abstract <input type="button" value="버튼"
+                    onClick="location.href='http://localhost:5000/xlupload'"><input type="button" value="버튼"
+                    onClick="location.href='http://localhost:5000/'"></h1>
             <div id="right_box">
                 <form method=post enctype=multipart/form-data>
                     <div class="filebox">
-                        <label for ="fb"><img src="/static/images/upload.png" style=" width:100px;height:100px;"><strong>   upload</strong></label>
-                        <input multiple=multiple type=file name=file[] id="fb"></div>
+                        <label for="fb"><img src="/static/images/upload.png" style=" width:100px;height:100px;"><strong>
+                                upload</strong></label>
+                        <input multiple=multiple type=file name=file[] id="fb">
+                    </div>
                     <div class="filebox">
-                        <label for ="sm"><img src="/static/images/transform.png" style="width:100px;height:100px;"><strong> transform</strong></label>
-                        <input type=submit value=upload id="sm"></div>
+                        <label for="sm"><img src="/static/images/transform.png"
+                                style="width:100px;height:100px;"><strong> transform</strong></label>
+                        <input type=submit value=upload id="sm">
+                    </div>
                 </form>
-                {% if active==0 %}<button class="download_box" onClick="alert('이미지를 먼저 업로드 해주세요!')"><strong>download images</strong></button>{% elif active==1 %}<a href="./static/result/transformed_{{nowtime}}.zip" download="transformed_{{nowtime}}"><button class="download_box btn" alert="모든 이미지 저장 완료!" ><strong>download images</strong></button></a>{% endif %}
-                {% if active==0 %}<button class="download_box" onClick="alert('이미지를 먼저 업로드 해주세요!')"><strong>download excel</strong></button>{% elif active==1 %}<a href="./static/excel/excel{{nowtime}}.xlsx" download="excel{{nowtime}}"><button class="download_box btn" alert="엑셀 저장 완료!"><strong>download excel</strong></button></a>{% endif %}
+                {% if active==0 %}<button class="download_box" onClick="alert('이미지를 먼저 업로드 해주세요!')"><strong>download
+                        images</strong></button>{% elif active==1 %}<a
+                    href="./static/result/transformed_{{nowtime}}.zip" download="transformed_{{nowtime}}"><button
+                        class="download_box btn" alert="모든 이미지 저장 완료!"><strong>download images</strong></button></a>{%
+                endif %}
+                {% if active==0 %}<button class="download_box" onClick="alert('이미지를 먼저 업로드 해주세요!')"><strong>download
+                        excel</strong></button>{% elif active==1 %}<a href="./static/excel/excel{{nowtime}}.xlsx"
+                    download="excel{{nowtime}}"><button class="download_box btn" alert="엑셀 저장 완료!"><strong>download
+                            excel</strong></button></a>{% endif %}
             </div>
             <div id="left_box">
-                <div class="in_left_box1" style="overflow-y:scroll;"><h2>uploaded image</h2>{% if img_src %}{% for img in img_src %}<img src="{{ img }}" style="width:500px;">{% endfor %}{% endif %}</div>
-                <div class="in_left_box2" style="overflow-y:scroll;"><h2>transformed image</h2>{% if car_source %}{% for i in range(car_source|length) %}{% for j in range(car_source[i]|length) %}<a href="{{car_source[i][j]}}" download="{{nowtime}}/{{i}}/{{j}}"><img src="{{ car_source[i][j] }}" style=width:340px;height:80px;></a>{% endfor %}<hr>{% endfor %}{% endif %}</div>
-                <div class="in_left_box3">{% for i in range(car_num | length) %}{% for j in range(car_num[i] | length) %}
+                <div class="in_left_box1" style="overflow-y:scroll;">
+                    <h2>uploaded image</h2>{% if img_src %}{% for img in img_src %}<img src="{{ img }}"
+                        style="width:500px;">{% endfor %}{% endif %}
+                </div>
+                <div class="in_left_box2" style="overflow-y:scroll;">
+                    <h2>transformed image</h2>{% if car_source %}{% for i in range(car_source|length) %}{% for j in
+                    range(car_source[i]|length) %}<a href="{{car_source[i][j]}}" download="{{nowtime}}/{{i}}/{{j}}"><img
+                            src="{{ car_source[i][j] }}" style=width:340px;height:80px;></a>{% endfor %}
+                    <hr>{% endfor %}{% endif %}
+                </div>
+                <div class="in_left_box3">{% for i in range(car_num | length) %}{% for j in range(car_num[i] | length)
+                    %}
                     {% if car_num[i][j] %}차량번호 : {{ car_num[i][j] }}{% endif %}
                     촬영 시간 :{% if car_time[i] %} {{car_time[i]}}{% else %} 존재하지 않습니다.{% endif %}
-                    위도 정보 :{% if car_lalo[i] %} {{car_lalo[i]}}{% else %} 존재하지 않습니다.{% endif %}<hr>
+                    위도 정보 :{% if car_lalo[i] %} {{car_lalo[i]}}{% else %} 존재하지 않습니다.{% endif %}
+                    <hr>
                     {% endfor %}{% endfor %}
                 </div>
             </div>
         </div>
-        
+
     </div>
 
     <footer class="footer-basic">
