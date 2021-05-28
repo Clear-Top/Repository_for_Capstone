@@ -46,6 +46,14 @@ def allowed_file(file):
     return '.' in file and file.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+@app.route('/introductionList')
+def introductionList():
+    return render_template('introductionList.html')
+
+@app.route('/introductionMap')
+def introductionMap():
+    return render_template('introductionMap.html')
+
 
 @app.route('/searchCar', methods=['GET'])
 def search_carnum():
