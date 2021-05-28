@@ -10,7 +10,7 @@
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4a81af8fef0943a32040477087ec034a&libraries=services,clusterer"></script>
-    <!-- <script src="../static/js/navigation.js"></script> -->
+    <script type="text/javascript" src="../static/js/navigation.js"></script>
     <!-- <script type=" text/javascript" src="../static/js/kakaoMap.js"></script> -->
     <!-- <script type=" text/javascript" src="../static/js/mouseEvent.js"></script> -->
     <link rel="stylesheet" type="text/css" href="../static/css/kakaoMap.css">
@@ -45,43 +45,38 @@
     <p>{{i}}</p>
     {% endfor%} -->
     <!-- db데이터 쓰기-->
-    <header>
-        <div class="header" style="background-color: gray;margin: 0;">
-            <!-- <h2>Scroll Down</h2>
-                    <p>Scroll down to see the sticky effect.</p> -->
-        </div>
-        <div class="nav-container">
-            <ul class="nav">
-                <li class="dropdown">
-                    <a href="#home">서비스소개</a>
-                    <div class="dropdown-content">
-                        <a href="#">번호인식 서비스</a>
-                        <a href="#">맵 조회 서비스</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <a href="#news">서비스구성</a>
-                    <div class="dropdown-content">
-                        <a href="#">Model</a>
-                        <a href="#">Web</a>
-                        <a href="#">Server</a>
-                        <a href="#">API</a>
-                        <a href="#">DB</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)" class="dropbtn">서비스 이용방법</a>
-                    <div class="dropdown-content">
-                        <a href="#">리스트 조회</a>
-                        <a href="#">맵 조회</a>
-                        <a href="#">파일 로컬저장</a>
-                        <a href="#">유의사항</a>
-                    </div>
-                </li>
-                <li class="dropdown"><a href="#developer">개발자</a></li>
-            </ul>
-        </div>
-    </header>
+    <div class="header" style="background-color: gray;margin: 0;"></div>
+    <div class="nav-container">
+        <ul class="nav">
+            <li class="dropdown">
+                <a href="#home">서비스소개</a>
+                <div class="dropdown-content">
+                    <a href="#">번호인식 서비스</a>
+                    <a href="#">맵 조회 서비스</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="#news">서비스구성</a>
+                <div class="dropdown-content">
+                    <a href="#">Model</a>
+                    <a href="#">Web</a>
+                    <a href="#">Server</a>
+                    <a href="#">API</a>
+                    <a href="#">DB</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">서비스 이용방법</a>
+                <div class="dropdown-content">
+                    <a href="#">리스트 조회</a>
+                    <a href="#">맵 조회</a>
+                    <a href="#">파일 로컬저장</a>
+                    <a href="#">유의사항</a>
+                </div>
+            </li>
+            <li class="dropdown"><a href="#developer">개발자</a></li>
+        </ul>
+    </div>
     <div class="container">
         <h1 style="display: block;text-align:center; font-size: 50px; height: 100px;">Map Inquiry Service
             <i class="material-icons md-55">
