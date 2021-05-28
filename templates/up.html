@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    {% if alert %}<script>alert("이미지를 먼저 업로드 해주세요!")</script>{% endif %}
+    {% if alert==-1 %}<script>alert("이미지를 먼저 업로드 해주세요!")</script>{% endif %}
     <div class="container">
         <div id="frame3"><br>
             <h1>Data Abstract   <input type="button" value="버튼" onClick="location.href='http://localhost:5000/xlupload'"><input type="button" value="버튼" onClick="location.href='http://localhost:5000/'"></h1>

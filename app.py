@@ -306,7 +306,8 @@ def upload_page():
                                     car_lalo=lalo_file,
                                     car_source=plate_picture,
                                     nowtime=nowtime,
-                                    active=active)
+                                    active=active,
+                                    alert=0)
         except:
             alert=-1
             active=0
