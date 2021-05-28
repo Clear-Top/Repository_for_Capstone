@@ -1,0 +1,23 @@
+#icon{
+    font-size: 100px;
+    text-align: center;
+}
+
+#nav-sub{
+    text-align: center;
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 30%;   
+    /* transition: margin-left .5s;  */
+}
+
+.T{
+    font-weight: 900;
+    font-size: 22px;
+}
+
+.C{
+    font-weight: bolder;
+    font-size: 18px;
+}
