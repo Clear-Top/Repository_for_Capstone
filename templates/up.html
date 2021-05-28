@@ -2,26 +2,27 @@
 <html>
 
 <head>
-    <link href="{{url_for('static',filename='css/up.css')}}" rel="stylesheet">
-    <script type=" text/javascript" src="../static/js/btnactive.js"></script>
+    <script type="text/javascript" src="../static/js/btnactive.js"></script>
     <script type="text/javascript" src="../static/js/navigation.js"></script>
-
     <script src="https://kit.fontawesome.com/98399ba990.js" crossorigin="anonymous"></script>
+
+    <link href="{{url_for('static',filename='css/up.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../static/css/mainfooter.css">
     <link rel="stylesheet" href="../static/css/navigation.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="shortcut icon" href="#">
     <title>upload</title>
 </head>
 
 <body>
-    <div class="header" style="background-color: gray;margin: 0;"></div>
+    <div class="header" style="background-color: gray;margin: 0; height: 100px;"></div>
     <div class="nav-container">
         <ul class="nav">
             <li class="dropdown">
-                <a href="#home">서비스소개</a>
+                <a href="#">서비스소개</a>
                 <div class="dropdown-content">
-                    <a href="#">번호인식 서비스</a>
-                    <a href="#">맵 조회 서비스</a>
+                    <a href="http://localhost:5000/introductionList">번호인식 서비스</a>
+                    <a href="http://localhost:5000/introductionMap">맵 조회 서비스</a>
                 </div>
             </li>
             <li class="dropdown">
@@ -49,10 +50,17 @@
     {% if alert==-1 %}
     <script>alert("이미지를 먼저 업로드 해주세요!")</script>{% endif %}
     <div class="container">
+        <h1
+            style="display: block;text-align:center; font-size: 50px; height: 100px; margin-bottom: 0px;margin-top: 250px; margin-bottom: 30px;">
+            List Inquiry
+            Service
+            <i class="material-icons md-55" style="position: relative;top: 10px; height: 55px">
+                format_list_bulleted
+            </i>
+        </h1>
         <div id="frame3"><br>
-            <h1>Data Abstract <input type="button" value="버튼"
-                    onClick="location.href='http://localhost:5000/xlupload'"><input type="button" value="버튼"
-                    onClick="location.href='http://localhost:5000/'"></h1>
+            <input type="button" value="버튼" onClick="location.href='http://localhost:5000/xlupload'"><input
+                type="button" value="버튼" onClick="location.href='http://localhost:5000/'">
             <div id="right_box">
                 <form method=post enctype=multipart/form-data>
                     <div class="filebox">
