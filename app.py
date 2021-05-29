@@ -210,18 +210,14 @@ def upload_page():
                     try:
                         real_time=extractExif.get_exif_time(file.filename)
                         real_lalo=extractExif.get_coordinates(extractExif.get_geotagging(info))
-                
                         time_file.append(real_time)
                         lalo_file.append(real_lalo)
                         lalo_excel.append(real_lalo[0])
                         lalo_excel.append(real_lalo[1])
-                        #print(real_lalo)
-                        #print(type(real_lalo))
                     except:
                         real_time='None'
                         lalo_excel.append('None')
                         lalo_excel.append('None') 
-                        
                         time_file.append('None')
                         lalo_file.append('None')
                 else:
@@ -230,9 +226,7 @@ def upload_page():
                     lalo_excel.append('None')
                     time_file.append('None')
                     lalo_file.append('None')
-                # print(time)
-                # print(lalo)
-
+                
                 full_image, yolo_lp, cars = lpd(file)
                 upload_source = []
                 plate_num = []
@@ -305,8 +299,10 @@ def upload_page():
                 myzip.write(i)
             myzip.close()
             os.chdir(path)
-            if(len(plate_picture)>0):active=1
-            else :active=0
+            if(len(plate_picture)>0):
+                active=1
+            else:
+                active=0
             return render_template('up.html',
                                     img_src=u_src,
                                     car_num=plate_number,
@@ -316,7 +312,8 @@ def upload_page():
                                     nowtime=nowtime,
                                     active=active,
                                     alert=0)
-        except:
+        except Exception as e:
+            print("[SYS]",e)
             alert=-1
             active=0
             return render_template('up.html',alert=alert,active=active)

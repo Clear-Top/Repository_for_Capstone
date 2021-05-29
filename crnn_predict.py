@@ -55,7 +55,7 @@ def crnn_predict(img):
     model = get_Model(training=False)
 
     try:
-        model.load_weights("./DL/model/lpr/best2.hdf5")
+        model.load_weights("./DL/model/lpr/crnn-final.hdf5")
         print("...Previous weight data...")
     except:
         raise Exception("No weight file!")
