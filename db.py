@@ -130,7 +130,7 @@ def select_Date(carnum, conn, curs):
 
 def clear_Data(conn, curs):
     try:
-        sql = "delete from class1;"
+        sql = "truncate class1;"
         curs.execute(sql)
         conn.commit()
     finally:
