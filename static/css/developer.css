@@ -1,0 +1,20 @@
+.introduce_box{
+    background-color: white;
+    height : 1000px;
+    width : 1200px;
+    margin : auto;
+    border-radius: .5em;
+    text-align: center;
+}
+
+.person{
+    background-color: rgb(152, 144, 129);
+    height : 200px;
+    width : 200px;
+    margin-left:50px;
+    margin-right:50px;
+    float:left;
+    border-radius: 50% ;
+    position:relative;
+    text-align: center;
+}

@@ -54,6 +54,10 @@ def introductionList():
 def introductionMap():
     return render_template('introductionMap.html')
 
+@app.route('/developer')
+def developer():
+    return render_template('developer.html')
+
 
 @app.route('/searchCar', methods=['GET'])
 def search_carnum():
