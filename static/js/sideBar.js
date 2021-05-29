@@ -6,17 +6,22 @@ $(document).ready(function () {
     })
     $('#closeNav').click(function () {
         // alert('사이드바를 닫습니다.');
-        $('#nav-sub').fadeOut(500);
+        $('#nav-sub').fadeOut(300);
     })
 });
 
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
-    document.body.style.backgroundColor = "rgba(0,0,0,0.6)";
+    document.body.style.backgroundColor = "rgba(0,0,0,0.2)";
+    document.getElementById("main").style.opacity = 0.2;
+    var p = document.getElementsByClassName('logo');
+    p[0].style.opacity = 0.2;
 }
 function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
-    document.getElementById("main").style.marginLeft = "0";
+    document.getElementById("main").style.opacity = 1.0;
     document.body.style.backgroundColor = "white";
+    var p = document.getElementsByClassName('logo');
+    p[0].style.opacity = 1.0;
+
 }

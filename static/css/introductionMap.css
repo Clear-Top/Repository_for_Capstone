@@ -1,6 +1,18 @@
-#icon{
-    font-size: 100px;
-    text-align: center;
+
+*{
+    font-family: 'Noto Sans KR', sans-serif;
+}
+#logo{
+    width: 200px;
+    cursor: pointer;
+}
+
+.logo{
+    transition: 0.3s;
+}
+
+.logo:hover{
+    scale: (1.2,1.2);
 }
 
 #nav-sub{
@@ -9,7 +21,11 @@
     position: absolute;
     left: 50%;
     top: 30%;   
-    /* transition: margin-left .5s;  */
+}
+
+#nav-sub p{
+    font-size: large;
+    font-weight: bold;
 }
 
 .T{
@@ -20,4 +36,10 @@
 .C{
     font-weight: bolder;
     font-size: 18px;
+}
+
+#main{
+    background-color: rgb(210, 210, 210);
+    margin: 0 auto;
+    width: 1500px;
 }
