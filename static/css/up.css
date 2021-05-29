@@ -47,7 +47,7 @@ input{
   -webkit-apperance:none;
 }
 #right_box{
-  position: relative;
+ 
   background-color: rgb(152, 144, 129);
   height : 780px;
   width : 300px;
@@ -72,7 +72,7 @@ input{
 }
 .in_left_box1{
   overflow-y : scroll;
-  background-color:rgb(208,198 ,177 );
+  background-color:rgb(208,198,177);
   height : 450px;
   width : 550px;
   margin-top:30px;
@@ -89,7 +89,7 @@ input{
 
 .in_left_box2{
   overflow-y : scroll;
-  background-color:rgb(208,198 ,177 );
+  background-color:rgb(208,198,177);
   height : 450px;
   width : 380px;
   margin-top:30px;
@@ -106,7 +106,7 @@ input{
 }
 .in_left_box3{
   overflow-y: scroll;
-  background-color:rgb(208,198 ,177 );
+  background-color:rgb(208,198,177);
   height : 180px;
   width : 990px;
   margin-top:50px;
@@ -118,7 +118,7 @@ input{
   padding-bottom:20px;
   padding-right:20px;
   border-radius:.5em;
-  float :right;
+  float:right;
 }
 .download_box{
   background: gray;
