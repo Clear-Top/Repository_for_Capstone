@@ -128,6 +128,13 @@ def select_Date(carnum, conn, curs):
         # print(listData)
         return listData
 
+def clear_Data(conn, curs):
+    try:
+        sql = "delete from class1;"
+        curs.execute(sql)
+        conn.commit()
+    finally:
+        return None
 
 # 날짜 분리구문(년월일/시간)
 # select carnum, date_format(date,'%Y-%m-%d'),date_format(date,'%h:%i:%s') from class1 where carnum = '12가3456' order by date asc ;

@@ -126,7 +126,11 @@ def selectDate():
 
     return json.dumps(data)
 
-
+@app.route('/clearData', methods=['GET'])
+def clearData():
+    conn = db.connect_db()
+    curs = conn.cursor()
+    db.clearData(conn,curs)
 
 @app.route('/xlupload', methods=['GET', 'POST'])
 def upload_excel():
