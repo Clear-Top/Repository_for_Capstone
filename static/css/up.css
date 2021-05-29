@@ -129,6 +129,7 @@ input{
  border-radius: 10px 10px 10px 10px;
  border:0;
  outline:0;
+ opacity:0.7;
  text-align: center;
  line-height: 65px;
  font-size: x-large;
@@ -149,16 +150,23 @@ input{
  transition : transform 0.3s, opacity 0.3s;
  cursor : pointer;
 }
-
+.download_box:hover{
+  transform: scale(0.8,0.8);
+  opacity: 1.0; 
+}
 .linkbox:hover{
  transform: scale(0.8,0.8);
  opacity: 1.0;
 }
-
+.filebox label:hover{
+  transform:scale(0.8,0.8);
+  opacity:1.0;
+}
 .filebox label{
  display : inline-block;
  background: gray;
  position: center;
+ opacity:0.8;
  width: 260px;
  height: 130px;
  left: 10px;
