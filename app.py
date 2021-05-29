@@ -130,7 +130,7 @@ def selectDate():
 def clearData():
     conn = db.connect_db()
     curs = conn.cursor()
-    db.clearData(conn,curs)
+    db.clear_Data(conn,curs)
 
 @app.route('/xlupload', methods=['GET', 'POST'])
 def upload_excel():
@@ -147,7 +147,7 @@ def upload_excel():
             # 엑셀업로드+db반영
             conn = db.connect_db()  # DB연결
             curs = conn.cursor()    # cursor생성
-
+            db.clear_Data(conn,curs)  #DB초기화
             db.insert_test(file.filename, conn)  # test삽입
 
             data = readDB.data(curs, conn)
