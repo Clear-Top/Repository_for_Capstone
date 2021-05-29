@@ -11,10 +11,6 @@
     transition: 0.3s;
 }
 
-.logo:hover{
-    scale: (1.2,1.2);
-}
-
 #nav-sub{
     text-align: center;
     display: none;
