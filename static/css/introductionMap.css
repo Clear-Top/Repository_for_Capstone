@@ -2,6 +2,11 @@
 *{
     font-family: 'Noto Sans KR', sans-serif;
 }
+
+html, body {
+    margin: 0;
+}
+
 #logo{
     width: 200px;
     cursor: pointer;
@@ -9,6 +14,10 @@
 
 .logo{
     transition: 0.3s;
+}
+
+h1{
+    vertical-align: middle;
 }
 
 #nav-sub{
@@ -35,7 +44,58 @@
 }
 
 #main{
+    position: relative;
     background-color: rgb(210, 210, 210);
     margin: 0 auto;
+    margin-top: -44px;
     width: 1500px;
+    height: 1500px;
+    top: 0;
+}
+
+#main h1{
+    font-size: 50px;
+    text-align: center;
+    vertical-align:middle;
+    line-height: 100px;
+}
+
+#intro-image{
+    background-color: gray;
+    text-align: center;
+}
+
+/* DB 아이콘 */
+.material-icons.md-100 {
+    font-size: 150px;
+    height: 100px;
+    position: relative;
+}
+
+/* Map 아이콘 */
+.material-icons.md-101 {
+   font-size: 150px;
+   height: 100px;
+   position: relative;
+}
+
+/* Server 아이콘 */
+.material-icons.md-102 {
+   font-size: 150px;
+   height: 100px;
+   position: relative;
+}
+
+#intro-smallTitle{
+    background-color: darkgrey;
+    text-align: center;
+}
+
+.smallTitle{
+    font-size: 80px;
+    font-weight: bold;
+    height: 100px;
+    position: relative;
+    font-family: 'Noto Sans KR', sans-serif;
+    left: 30px;
 }
