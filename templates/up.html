@@ -50,17 +50,18 @@
     {% if alert==-1 %}
     <script>alert("이미지를 먼저 업로드 해주세요!")</script>{% endif %}
     <div class="container">
+        <h1><button class="linkbox" style= "float:left;" onClick="location.href='http://localhost:5000/'"><strong>번호인식 페이지 <i class="fas fa-mouse-pointer"></i></strong></button></h1>
         <h1
             style="display: block;text-align:center; font-size: 50px; height: 100px; margin-bottom: 0px;margin-top: 250px; margin-bottom: 30px;">
+            
             List Inquiry
             Service
             <i class="material-icons md-55" style="position: relative;top: 10px; height: 55px">
                 format_list_bulleted
             </i>
+            <button class="linkbox" style="float:right" onClick="location.href='http://localhost:5000/xlupload'"><strong>맵 조회 페이지 <i class="fas fa-mouse-pointer"></i></strong></button>
         </h1>
         <div id="frame3"><br>
-            <input type="button" value="버튼" onClick="location.href='http://localhost:5000/xlupload'"><input
-                type="button" value="버튼" onClick="location.href='http://localhost:5000/'">
             <div id="right_box">
                 <form method=post enctype=multipart/form-data>
                     <div class="filebox">

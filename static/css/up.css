@@ -116,13 +116,26 @@ input{
   left: 10px;
   margin-top: 30px; 
   border-radius: 10px 10px 10px 10px;
+  border:0;
+  outline:0;
   text-align: center;
   line-height: 65px;
   font-size: x-large;
   transition: transform 0.5s, opacity 0.5s;
   cursor: pointer;
 }
-
+.linkbox{
+  background:rgb(208,198 ,177 );
+  width:300px;
+  height:100px;
+  border-radius: 10px 10px 10px 10px;
+  line-height:50px;
+  font-size:x-large;
+  border:0;
+  outline:0;
+  transition : transform 0.5s, opacity 0.5s;
+  cursor : pointer;
+}
 .filebox label{
   display : inline-block;
   background: gray;
