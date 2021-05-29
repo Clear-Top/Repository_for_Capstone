@@ -17,17 +17,14 @@ h1{
     position: relative;
     bottom: 30px;
 }
-
 .bossContainer{
-  position: relative;
-  /* border-right: 5px solid black; */
-  /* border-left: 5px solid black; */
-  margin-left: 200px;
-  margin-right: 200px;
-  margin-bottom: 0;
-  height: 1400px;
-  top: 0;
-  background-color: rgb(230, 230, 230);
+    position: relative;
+    /* border-right: 5px solid black; */
+    /* border-left: 5px solid black; */
+    margin:0 auto;
+    
+    height: 1400px;
+    background-color: rgb(230, 230, 230);
 }
 
 .container{
