@@ -4,13 +4,12 @@ import writeExcel
 import searchCar
 from lpr import lpr
 from lpd import lpd
+from korlpr import korlpr
 from wpodnet import wpod_inf
 import db
 from pymysql import NULL
 import os.path
 import numpy as np
-import sys
-import argparse
 import cv2 as cv
 from flask import Flask, render_template, request
 import os
@@ -24,11 +23,7 @@ UPLOAD_FOLDER = '/static/uploads/'
 RESULT_FOLDER = './static/result/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 ALLOWED_EXCEL = set(['xlsx', 'xls'])
-kor_dict = ["가", "나", "다", "라", "마", "거", "너", "더", "러",
-            "머", "버", "서", "어", "저", "고", "노", "도", "로",
-            "모", "보", "소", "오", "조", "구", "누", "두", "루",
-            "무", "부", "수", "우", "주", "허", "하", "호"]
-num_dict = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+
 app = Flask(__name__)
 
 
@@ -211,8 +206,9 @@ def upload_page():
             for file in files :
             # check if the post request has the file part
                 if file and not allowed_file(file.filename):
-                    print(file.filename)
+                    print("[SYS] NOT ALLOWED FORMAT",file.filename)
                     continue
+                print("[SYS] Saving image")
                 file.save(os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
                 
                 print("[SYS]",os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
@@ -262,6 +258,7 @@ def upload_page():
                 
                 #Depend on Yolo_lp Detection 
                 if len(plates) == 0:
+                    print("[Plate NOT FOUND], Using [Yolo] Instead")
                     n = 0
                     for lp in yolo_lp:
                         try:
@@ -272,35 +269,19 @@ def upload_page():
                             n+=1
                         except:
                             continue
-                    print("[NOT FOUND], Using [Yolo] Instead")
-                print("[SYS] lpr ")
+                    
+                print("[SYS] lpr with correction")
                 for i, pic in enumerate(plates):
                     if pic is not None:
                         try:
                             print("[", i, "]", pic.shape)
-                            lp, prob = lpr(pic)
-                            print("[CRNN]",crnn_predict(pic))
-                            print("[LPRNet]",lp[0])
-                            plate_num.append(lp[0])
-                            plate_prob.append(float(prob[0][0]))
+                            lp, _ = lpr(pic)
+                            crnn_lp = crnn_predict(pic)
+                            final_lpr = korlpr(lp,crnn_lp)
+                            plate_num.append(final_lpr)
+                            writeExcel.write_excel(excel, final_lpr, real_time, UPLOAD_FOLDER, file.filename, lalo_excel[0],lalo_excel[1],nowtime)
                         except Exception as e:
                             print("[ERROR]", e)
-
-                for i in range(len(plate_num)):
-                    try:
-                        print("[PROB ", i, "]", plate_num[i],len(plate_num[i]))
-                        if plate_num[i][-5] not in kor_dict:
-                            print("wrong assumption")
-                            #TODO: Implement alternative algorithm for handling
-                        else:
-                            if (len(plate_num[i]) >= 7):
-                                print("right length")
-                                writeExcel.write_excel(excel, plate_num[i], real_time, UPLOAD_FOLDER, file.filename, lalo_excel[0],lalo_excel[1],nowtime)
-                            else:
-                                #TODO: Implement alternative algorithm
-                                print("wrong length")
-                    except Exception as e:
-                        print("[ERROR]", e)
                 plate_number.append(plate_num)
                 plate_picture.append(upload_source)
                 u_src.append(UPLOAD_FOLDER + full_image)
