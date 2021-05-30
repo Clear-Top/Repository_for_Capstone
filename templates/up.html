@@ -43,7 +43,7 @@
             <li class="dropdown">
                 <a href="javascript:void(0)" class="dropbtn">서비스 이용방법</a>
                 <div class="dropdown-content">
-                    <a href="#">리스트 조회</a>
+                    <a href="http://localhost:5000/howtolist">리스트 조회</a>
                     <a href="#">맵 조회</a>
                     <a href="#">파일 로컬저장</a>
                     <a href="#">유의사항</a>
@@ -96,11 +96,11 @@
                                 excel</strong></button></a>{% endif %}
                 </div>
                 <div id="left_box">
-                    <div class="in_left_box1" style="overflow-y:scroll;">
+                    <div class="in_left_box1" >
                         <h2>uploaded image</h2>{% if img_src %}{% for img in img_src %}<img src="{{ img }}"
                             style="width:500px;">{% endfor %}{% endif %}
                     </div>
-                    <div class="in_left_box2" style="overflow-y:scroll;">
+                    <div class="in_left_box2" >
                         <h2>transformed image</h2>{% if car_source %}{% for i in range(car_source|length) %}{% for j in
                         range(car_source[i]|length) %}<a href="{{car_source[i][j]}}"
                             download="{{nowtime}}/{{i}}/{{j}}"><img src="{{ car_source[i][j] }}"
