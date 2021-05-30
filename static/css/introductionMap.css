@@ -48,8 +48,8 @@ h1{
     background-color: rgb(210, 210, 210);
     margin: 0 auto;
     margin-top: -44px;
-    width: 1500px;
-    height: 1500px;
+    width: 1600px;
+    height: 1590px;
     top: 0;
 }
 
@@ -98,4 +98,41 @@ h1{
     position: relative;
     font-family: 'Noto Sans KR', sans-serif;
     left: 30px;
+}
+
+.intro-content{
+    margin: 0 auto;
+    position: relative;
+    margin-top: 50px;
+    width: 1200px;
+    height: 300px;
+}
+
+.intro-content-image{
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    transition: 0.3s;
+    z-index: 1;
+    /* background-color: honeydew; */
+}
+
+.intro-content-image:hover{
+    transform:scale(1.5,1.5);
+    z-index: 2;
+}
+
+.intro-content-contents{
+    position: absolute;
+    display: inline;
+    left: 300px;
+    margin-left: 30px;
+    padding-left: 30px;
+    /* background-color: green; */
+    width: 835px;
+    height: 300px;
+    float: right;
+    border-left: 4px solid rgba(180, 180, 180);
+    z-index: 0;
 }
