@@ -6,14 +6,14 @@
     <link rel="stylesheet" href="../static/css/introductionMap.css">
     <link rel="stylesheet" href="../static/css/sideBar.css">
     <link rel="stylesheet" href="../static/css/footer.css">
-    <link rel="stylesheet" href="../static/css/servicesmodel.css"
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/servicesmodel.css" <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
         integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <script src="../static/js/sideBar.js"></script>
     <script src="https://kit.fontawesome.com/98399ba990.js" crossorigin="anonymous"></script>
-    
+
     <link rel="shortcut icon" href="#">
 </head>
 
@@ -25,25 +25,26 @@
             onclick="alert('차찾자 서비스에 오신것을 환영합니다^^\nFrom. 군자동삼겹살 일동')" />
     </header>
 
-    <nav id="mySidenav" class="sidenav">
-        <a class="T" href="http://localhost:5000/"><i class="fas fa-home" style="font-size: 40px;"></i></a>
-        <a id="closeNav" href="javascript:void(0)" class="closebtn" onclick="closeNav();">&times;</a>
-        <a class="T" href="#">서비스구성</a>
-        <a class="C" href="http://localhost:5000/servicesmodel">&nbsp&nbsp&nbspModel</a>
-        <a class="C" href="http://localhost:5000/servicesweb">&nbsp&nbsp&nbspWeb</a>
-        <a class="C" href="http://localhost:5000/servicesserver">&nbsp&nbsp&nbspServer</a>
-        <a class="C" href="http://localhost:5000/servicesapi">&nbsp&nbsp&nbspAPI</a>
-        <a class="C" href="http://localhost:5000/servicesdb">&nbsp&nbsp&nbspDB</a>
-    </nav>
-    <aside style="display:inline-block; margin-top: 20px;margin-left: 30px;">
-        <span id="openNav" style="font-size:30px;cursor:pointer;" onclick="openNav();">&#9776;
-            Menu</span>
-    </aside>
+
 
     <div id="page">
         <div id="body">
+            <nav id="mySidenav" class="sidenav">
+                <a class="T" href="http://localhost:5000/"><i class="fas fa-home" style="font-size: 40px;"></i></a>
+                <a id="closeNav" href="javascript:void(0)" class="closebtn" onclick="closeNav();">&times;</a>
+                <a class="T" href="#">서비스구성</a>
+                <a class="C" href="http://localhost:5000/servicesmodel">&nbsp&nbsp&nbspModel</a>
+                <a class="C" href="http://localhost:5000/servicesweb">&nbsp&nbsp&nbspWeb</a>
+                <a class="C" href="http://localhost:5000/servicesserver">&nbsp&nbsp&nbspServer</a>
+                <a class="C" href="http://localhost:5000/servicesapi">&nbsp&nbsp&nbspAPI</a>
+                <a class="C" href="http://localhost:5000/servicesdb">&nbsp&nbsp&nbspDB</a>
+            </nav>
+            <aside style="display:inline-block; margin-top: 20px;margin-left: 30px;">
+                <span id="openNav" style="font-size:30px;cursor:pointer;" onclick="openNav();">&#9776;
+                    Menu</span>
+            </aside>
             <div class="header">
-                <div>
+                <div id="who">
                     <h1>Model</h1>
                     <ul>
                         <li>
@@ -56,10 +57,10 @@
                                     (2)License Plate Picture<br>
                                     YoloV4모델을 통해서 얻은 번호판 사진은 (1)에서 아무런 값도 획득하지 못했을 때 활용하도록 하였다.
                                     Wpod Net 또한 darknet을 기반으로 둔 모델이고 휘어진 번호판 사진을 보정해주는 역할을 한다.<br>
-                                    Wpod Net 및 YoloV4를 사용하여 Detection 및 de-skewing 과정을 진행한 후에는 
+                                    Wpod Net 및 YoloV4를 사용하여 Detection 및 de-skewing 과정을 진행한 후에는
                                     CRNN 모델을 이용하여 OCR 작업을 진행하였다.
                                 </p>
-                                
+
                             </div>
                         </li>
                         <li>
@@ -73,9 +74,10 @@
                             </div>
                         </li>
                         <li>
-                            <div class = "i">
+                            <div class="i">
                                 <h1>추상화</h1>
-                                <a href="#"><img class="im" src="../static/images/servicesmodel/totalPicture.jpg" alt=""></a>
+                                <a href="#"><img class="im" src="../static/images/servicesmodel/totalPicture.jpg"
+                                        alt=""></a>
                             </div>
                         </li>
                     </ul>
@@ -113,4 +115,5 @@
             @ 2021.CCC Corp., Inc.All rights reserved <br><br><br><br></p>
     </footer>
 </body>
+
 </html>
