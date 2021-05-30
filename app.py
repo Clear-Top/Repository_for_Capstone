@@ -53,6 +53,10 @@ def introductionMap():
 def developer():
     return render_template('developer.html')
 
+@app.route('/howtolist')
+def howtolist():
+    return render_template('howtolist.html')
+
 
 @app.route('/searchCar', methods=['GET'])
 def search_carnum():
