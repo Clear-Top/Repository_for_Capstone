@@ -295,6 +295,7 @@ hr{
     font-size: 36px;
     text-align: center;
     line-height: 65px;
+    cursor: pointer;
 }
 
 .material-icons.md-55 {
@@ -303,6 +304,9 @@ hr{
     line-height: 100px;
 }
 
+#clickAndUpload{
+    cursor: pointer;
+}
 
 #button1 input[type="file"] {  
     position: absolute; 
