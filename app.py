@@ -63,6 +63,22 @@ def howtolist():
 def servicesmodel():
     return render_template('servicesmodel.html')
 
+@app.route('/servicesweb')
+def servicesweb():
+    return render_template('servicesweb.html')
+
+@app.route('/servicesserver')
+def servicesserver():
+    return render_template('servicesserver.html')
+
+@app.route('/servicesapi')
+def servicesapi():
+    return render_template('servicesapi.html')
+
+@app.route('/servicesdb')
+def servicesdb():
+    return render_template('servicesdb.html')
+
 @app.route('/searchCar', methods=['GET'])
 def search_carnum():
     # print('submit해서 server옴')
