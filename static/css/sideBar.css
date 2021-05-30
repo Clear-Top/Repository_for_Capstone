@@ -16,6 +16,15 @@ body {
   padding-top: 60px;
 }
 
+.logo{
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.logo:hover{
+  transform: scale(1.2,1.2);
+}
+
 .sidenav a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;

@@ -16,6 +16,15 @@ body{
   z-index: 3;
 }
 
+.logo{
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.logo:hover{
+  transform: scale(1.2,1.2);
+}
+
 .nav-container{
   position: sticky;
   top: 100px;
@@ -56,10 +65,12 @@ body{
   margin-right: -6px;
   font-weight: bold;
   z-index: 1;
+  transition: all 0.3s;
 }
 
 .dropdown a:hover, .dropdown:hover .dropbtn {
-  background-color: red;
+  /* background-color: red; */
+  background-color: rgba(29,128,250,0.8);
 }
 
 .nav li.dropdown {
@@ -88,7 +99,7 @@ body{
   font-size: large;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1;}
+.dropdown-content a:hover {background-color: rgba(29,128,250,0.2);}
 
 .dropdown:hover .dropdown-content {
   display: block;
