@@ -59,6 +59,10 @@ def developer():
 def howtolist():
     return render_template('howtolist.html')
 
+@app.route('/howtomap')
+def howtomap():
+    return render_template('howtomap.html')
+
 @app.route('/servicesmodel')
 def servicesmodel():
     return render_template('servicesmodel.html')

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="../static/css/introductionList.css">
+    <link rel="stylesheet" href="../static/css/sideBar.css">
+    <link rel="stylesheet" href="../static/css/footer.css">
+    <link rel="stylesheet" href="../static/css/developer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <script src="../static/js/sideBar.js"></script>
+    <script src="https://kit.fontawesome.com/98399ba990.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header style="background-color: gray;margin: 0; height: 100px;"></header>
+    <nav id="mySidenav" class="sidenav" style="background-color: orange;">
+        <a class="T" href="http://localhost:5000/"><i class="fas fa-home" style="font-size: 40px;"></i></a>
+        <a id="closeNav" href="javascript:void(0)" class="closebtn" onclick="closeNav();">&times;</a>
+        <a class="T" href="#">서비스소개</a>
+        <a class="C" href="http://localhost:5000/introductionList">&nbsp&nbsp&nbsp번호인식 서비스</a>
+        <a class="C" href="http://localhost:5000/introductionMap">&nbsp&nbsp&nbsp맵 조회 서비스</a>
+    </nav>
+    <aside style="background-color: green;">
+        <span id="openNav" style="font-size:30px;cursor:pointer;" onclick="openNav();">&#9776; open<br></span>
+    </aside>
+    <article style="background-color: aqua; text-align: center;">
+        <h2 style="margin-top:0px;">맵 조회 이용방법</h2>
+        <!--<img src="../static/images/howtolist.png" style="margin-top:60px;margin-bottom: 60px;"><img src="../static/images/howtolist1.png" style="margin-top:60px;margin-bottom: 60px;">!-->
+            <div class="howtolist">
+                <div class="a">
+                    <img src="./static/images/howmap.png" style="float:left;position:relative;">
+                </div>
+                <p style="font-size:30px;float:left;text-align: left;">    
+                    <br>① : 엑셀 파일 선택
+                    <br>② : 클릭 시 업로드 실행
+                    <br>③ : 처음 돋보기 클릭 시 ④에 번호판 표시
+                    <br>③ : 번호판 검색 
+                    <br>④ : 번호판 표시, 번호판 클릭
+                    <br>⑤ : 번호판 새로고침
+                    <br>⑥ : ④의 번호판 클릭 시 마커 표시
+                    <br>⑦ : ⑥의 마커 클릭 시 데이터 표시
+                    <br>⑧ : ⑥의 마커 표시/미표시/제거
+                </p>
+            </div>
+    </article>
+    <div id="nav-sub">
+        <i id="icon" class="fas fa-map-marked-alt"></i>
+        <p>Follow me</p>
+        <p>on Twitter!</p>
+    </div>
+    <footer id=" main" class="footer-basic"> 
+        <div class="social">
+            <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://twitter.com/"><i class="fab fa-twitter"></i></a>
+            <a href="https://github.com/RaicLee/Capstone_Design"><i class="fab fa-github"></i></a>
+        </div>
+
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="http://127.0.0.1:5000/">Home</a></li>
+            <li class="list-inline-item"><a href="http://127.0.0.1:5000/xlupload">Services</a></li>
+            <li class="list-inline-item"><a href="#">About</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li>
+            <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+        </ul>
+        <p class="copyright">(주)차찾자 | 대표: 군자동 삼겹살 <br>
+            주소: 서울특별시 광진구 능동로 209<br>
+            개인정보 처리방침 | 서비스 이용 약관 <br><br>
+            @ 2021.CCC Corp., Inc.All rights reserved <br><br><br><br></p>
+    </footer>
+</body>
+
+</html>
