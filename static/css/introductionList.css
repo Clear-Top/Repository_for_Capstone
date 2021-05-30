@@ -59,6 +59,7 @@ h1 span{
     width: 1600px;
     height: 1900px;
     top: 0;
+    overflow: hidden;
 }
 
 #main h1{
@@ -185,6 +186,6 @@ h1 span{
 .intro-content-contents p:hover{
     display: block;
     transform-origin: left center;
-    transform: scale(1.2);
+    transform: scale(1.4);
     background-color: rgb(230,230,230);
 }
