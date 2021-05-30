@@ -1,3 +1,5 @@
+from zerodce import lowlight
+import torch
 import readDB
 import extractExif
 import writeExcel
@@ -235,10 +237,15 @@ def upload_page():
                     time_file.append('None')
                     lalo_file.append('None')
                 
+                print("[ZERODCE] enhancing")
+                try:
+                    with torch.no_grad():
+                        lowlight(os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
+                except Exception as ll:
+                    print("[ZeroDCE error]",ll)
                 full_image, yolo_lp, cars = lpd(file)
                 upload_source = []
                 plate_num = []
-                plate_prob = []
                 plates = []
 
                 print("[SYS] cars")
@@ -254,8 +261,6 @@ def upload_page():
                         plates.append(img)
                     except Exception as e:
                         print("[ERROR]", e)
-
-                
                 #Depend on Yolo_lp Detection 
                 if len(plates) == 0:
                     print("[Plate NOT FOUND], Using [Yolo] Instead")
@@ -277,6 +282,7 @@ def upload_page():
                             print("[", i, "]", pic.shape)
                             lp, _ = lpr(pic)
                             crnn_lp = crnn_predict(pic)
+                            #print(type(lp[0]),type(crnn_lp))
                             print("[LPRNet]",lp[0])
                             print("[CRNN]",crnn_lp)
                             final_lpr = korlpr(lp[0],crnn_lp)
