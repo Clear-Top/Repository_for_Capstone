@@ -28,10 +28,14 @@ h1 span{
     padding: 10px 30px 10px 30px;
 }
 
+#openNav{
+    position: fixed;
+}
+
 #nav-sub{
     text-align: center;
     display: none;
-    position: absolute;
+    position: fixed;
     left: 50%;
     top: 30%;   
 }
@@ -55,7 +59,7 @@ h1 span{
     position: relative;
     background-color: rgb(210, 210, 210);
     margin: 0 auto;
-    margin-top: -64px;
+    margin-top: -25px;
     width: 1600px;
     height: 1900px;
     top: 0;

@@ -202,5 +202,20 @@ body #page {
 	color: #a3a3a3;
 }
 
+.i h1{
+	position: relative;
+	left: 150px;
+}
+
+.i{
+	position: relative;
+	left: 300px;
+}
+
+.im{
+	width: 400px;
+	height: 400px;
+	overflow: visible;
+}
 
 
