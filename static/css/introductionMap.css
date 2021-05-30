@@ -49,7 +49,7 @@ h1{
     margin: 0 auto;
     margin-top: -44px;
     width: 1600px;
-    height: 1590px;
+    height: 1800px;
     top: 0;
 }
 
@@ -57,7 +57,16 @@ h1{
     font-size: 50px;
     text-align: center;
     vertical-align:middle;
-    line-height: 100px;
+    line-height: 80px;
+    margin-bottom: 10px;
+}
+
+#main h3{
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 50px;
+    font-weight: bold;
+
 }
 
 #intro-image{
@@ -92,6 +101,7 @@ h1{
 }
 
 .smallTitle{
+    font-style: normal;
     font-size: 80px;
     font-weight: bold;
     height: 100px;
@@ -103,7 +113,8 @@ h1{
 .intro-content{
     margin: 0 auto;
     position: relative;
-    margin-top: 50px;
+    margin-top: 100px;
+    margin-bottom: 100px;
     width: 1200px;
     height: 300px;
 }
@@ -119,7 +130,7 @@ h1{
 }
 
 .intro-content-image:hover{
-    transform:scale(1.5,1.5);
+    transform:scale(1.8,1.8);
     z-index: 2;
 }
 
@@ -135,4 +146,30 @@ h1{
     float: right;
     border-left: 4px solid rgba(180, 180, 180);
     z-index: 0;
+}
+
+.intro-content-contents h2{
+    display: inline-block;
+    font-style: italic;
+    font-weight: bold;
+    margin-bottom: 40px;
+    transition: 0.3s;
+}
+.intro-content-contents h2:hover{
+    transform-origin: left center;
+    transform: scale(2.0);
+}
+
+
+.intro-content-contents p{
+    margin-bottom: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.intro-content-contents p:hover{
+    display: block;
+    transform-origin: left center;
+    transform: scale(1.2);
+    background-color: rgb(230,230,230);
 }
