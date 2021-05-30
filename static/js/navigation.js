@@ -32,4 +32,8 @@ window.onload = function () {
         }
         prevScrollpos = currentScrollPos;
     }
+
+    $('.logo').click(function () {
+        location.href = 'http://localhost:5000';
+    })
 }

@@ -8,6 +8,9 @@ $(document).ready(function () {
         // alert('사이드바를 닫습니다.');
         $('#nav-sub').fadeOut(300);
     })
+    $('.logo').click(function () {
+        location.href = 'http://localhost:5000/';
+    })
 });
 
 function openNav() {
