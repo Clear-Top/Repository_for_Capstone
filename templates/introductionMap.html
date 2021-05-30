@@ -18,11 +18,11 @@
 
 <body>
     <header
-        style="background-color: rgba(128,128,128,1.0);margin: 0; height: 100px; text-align: center;line-height: 100px;">
+        style="background-color: rgba(128,128,128,1.0);margin: 0; height: 100px; text-align: center;line-height: 100px;position: sticky;top: 0;z-index: 2;">
         <img class="logo" src="../static/images/Logo.png" alt="Logo" style="width:150px;vertical-align: middle;"
             onclick="alert('차찾자 서비스에 오신것을 환영합니다^^\nFrom. 군자동삼겹살 일동')" />
     </header>
-    <nav id="mySidenav" class="sidenav">
+    <nav id="mySidenav" class="sidenav" style="z-index: 3;">
         <a class="T" href="http://localhost:5000/"><i class="fas fa-home" style="font-size: 40px;"></i></a>
         <a id="closeNav" href="javascript:void(0)" class="closebtn" onclick="closeNav();">&times;</a>
         <a class="T" href="#">서비스소개</a>
