@@ -273,7 +273,9 @@ def upload_page():
                             print("[", i, "]", pic.shape)
                             lp, _ = lpr(pic)
                             crnn_lp = crnn_predict(pic)
-                            final_lpr = korlpr(lp,crnn_lp)
+                            print("[LPRNet]",lp[0])
+                            print("[CRNN]",crnn_lp)
+                            final_lpr = korlpr(lp[0],crnn_lp)
                             plate_num.append(final_lpr)
                             writeExcel.write_excel(excel, final_lpr, real_time, UPLOAD_FOLDER, file.filename, lalo_excel[0],lalo_excel[1],nowtime)
                         except Exception as e:
