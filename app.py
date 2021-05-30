@@ -59,6 +59,9 @@ def developer():
 def howtolist():
     return render_template('howtolist.html')
 
+@app.route('/servicesmodel')
+def servicesmodel():
+    return render_template('servicesmodel.html')
 
 @app.route('/searchCar', methods=['GET'])
 def search_carnum():
