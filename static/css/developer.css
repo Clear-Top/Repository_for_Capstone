@@ -26,3 +26,9 @@
     text-align: center;
     position: relative;
 }
+.a img{
+    transition: all 0.1s linear;
+}
+.a:hover img{
+    transform : scale(1.2);
+}
