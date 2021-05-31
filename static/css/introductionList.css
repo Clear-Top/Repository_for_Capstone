@@ -56,7 +56,7 @@ h1 span{
     background-color: rgb(210, 210, 210);
     margin: 0 auto;
     margin-top: -64px;
-    width: 1600px;
+    width: 1200px;
     height: 1900px;
     top: 0;
     overflow: hidden;
@@ -87,7 +87,7 @@ h1 span{
     background-color: rgba(128, 128, 128,0.5);
     text-align: center;
     width: 600px;
-    left: 31%;
+    left: 25%;
     border-radius: 25px;
     margin-bottom: 20px;
 }
@@ -111,7 +111,7 @@ h1 span{
     background-color: rgba(128, 128, 128,0.5);
     text-align: center;
     width: 600px;
-    left: 31%;
+    left: 25%;
     border-radius: 25px;
     margin-bottom: 20px;
 }
@@ -137,6 +137,7 @@ h1 span{
 
 .intro-content-image{
     position: absolute;
+    margin-left: 30px;
     width: 300px;
     height: 300px;
     object-fit: cover;
@@ -153,7 +154,7 @@ h1 span{
 .intro-content-contents{
     position: absolute;
     display: inline;
-    left: 300px;
+    left: 330px;
     margin-left: 30px;
     padding-left: 30px;
     /* background-color: green; */
@@ -179,13 +180,13 @@ h1 span{
 
 .intro-content-contents p{
     margin-bottom: 30px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     transition: 0.3s;
 }
 .intro-content-contents p:hover{
     display: block;
     transform-origin: left center;
-    transform: scale(1.4);
+    transform: scale(1.2);
     background-color: rgb(230,230,230);
 }
