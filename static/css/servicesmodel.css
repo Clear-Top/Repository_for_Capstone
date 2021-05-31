@@ -5,6 +5,12 @@ body {
 	position: relative;
 	width: auto;
 }
+
+header{
+	position: sticky;
+	top: 0;
+}
+
 body #page {
 	
 	margin: 0;
