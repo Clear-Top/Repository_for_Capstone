@@ -63,6 +63,14 @@ def howtolist():
 def howtomap():
     return render_template('howtomap.html')
 
+@app.route('/howtosave')
+def howtosave():
+    return render_template('howtosave.html')
+
+@app.route('/howtowarn')
+def howtowarn():
+    return render_template('howtowarn.html')
+
 @app.route('/servicesmodel')
 def servicesmodel():
     return render_template('servicesmodel.html')
