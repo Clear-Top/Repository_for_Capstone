@@ -269,11 +269,13 @@ def upload_page():
                     lalo_file.append('None')
                 
                 print("[ZERODCE] enhancing")
+                """
                 try:
                     with torch.no_grad():
                         lowlight(os.path.join(os.getcwd() + UPLOAD_FOLDER, file.filename))
                 except Exception as ll:
                     print("[ZeroDCE error]",ll)
+                """
                 full_image, yolo_lp, cars = lpd(file)
                 upload_source = []
                 plate_num = []
@@ -285,11 +287,29 @@ def upload_page():
                 for i, c in enumerate(cars):
                     try:
                         img = wpod_inf(c)
+
+                        #img is deskewed lp
+                        lp, _ = lpr(img)
+                        crnn_lp = crnn_predict(img)
+                        
+                        print("[LPRNet]",lp[0])
+                        print("[CRNN]",crnn_lp)
+                        final_lpr = korlpr(lp[0],crnn_lp)
+                        if final_lpr is not None and len(final_lpr) == 0:
+                            print("[korlpr] returned none")
+                            continue
+
+                        #Saving Deskewed LP image
                         cv.imwrite("./static/result/"+full_image.rsplit(".")[0]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
-                        cv.imwrite("./static/result/"+full_image.rsplit(".")[0]+"_car"+str(i)+".jpg", c.astype(np.uint8))
+                        #cv.imwrite("./static/result/"+full_image.rsplit(".")[0]+"_car"+str(i)+".jpg", c.astype(np.uint8))
+                        
+                        #Saving the source
                         upload_source.append("/static/result/"+full_image.rsplit(".")[0]+"_wp"+str(i)+".jpg")
                         zipname.append(full_image.rsplit(".")[0]+"_wp"+str(i)+".jpg")
+                        
                         plates.append(img)
+                        plate_num.append(final_lpr)
+                        writeExcel.write_excel(excel, final_lpr, real_time, UPLOAD_FOLDER, file.filename, lalo_excel[0],lalo_excel[1],nowtime)
                     except Exception as e:
                         print("[ERROR]", e)
                 #Depend on Yolo_lp Detection 
@@ -299,6 +319,7 @@ def upload_page():
                     for lp in yolo_lp:
                         try:
                             cv.imwrite("./static/result/"+full_image.rsplit(".")[0]+"_yv4_"+str(n)+".jpg",lp.astype(np.uint8))
+                            
                             plates.append(lp)
                             upload_source.append("/static/result/"+full_image.rsplit(".")[0]+"_yv4_"+str(n)+".jpg")
                             zipname.append(full_image.rsplit(".")[0]+"_yv4_"+str(n)+".jpg")
@@ -306,6 +327,8 @@ def upload_page():
                         except:
                             continue
                     
+
+                """
                 print("[SYS] lpr with correction")
                 for i, pic in enumerate(plates):
                     if pic is not None:
@@ -317,10 +340,14 @@ def upload_page():
                             print("[LPRNet]",lp[0])
                             print("[CRNN]",crnn_lp)
                             final_lpr = korlpr(lp[0],crnn_lp)
+                            if len(final_lpr) == 0:
+                                print("[korlpr returned none")
+                                continue
                             plate_num.append(final_lpr)
                             writeExcel.write_excel(excel, final_lpr, real_time, UPLOAD_FOLDER, file.filename, lalo_excel[0],lalo_excel[1],nowtime)
                         except Exception as e:
                             print("[ERROR]", e)
+                """
                 plate_number.append(plate_num)
                 plate_picture.append(upload_source)
                 u_src.append(UPLOAD_FOLDER + full_image)
