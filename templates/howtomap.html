@@ -12,47 +12,76 @@
         integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <script src="../static/js/sideBar.js"></script>
     <script src="https://kit.fontawesome.com/98399ba990.js" crossorigin="anonymous"></script>
+    <style>
+        #openNav {
+            position: fixed;
+            z-index: 2;
+        }
+
+        #nav-sub {
+            text-align: center;
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 30%;
+            z-index: 2;
+        }
+
+        #nav-sub p {
+            font-size: large;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
-    <header style="background-color: gray;margin: 0; height: 100px;"></header>
-    <nav id="mySidenav" class="sidenav" style="background-color: orange;">
+    <header
+        style="background-color: rgba(128,128,128,1.0);margin: 0; height: 100px; text-align: center;line-height: 100px;position: sticky;top: 0;z-index: 2;">
+        <img class="logo" src="../static/images/Logo.png" alt="Logo" style="width:150px;vertical-align: middle;" />
+    </header>
+    <nav id="mySidenav" class="sidenav" style="background-color: #000000;z-index: 3;">
         <a class="T" href="http://localhost:5000/"><i class="fas fa-home" style="font-size: 40px;"></i></a>
         <a id="closeNav" href="javascript:void(0)" class="closebtn" onclick="closeNav();">&times;</a>
-        <a class="T" href="#">서비스소개</a>
-        <a class="C" href="http://localhost:5000/introductionList">&nbsp&nbsp&nbsp번호인식 서비스</a>
-        <a class="C" href="http://localhost:5000/introductionMap">&nbsp&nbsp&nbsp맵 조회 서비스</a>
+        <a class="T" href="#">서비스 이용방법</a>
+        <a class="C" href="http://localhost:5000/howtolist">&nbsp&nbsp&nbsp리스트 조회</a>
+        <a class="C" href="http://localhost:5000/howtomap">&nbsp&nbsp&nbsp맵 조회</a>
+        <a class="C" href="http://localhost:5000/howtosave">&nbsp&nbsp&nbsp파일 로컬저장</a>
+        <a class="C" href="http://localhost:5000/howtowarn">&nbsp&nbsp&nbsp유의사항</a>
     </nav>
-    <aside style="background-color: green;">
-        <span id="openNav" style="font-size:30px;cursor:pointer;" onclick="openNav();">&#9776; open<br></span>
-    </aside>
-    <article style="background-color: aqua; text-align: center;">
-        <h2 style="margin-top:0px;">맵 조회 이용방법</h2>
+    <article style="background-color: #d2d2d2; text-align: center;">
+        <aside style="text-align: left;position: fixed;z-index: 2;">
+            <span id="openNav" style="font-size:30px;cursor:pointer;margin: 20px 10px 10px 10px;"
+                onclick="openNav();">&#9776;
+                Menu<br></span>
+        </aside>
         <!--<img src="../static/images/howtolist.png" style="margin-top:60px;margin-bottom: 60px;"><img src="../static/images/howtolist1.png" style="margin-top:60px;margin-bottom: 60px;">!-->
-            <div class="howtolist">
-                <div class="a">
-                    <img src="./static/images/howmap.png" style="float:left;position:relative;margin-right:20px;">
-                </div>
-                <p style="font-size:30px;float:left;text-align: left;margin-top: -30px;margin-left:20px;">    
-                    <br>① : 엑셀 파일 선택
-                    <br>② : 클릭 시 업로드 실행
-                    <br>③ : 번호판 검색기능 
-                    <br>③ : 처음 돋보기 클릭 시 ④에 번호판 표시
-                    <br>④ : 번호판 표시, 번호판 클릭
-                    <br>⑤ : 번호판 새로고침
-                    <br>⑥ : ④의 번호판 클릭 시 마커 표시
-                    <br>⑦ : ⑥의 마커 클릭 시 데이터 표시
-                    <br>⑧ : ⑥의 마커 표시/미표시/제거
-                    <br>⑨ : 시간별 마커목록 표시/클릭시 ⑦ 표시
-                </p>
+        <div id="main" style="background-color: #d2d2d2;width: 1500px;margin-top: 0px;overflow: visible;">
+            <h2 style="margin-top:0px;">맵 조회 이용방법</h2>
+            <div class="a">
+                <img src="./static/images/howmap.png" style="float:left;position:relative;margin-right:20px;">
             </div>
+            <p style="font-size:30px;float:left;text-align: left;margin-top: -30px;margin-left:20px;">
+                <br>① : 엑셀 파일 선택
+                <br>② : 클릭 시 업로드 실행
+                <br>③ : 번호판 검색기능
+                <br>③ : 처음 돋보기 클릭 시 ④에 번호판 표시
+                <br>④ : 번호판 표시, 번호판 클릭
+                <br>⑤ : 번호판 새로고침
+                <br>⑥ : ④의 번호판 클릭 시 마커 표시
+                <br>⑦ : ⑥의 마커 클릭 시 데이터 표시
+                <br>⑧ : ⑥의 마커 표시/미표시/제거
+                <br>⑨ : 시간별 마커목록 표시/클릭시 ⑦ 표시
+            </p>
+        </div>
     </article>
     <div id="nav-sub">
-        <i id="icon" class="fas fa-map-marked-alt"></i>
-        <p>Follow me</p>
-        <p>on Twitter!</p>
+        <!-- <i id="icon" class="fas fa-map-marked-alt"></i> -->
+        <img class="logo" id="logo" src="../static/images/Logo.png" alt="Logo"
+            onclick="alert('차찾자 서비스에 오신것을 환영합니다^^\nFrom. 군자동삼겹살 일동')" />
+        <p>차찾자 Corp.</p>
+        <p>LPR-based Data Visualization Services</p>
     </div>
-    <footer id=" main" class="footer-basic"> 
+    <footer id=" main" class="footer-basic">
         <div class="social">
             <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
             <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
