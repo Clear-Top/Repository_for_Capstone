@@ -295,7 +295,7 @@ def upload_page():
                         print("[LPRNet]",lp[0])
                         print("[CRNN]",crnn_lp)
                         final_lpr = korlpr(lp[0],crnn_lp)
-                        if final_lpr is not None and len(final_lpr) == 0:
+                        if final_lpr is not None and len(final_lpr) == 1:
                             print("[korlpr] returned none")
                             continue
 
@@ -316,11 +316,22 @@ def upload_page():
                 if len(plates) == 0:
                     print("[Plate NOT FOUND], Using [Yolo] Instead")
                     n = 0
-                    for lp in yolo_lp:
+                    for lic in yolo_lp:
                         try:
-                            cv.imwrite("./static/result/"+full_image.rsplit(".")[0]+"_yv4_"+str(n)+".jpg",lp.astype(np.uint8))
+                            lp, _ = lpr(lic)
+                            crnn_lp = crnn_predict(lic)
+                            
+                            print("[LPRNet]",lp[0])
+                            print("[CRNN]",crnn_lp)
+                            final_lpr = korlpr(lp[0],crnn_lp)
+                            if final_lpr is not None and len(final_lpr) == 1:
+                                print("[korlpr] returned none")
+                                continue
+                            cv.imwrite("./static/result/"+full_image.rsplit(".")[0]+"_yv4_"+str(n)+".jpg",lic.astype(np.uint8))
+                            writeExcel.write_excel(excel, final_lpr, real_time, UPLOAD_FOLDER, file.filename, lalo_excel[0],lalo_excel[1],nowtime)
                             
                             plates.append(lp)
+                            plate_num.append(final_lpr)
                             upload_source.append("/static/result/"+full_image.rsplit(".")[0]+"_yv4_"+str(n)+".jpg")
                             zipname.append(full_image.rsplit(".")[0]+"_yv4_"+str(n)+".jpg")
                             n+=1
