@@ -17,14 +17,14 @@ function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
     document.body.style.backgroundColor = "rgba(0,0,0,0.2)";
     document.getElementById("main").style.opacity = 0.2;
-    document.getElementById("main2").style.opacity = 0.2;
+    document.getElementById("head").style.opacity = 0.2;
     var p = document.getElementsByClassName('logo');
     p[0].style.opacity = 0.2;
 }
 function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
     document.getElementById("main").style.opacity = 1.0;
-    document.getElementById("main2").style.opacity = 1.0;
+    document.getElementById("head").style.opacity = 1.0;
     document.body.style.backgroundColor = "white";
     var p = document.getElementsByClassName('logo');
     p[0].style.opacity = 1.0;
