@@ -8,6 +8,11 @@ html, body {
     margin: 0;
 }
 
+#head{
+    opacity: 1.0;
+    transition: 0.3s;
+}
+
 #logo{
     width: 200px;
     cursor: pointer;
