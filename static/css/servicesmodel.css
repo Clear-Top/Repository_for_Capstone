@@ -9,6 +9,7 @@ body {
 header{
 	position: sticky;
 	top: 0;
+	z-index: 1;
 }
 
 body #page {
@@ -17,7 +18,7 @@ body #page {
 	overflow: hidden;
 	padding: 0;
 	width: auto;
-	z-index: 3;
+	z-index: 0;
 }
 
 #body{
@@ -85,6 +86,11 @@ body #page {
 	padding: 0;
 	width: 380px;
 }
+
+.im{
+	z-index: 0;
+}
+
 #body .header div ul li a img {
 	cursor: pointer;
 	opacity: 1.0;
@@ -211,7 +217,7 @@ body #page {
 
 .i h1{
 	position: relative;
-	left: 260px;
+	left: 170px;
 }
 
 .i{
@@ -232,4 +238,8 @@ body #page {
     width: 600px;
     height: 400px;
     overflow: scroll;
+}
+
+li{
+	z-index: 0;
 }
