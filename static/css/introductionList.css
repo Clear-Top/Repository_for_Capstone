@@ -147,7 +147,8 @@ h1 span{
 }
 
 .intro-content-image:hover{
-    transform:scale(1.8,1.8);
+    transform-origin: left bottom;
+    transform:scale(1.8);
     z-index: 2;
 }
 
