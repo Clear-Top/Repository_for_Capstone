@@ -114,7 +114,7 @@ class LPRNet:
         samples, times = pred.shape[:2]
         input_length = tf.convert_to_tensor([times] * samples)
         decodeds, logprobs = tf.keras.backend.ctc_decode(pred, input_length, greedy=True, beam_width=100, top_paths=1)
-        #print("[SYS]", logprobs)
+        #print("[SYS]", logprobs[0])
         decodeds = np.array(decodeds[0])
 
         results = []
@@ -125,7 +125,7 @@ class LPRNet:
                     break
                 text.append(classnames[idx])
             results.append(''.join(text))
-        return results,logprobs
+        return results,logprobs[0]
 
     def save_weights(self, filepath):
         self.model.save_weights(filepath)

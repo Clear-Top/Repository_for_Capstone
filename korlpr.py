@@ -53,7 +53,9 @@ def korlpr(lprnet,crnn):
                 #both right length
                 if (check_appropriate(lprnet) and check_appropriate(crnn)):
                     if lprnet[-5] != crnn[-5] and len(lprnet) == len(crnn):
+                        #if lprnet[-4:] == crnn[-4:] and lprnet[-7:-5] == crnn[-7:-5]:
                         return lprnet[:-5]+crnn[-5]+lprnet[-4:]
+                        
                     else:
                         return lprnet
                 elif check_appropriate(lprnet) == 1:

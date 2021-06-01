@@ -343,9 +343,10 @@ def upload_page():
                     n = 0
                     for lic in yolo_lp:
                         try:
-                            lp, _ = lpr(lic)
+                            lp, p = lpr(lic)
                             crnn_lp = crnn_predict(lic)
                             print("[LPRNet]", lp[0])
+                            #print("[prob]", np.float32(p))
                             print("[CRNN]", crnn_lp)
                             final_lpr = korlpr(lp[0], crnn_lp)
                             if final_lpr is not None and len(final_lpr) == 1:
