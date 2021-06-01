@@ -10,6 +10,7 @@ header{
 	position: sticky;
 	top: 0;
 	z-index: 1;
+	width: auto;
 }
 
 body #page {
@@ -28,7 +29,7 @@ body #page {
 	overflow: hidden;
 	padding: 0;
 	width: 100%;
-    height: 100%;
+	height: 1700px;
 }
 
 #body .header div {
@@ -49,14 +50,13 @@ body #page {
 	padding: 0;
 	text-align: center;
 	text-transform: uppercase;
-	width: 1200px;
+	width: 940px;
 }
 
 #body .header {
 	margin: 0 auto;
 	padding: 0;
 	width: 100%;
-	height: 1400px;
 }
 #body .header div ul {
 	display: inline-block;
@@ -76,7 +76,6 @@ body #page {
 	overflow: hidden;
 	padding: 38px 0;
 	width: auto;
-    height: auto;
 }
 #body .header div ul li a {
 	display: block;
@@ -122,6 +121,7 @@ body #page {
 	text-align: left;
 	text-transform: uppercase;
 	width: 520px;
+	height: 10px;
 }
 #body .header div ul li div p {
 	color: #3d0808;
@@ -141,12 +141,13 @@ body #page {
 	font-family: Arial;
 	font-size: 14px;
 	font-weight: normal;
-	height: auto;
 	line-height: 24px;
 	margin: 0;
 	padding: 0;
 	text-decoration: underline;
+	height: auto;
 	width: auto;
+
 }
 #body .header div ul li div p a:hover {
 	color: #a3a3a3;
@@ -174,21 +175,9 @@ body #page {
 	display: block;
 	margin: 0 auto;
 	padding: 3px 0 0;
-	width: auto;
+
 }
-#body .header div h2 {
-	color: #A3A3A3;
-	display: block;
-	font-family: audiowide-regular-webfont;
-	font-size: 23px;
-	font-weight: normal;
-	line-height: 23px;
-	margin: 0 auto;
-	padding: 53px 0 27px;
-	text-align: center;
-	text-transform: uppercase;
-	width: 780px;
-}
+
 #body .header div p {
 	color: #FFFFFF;
 	display: block;
@@ -225,7 +214,7 @@ body #page {
 	overflow: visible;
 	left: 200px;
 	width: 900px;
-	height: 2000px;
+	height: 1000px;
 }
 
 
