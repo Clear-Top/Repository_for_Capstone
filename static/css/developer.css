@@ -1,6 +1,7 @@
 .introduce_box{
     background-color: pink;
-    height : 1000px;
+    padding-top:80px;
+    height : 800px;
     width : 1200px;
     margin : auto;
     border-radius: .5em;
@@ -17,6 +18,9 @@
     border-radius: 50% ;
     position:relative;
     text-align: center;
+}
+.person:hover img{
+    transform : scale(1.4);
 }
 .howtolist{
     background-color: aqua;
