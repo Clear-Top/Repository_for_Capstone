@@ -115,13 +115,11 @@ def servicesdb():
 
 @app.route('/searchCar', methods=['GET'])
 def search_carnum():
-    # print('submit해서 server옴')
     toggle = 0
     temp = ""
     data = ""
     temp = request.args.get('id')
     # temp = request.form.get('search', False)
-    print("검색한 번호 : " + str(temp))
     conn = db.connect_db()
     curs = conn.cursor()
     if(temp == ""):
@@ -130,13 +128,11 @@ def search_carnum():
         tp = db.select_data(temp, conn, curs)
         data = tp[0]
 
-    print(data)
     conn.close()
     if data[0] == "No":
         toggle = 0
     else:
         toggle = 1
-    # print(toggle)
     json_object = {
         "carnum": data,
         "toggle": toggle
@@ -168,8 +164,6 @@ def searchData():
             longt=data[0][j+4]
         ))
         j = j + 5
-
-    print(list)
 
     return json.dumps(list)
 
@@ -224,20 +218,15 @@ def search_carnum():
         toggle = 0
         temp = ""
         temp = request.args.get('search')
-        print("검색한 번호 : " + temp)
         conn = db.connect_db()
         curs = conn.cursor()
         data = db.select_data(temp, conn, curs)
 
-        print(data)
-
         conn.close()
         if(data == "No"):
-            # print('검출실패!')
             toggle = 0
             return render_template('mapPage.html', carnum="없는 데이터입니다.", askInsert=toggle)
         else:
-            # print('검출성공!')
             toggle = 1
             return render_template('mapPage.html', carnum=data, askInsert=toggle)
 
