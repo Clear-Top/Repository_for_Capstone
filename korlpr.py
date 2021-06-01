@@ -11,6 +11,8 @@ num_dict = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 def korlpr(lprnet,crnn):
     def check_appropriate(st):
         isokay = 1
+        if len(st)<=6:
+            isokay = 0
         if (st[-1] not in num_dict):
             isokay = 0
         if (st[-2] not in num_dict):
@@ -35,14 +37,11 @@ def korlpr(lprnet,crnn):
         #1 first check length
         #length should be over 7 characters
         if len(lprnet) < 7:
-            if len(crnn) < 7:
-                return " "
-            else:
-                #return crnn value
-                if (check_appropriate(crnn)):
-                    return crnn
-                else:
+            if check_appropriate(crnn):
+                if len(lprnet) < 5:
                     return " "
+                return crnn
+            return " "
         else:
             #lprnet has right length
             if len(crnn) < 7:
@@ -53,10 +52,13 @@ def korlpr(lprnet,crnn):
             else:
                 #both right length
                 if (check_appropriate(lprnet) and check_appropriate(crnn)):
+                    if lprnet[-5] != crnn[-5] and len(lprnet) == len(crnn):
+                        return lprnet[:-5]+crnn[-5]+lprnet[-4:]
+                    else:
+                        return lprnet
+                elif check_appropriate(lprnet) == 1:
                     return lprnet
-                elif check_appropriate(lprnet):
-                    return lprnet
-                elif check_appropriate(crnn):
+                elif check_appropriate(crnn) == 1:
                     return crnn
                 else:
                     return " "
