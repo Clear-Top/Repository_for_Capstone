@@ -7,7 +7,8 @@
     <meta charset="UTP-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- <script src="../static/js/html2canvas.js"></script> -->
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <!-- <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script> -->
+    <script type="text/javascript" src="../static/js/html2canvas.js"></script>
     <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4a81af8fef0943a32040477087ec034a&libraries=services,clusterer"></script>
     <script type="text/javascript" src="../static/js/navigation.js"></script>
@@ -192,9 +193,10 @@
                     <div class="inquiry time">발견시각 :</div>
                     <div style="position: absolute;top: 510px;left: 250px;">
                         <!-- onclick="sortData(this)" -->
-                        <button disabled="disabled" type="button" id="sortData" onclick="capture()"
-                            style="width: 100px;height: 30px;border-radius: 5px;"
-                            data-html2canvas-ignore="true">캡쳐실행</button>
+                        <button disabled="disabled" type="button" id="sortData"
+                            onclick="capture(document.getElementById('instanceBox'));"
+                            style=" width: 100px;height: 30px;border-radius: 5px;"
+                            data-html2canvas-ignore="true">캡처실행</button>
                     </div>
                 </div>
             </div>
@@ -787,48 +789,94 @@
                     $(saveBlink).toggleClass("blink");
                 }
 
-                function capture() {
-                    alert('캡쳐실행!');
-                    var target = document.getElementById('instanceBox');
-                    var bordStyle = target.style.border;
-                    alert(bordStyle);
-                    target.style.border = 'none';
-                    html2canvas(document.getElementById("instanceBox")).then(function (canvas) {
-                        saveAs(canvas.toDataURL(), carnumForCapture + '.jpg');
+                // 캡처방안 1
+                // function capture() {
+                //     // alert('캡쳐실행!');
+                //     var target = document.getElementById('instanceBox');
+                //     var bordStyle = target.style.border;
+                //     // alert(bordStyle);
+                //     target.style.border = 'none';
+                //     html2canvas(document.getElementById("instanceBox")).then(function (canvas) {
+                //         saveAs(canvas.toDataURL(), carnumForCapture + '.jpg');
+                //         alert('캡쳐파일 저장완료!');
+                //     });
+                //     target.style.border = bordStyle;
+                // }
+                // function saveAs(uri, filename) {
+                //     alert(filename + ' 저장실행 중...');
+                //     var link = document.createElement('a');
+                //     if (typeof link.download === 'string') {
+                //         link.href = uri;
+                //         link.download = filename;
+                //         //Firefox requires the link to be in the body
+                //         document.body.appendChild(link);
+
+                //         //simulate click
+                //         link.click();
+
+                //     } else {
+                //         window.open(uri);
+                //         alert('저장실패!');
+                //     }
+                // }
+
+                // 캡처방안 2
+                //이미지(png)로 다운로드
+
+                function capture(div) {
+                    var scrollValue = $(document).scrollTop();  // 현재스크롤 위치 저장
+                    var bordStyle = div.style.border;
+                    // alert(bordStyle);
+                    $('html').scrollTop(0);                     // 캡처를 위해서 맨위로 올리기
+
+                    $(div).css({
+                        "position": "absolute",
+                        "top": "0px",
+                        "left": "0px",
+                        "border": "none"
                     });
-                    target.style.border = bordStyle;
-                }
-                function saveAs(uri, filename) {
-                    alert(filename + ' 저장실행 중...');
-                    var link = document.createElement('a');
-                    if (typeof link.download === 'string') {
-                        link.href = uri;
-                        link.download = filename;
-                        link.click();
-                        alert(filename + ' 저장완료!');
-                    } else {
-                        window.open(uri);
-                        alert('저장실패!');
-                    }
+                    PrintDiv(div);
+                    $(div).css({
+                        "position": "absolute",
+                        "top": "30%",
+                        "left": "5px",
+                        "border": bordStyle
+                    })
+                    $('html').scrollTop(scrollValue);
                 }
 
-                function sortData(a) {
-                    $.ajax({
-                        type: 'GET',
-                        url: '/selectDate',
-                        data: { id: a.innerHTML },
-                        dataType: 'JSON',
-                        success: function (result) {
-                            for (i = 0; i < result.length; i++) {
-                                alert(result[i]['title'] + " " + result[i]['date']);
-                            }
-                        },
-                        error: function (request, status, error) {
-                            alert(request + ";" + status + ";" + error);
-                            alert('ajax error!');
-                        }
+                function PrintDiv(div) {
+                    html2canvas(div).then(function (canvas) {
+                        var myImage = canvas.toDataURL();
+                        downloadURI(myImage, "저장이미지이름.png")
                     });
                 }
+
+                function downloadURI(uri, name) {
+                    var link = document.createElement("a")
+                    link.download = name;
+                    link.href = uri;
+                    document.body.appendChild(link);
+                    link.click();
+                }
+
+                // function sortData(a) {
+                //     $.ajax({
+                //         type: 'GET',
+                //         url: '/selectDate',
+                //         data: { id: a.innerHTML },
+                //         dataType: 'JSON',
+                //         success: function (result) {
+                //             for (i = 0; i < result.length; i++) {
+                //                 alert(result[i]['title'] + " " + result[i]['date']);
+                //             }
+                //         },
+                //         error: function (request, status, error) {
+                //             alert(request + ";" + status + ";" + error);
+                //             alert('ajax error!');
+                //         }
+                //     });
+                // }
 
                 function slideUpDown() {
                     $('#menu_wrap').slideToggle();
