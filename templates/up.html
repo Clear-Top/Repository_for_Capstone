@@ -73,9 +73,10 @@
                     <form method=post enctype=multipart/form-data>
                         <div class="filebox">
                             <label for="fb"><img src="/static/images/upload.png"
-                                    style=" width:100px;height:100px;"><strong>
+                                    style=" width:100px;height:100px;"><strong id="clickAndUpload">
                                     upload</strong></label>
-                            <input multiple=multiple type=file name=file[] id="fb">
+                            <input multiple=multiple type=file name=file[] id="fb"
+                                onchange="getCmaFileInfo(this,'all')">
                         </div>
                         <div class="filebox">
                             <label for="sm"><img src="/static/images/transform.png"
@@ -141,6 +142,40 @@
             개인정보 처리방침 | 서비스 이용 약관 <br><br>
             @ 2021.CCC Corp., Inc.All rights reserved <br><br><br><br></p>
     </footer>
+    <script>
+        function getCmaFileInfo(obj, stype) {
+            var fileObj, pathHeader, pathMiddle, pathEnd, allFilename, fileName, extName;
+            if (obj == "[object HTMLInputElement]") {
+                fileObj = obj.value;
+            } else {
+                fileObj = document.getElementById(obj).value;
+            }
+            if (fileObj != "") {
+                pathHeader = fileObj.lastIndexOf("\\");
+                pathMiddle = fileObj.lastIndexOf(".");
+                pathEnd = fileObj.length;
+                fileName = fileObj.substring(pathHeader + 1, pathMiddle);
+                extName = fileObj.substring(pathMiddle + 1, pathEnd);
+                allFilename = fileName + "." + extName;
+
+                var buttonText = document.getElementById('clickAndUpload');
+                if (stype == "all") {
+                    alert('발생');
+                    buttonText.innerText = allFilename;
+                    // return allFilename; // 확장자 포함 파일명
+                } else if (stype == "name") {
+                    return fileName; // 순수 파일명만(확장자 제외)
+                } else if (stype == "ext") {
+                    return extName; // 확장자
+                } else {
+                    return fileName; // 순수 파일명만(확장자 제외)
+                }
+            } else {
+                alert("파일을 선택해주세요");
+                return false;
+            }
+        }
+    </script>
 </body>
 
 </html>
