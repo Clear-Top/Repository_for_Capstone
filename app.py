@@ -18,6 +18,7 @@ import os
 import json
 import time
 import zipfile
+import time
 from crnn_predict import crnn_predict
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -246,6 +247,7 @@ def search_carnum():
 def upload_page():
     if request.method == 'POST':
         try:
+            start = time.time()
             nowtime = time.strftime('%y%m%d_%H%M%S')
             files = request.files.getlist("file[]")
             excel = writeExcel.write_excel_prepare()
@@ -412,6 +414,9 @@ def upload_page():
                 active = 1
             else:
                 active = 0
+            end = time.time()
+            total_time = (end - start)
+            print("Time : ",total_time,"seconds")
             return render_template('up.html',
                                    img_src=u_src,
                                    car_num=plate_number,
