@@ -1,0 +1,234 @@
+
+body {
+	margin: 0;
+	padding: 0;
+	position: relative;
+	width: auto;
+}
+
+header{
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	width: auto;
+}
+
+body #page {
+	
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	width: auto;
+	z-index: 0;
+}
+
+#body{
+	background-color: rgb(210, 210, 210);
+	margin: 0;
+	min-height: 808px;
+	overflow: hidden;
+	padding: 0;
+	width: 100%;
+	height: 1100px;
+}
+
+#body .header div {
+	margin: 0 auto;
+	max-width: 960px;
+    max-height: 1100px;
+	overflow: visible;
+	padding: 65px 0 40px;
+}
+#body .header div h1 {
+	color: #080303;
+	display: block;
+	font-family: audiowide-regular-webfont;
+	font-size: 50px;
+	font-weight: bold;
+	line-height: 36px;
+	margin: 0 auto 87px;
+	padding: 0;
+	text-align: center;
+	text-transform: uppercase;
+	width: 940px;
+}
+
+#body .header {
+	margin: 0 auto;
+	padding: 0;
+	width: 100%;
+}
+#body .header div ul {
+	display: inline-block;
+	max-width: 1200px;
+    max-height: 1500px;
+	list-style: none outside none;
+	margin: 0;
+	padding: 3px 10px 0;
+}
+#body .header div ul li:first-child {
+	border: none;
+	padding: 0 0 38px;
+}
+#body .header div ul li {
+	border-top: 1px solid #A3A3A3;
+	margin: 0;
+	overflow: hidden;
+	padding: 38px 0;
+	width: auto;
+}
+#body .header div ul li a {
+	display: block;
+	float: left;
+	height: 217px;
+	margin: 0 40px 0 0;
+	padding: 0;
+	width: 380px;
+}
+
+.im{
+	z-index: 0;
+}
+
+#body .header div ul li a img {
+	cursor: pointer;
+	opacity: 1.0;
+	display: block;
+	margin: 0;
+	padding: 0;
+	width: 400px;
+    height: 250px;
+    overflow: scroll;
+}
+#body .header div ul li a img:hover {
+	opacity: 0.7;
+}
+#body .header div ul li div {
+	float: left;
+	margin: 0;
+	overflow: visible;
+	padding: 0;
+	width: 520px;
+}
+#body .header div ul li div h1 {
+	color: #140606;
+	font-family: audiowide-regular-webfont;
+	font-size: 23px;
+	font-weight: bold;
+	line-height: 23px;
+	margin: 0 0 26px;
+	padding: 0;
+	text-align: left;
+	text-transform: uppercase;
+	width: 520px;
+	height: 10px;
+}
+#body .header div ul li div p {
+	color: #3d0808;
+	font-family: Arial;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 24px;
+	margin: 0 0 41px;
+	padding: 0;
+	text-align: left;
+	width: 520px;
+}
+#body .header div ul li div p a {
+	color: #FFFFFF;
+	display: inline;
+	float: none;
+	font-family: Arial;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 24px;
+	margin: 0;
+	padding: 0;
+	text-decoration: underline;
+	height: auto;
+	width: auto;
+
+}
+#body .header div ul li div p a:hover {
+	color: #a3a3a3;
+}
+#body .header div ul li div a.more {
+	background-color: #3c0f38;
+	color: #ffffff;
+	display: block;
+	float: right;
+	font-family: Arial;
+	font-size: 14px;
+	font-weight: normal;
+	height: 31px;
+	line-height: 31px;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	text-transform: uppercase;
+	width: 120px;
+}
+#body .header div ul li div a.more:hover {
+	background-color: #620031;
+}
+#body .header div img {
+	display: block;
+	margin: 0 auto;
+	padding: 3px 0 0;
+
+}
+
+#body .header div p {
+	color: #FFFFFF;
+	display: block;
+	font-family: Arial;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 24px;
+	margin: 0 auto 48px;
+	padding: 0;
+	text-align: center;
+	width: 780px;
+}
+#body .header div p a {
+	color: #ffffff;
+	font-family: Arial;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 24px;
+	margin: 0 auto;
+	padding: 0;
+	text-decoration: underline;
+}
+#body .header div p a:hover {
+	color: #a3a3a3;
+}
+
+.i h1{
+	position: relative;
+	left: 170px;
+}
+
+.i{
+	position: relative;
+	overflow: visible;
+	left: 200px;
+	width: 900px;
+	height: 1000px;
+}
+
+
+#body .header div ul li div a img{
+    cursor: pointer;
+    opacity: 1.0;
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 600px;
+    height: 400px;
+    overflow: scroll;
+}
+
+li{
+	z-index: 0;
+}
