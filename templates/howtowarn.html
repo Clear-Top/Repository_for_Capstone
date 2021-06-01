@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="../static/css/introductionList.css">
+    <link rel="stylesheet" href="../static/css/sideBar.css">
+    <link rel="stylesheet" href="../static/css/footer.css">
+    <link rel="stylesheet" href="../static/css/developer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <script src="../static/js/sideBar.js"></script>
+    <script src="https://kit.fontawesome.com/98399ba990.js" crossorigin="anonymous"></script>
+    <style>
+        #openNav {
+            position: fixed;
+            z-index: 2;
+        }
+
+        #nav-sub {
+            text-align: center;
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 30%;
+            z-index: 2;
+        }
+
+        #nav-sub p {
+            font-size: large;
+            font-weight: bold;
+        }
+
+        .how {
+            font-size: 20px;
+            font-weight: bold;
+            transition: 0.5s;
+            cursor: pointer;
+        }
+
+        .how:hover {
+            background-color: rgba(255, 50, 50, 0.8);
+        }
+
+        a {
+            color: black;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="head"
+        style="background-color: rgba(128,128,128,1.0);margin: 0; height: 100px; text-align: center;line-height: 100px;position: sticky;top: 0;z-index: 2;">
+        <img class="logo" src="../static/images/Logo.png" alt="Logo" style="width:150px;vertical-align: middle;" />
+    </header>
+    <nav id="mySidenav" class="sidenav" style="background-color: #000000;z-index: 3;">
+        <a class="T" href="http://localhost:5000/"><i class="fas fa-home" style="font-size: 40px;"></i></a>
+        <a id="closeNav" href="javascript:void(0)" class="closebtn" onclick="closeNav();">&times;</a>
+        <a class="T" href="#">서비스 이용방법</a>
+        <a class="C" href="http://localhost:5000/howtolist">&nbsp&nbsp&nbsp리스트 조회</a>
+        <a class="C" href="http://localhost:5000/howtomap">&nbsp&nbsp&nbsp맵 조회</a>
+        <a class="C" href="http://localhost:5000/howtosave">&nbsp&nbsp&nbsp파일 로컬저장</a>
+        <a class="C" href="http://localhost:5000/howtowarn">&nbsp&nbsp&nbsp유의사항</a>
+    </nav>
+    <article style="background-color: #d2d2d2; text-align: center;">
+        <aside style="text-align: left;position: fixed;z-index: 2;">
+            <span id="openNav" style="font-size:30px;cursor:pointer;margin: 20px 10px 10px 10px;"
+                onclick="openNav();">&#9776; Menu<br></span>
+        </aside>
+        <!--<img src="../static/images/howtolist.png" style="margin-top:60px;margin-bottom: 60px;"><img src="../static/images/howtolist1.png" style="margin-top:60px;margin-bottom: 60px;">!-->
+        <div id="main"
+            style="background-color: #d2d2d2;width: 1500px;margin-top: 0px;overflow: visible;height: 2800px;padding-top: 50px;">
+            <h2 style="margin-top:0px;font-size: 60px;margin-bottom: 10px;">서비스 사용시 <span
+                    style="color: red;">유의사항</span>
+            </h2>
+            <h3 style="font-size: 30px;margin-bottom: 10px;">** 사용자는 아래 명시된 내용을 충분히 숙지한 후 이용해야 합니다. **</h3>
+            <h3 style="font-size: 15px;">** 아래 사항의 미숙지로 인해 발생한 문제는 <span
+                    style="color: blue;text-decoration: underline;">차찾자에서 책임지지 않습니다</span> **</h3>
+
+            <div style="margin: 0 auto;width: 900px;height: 100px;margin-top: 100px;">
+                <a href="#one">
+                    <div class="how"
+                        style="float: left;width: 150px;height: 90px;text-align: center;line-height: 90px;font-weight: bold;border: 3px solid gray;border-radius: 15px;">
+                        첫째</div>
+                </a>
+                <a href="#two">
+                    <div class="how"
+                        style="float: left;width: 150px;height: 90px;text-align: center;line-height: 90px;font-weight: bold;border: 3px solid gray;border-radius: 15px;margin-left: 20px;">
+                        둘째</div>
+                </a>
+                <a href="#three">
+                    <div class="how"
+                        style="float: left;width: 150px;height: 90px;text-align: center;line-height: 90px;font-weight: bold;border: 3px solid gray;border-radius: 15px;margin-left: 20px;">
+                        셋째</div>
+                </a>
+                <a href="#four">
+                    <div class="how"
+                        style="float: left;width: 150px;height: 90px;text-align: center;line-height: 90px;font-weight: bold;border: 3px solid gray;border-radius: 15px;margin-left: 20px;">
+                        넷째</div>
+                </a>
+                <a href="#five">
+                    <div class="how"
+                        style="float: left;width: 150px;height: 90px;text-align: center;line-height: 90px;font-weight: bold;border: 3px solid gray;border-radius: 15px;margin-left: 20px;">
+                        다섯째</div>
+                </a>
+            </div>
+
+
+            <div id="one" style="position: relative;height: 400px;width: 1000px;margin: 0 auto;margin-top: 150px;">
+                <img src="../static/images/howto/warn1.png" alt="warn1" style="width: 300px;height: 300px;float: left;">
+                <p style="position: absolute; text-align: left; left:350px;font-size:22px;font-weight: bold;">
+                    <span style="color: red;font-size: 40px;">첫째</span><br><br>차량번호판은 인식이 불가능할 정도로 <span
+                        style="text-decoration: underline;">훼손되어서는 안됩니다</span>.
+                </p>
+            </div>
+            <div id="two" style="position: relative;height: 400px;width: 1000px;margin: 0 auto;margin-top: 50px;">
+                <img src="../static/images/howto/warn2.png" alt="warn2" style="width: 300px;height: 300px;float: left;">
+                <p style="position: absolute; text-align: left; left:350px;font-size:22px;font-weight: bold;">
+                    <span style="color: red;font-size: 40px;">둘째</span><br><br>분석을 원하는 원본이미지에는 반드시 <span
+                        style="text-decoration: underline;">차량이 존재</span>해야 합니다.
+                </p>
+            </div>
+            <div id="three" style="position: relative;height: 400px;width: 1000px;margin: 0 auto;margin-top: 50px;">
+                <img src="../static/images/howto/warn3.png" alt="warn3" style="width: 300px;height: 300px;float: left;">
+                <p style="position: absolute; text-align: left; left:350px;font-size:22px;font-weight: bold;">
+                    <span style="color: red;font-size: 40px;">셋째</span><br><br>Map에 마커를 생성하고 싶다면 <span
+                        style="text-decoration: underline;">EXIF정보가 포함된 이미지</span>를 사용해야
+                    합니다.
+                </p>
+            </div>
+            <div id="four" style="position: relative;height: 400px;width: 1000px;margin: 0 auto;margin-top: 50px;">
+                <img src="../static/images/howto/warn4.png" alt="warn4" style="width: 300px;height: 300px;float: left;">
+                <p style="position: absolute; text-align: left; left:350px;font-size:22px;font-weight: bold;">
+                    <span style="color: red;font-size: 40px;">넷째</span><br><br>무단으로 Map의 내용을 <span
+                        style="text-decoration: underline;">캡처해서는 안됩니다</span>.<br><br>(지도에 대한 저작권은
+                    <span style="color: blue;">Kakao</span>측 소유입니다.)
+                </p>
+            </div>
+            <div id="five" style="position: relative;height: 400px;width: 1000px;margin: 0 auto;margin-top: 50px;">
+                <img src="../static/images/howto/warn5.png" alt="warn5" style="width: 300px;height: 300px;float: left;">
+                <p style="position: absolute; text-align: left; left:350px;font-size:22px;font-weight: bold;">
+                    <span style="color: red;font-size: 40px;">다섯째</span><br><br>목적없이 <span
+                        style="text-decoration: underline;">타인의 차량을 찍어서</span> 분석해서는 안됩니다. <br><br>(이로인해
+                    발생하는 법적인 문제를 차찾자는 책임지지 않습니다.)
+                </p>
+            </div>
+        </div>
+    </article>
+    <div id="nav-sub">
+        <!-- <i id="icon" class="fas fa-map-marked-alt"></i> -->
+        <img class="logo" id="logo" src="../static/images/Logo.png" alt="Logo" />
+        <p>차찾자 Corp.</p>
+        <p>LPR-based Data Visualization Services</p>
+    </div>
+    <footer id=" main" class="footer-basic">
+        <div class="social">
+            <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://twitter.com/"><i class="fab fa-twitter"></i></a>
+            <a href="https://github.com/RaicLee/Capstone_Design"><i class="fab fa-github"></i></a>
+        </div>
+
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="http://127.0.0.1:5000/">Home</a></li>
+            <li class="list-inline-item"><a href="http://127.0.0.1:5000/xlupload">Services</a></li>
+            <li class="list-inline-item"><a href="#">About</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li>
+            <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+        </ul>
+        <p class="copyright">(주)차찾자 | 대표: 군자동 삼겹살 <br>
+            주소: 서울특별시 광진구 능동로 209<br>
+            개인정보 처리방침 | 서비스 이용 약관 <br><br>
+            @ 2021.CCC Corp., Inc.All rights reserved <br><br><br><br></p>
+    </footer>
+</body>
+
+</html>
