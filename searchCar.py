@@ -16,8 +16,5 @@ def read_carnum():
         carnums.append(i[0])
 
     conn.close()
-    # print(carnums)
     return carnums
 
-
-# read_carnum()

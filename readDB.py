@@ -3,11 +3,6 @@ import db
 
 
 def data(curs, conn):
-
-    # db 연결
-    # conn = db.connect_db()
-    # curs = conn.cursor()
-
     # 자동차번호만 추출
     sql = "select carnum from class1"
 

@@ -2,7 +2,6 @@ from openpyxl import Workbook
 
 
 def write_excel_prepare():
-    print('액셀작성실행')
     write_wb = Workbook()
 
     # 엑셀작성을 위한 정보 = {'워크시트','활성화키','입력개수'}

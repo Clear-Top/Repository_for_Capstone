@@ -6,20 +6,8 @@ import app
 def connect_db():
     conn = pymysql.connect(host='127.0.0.1', port=3306, user='root',
                            passwd='root', db='capstone', charset='utf8')
-    # print('DB 연결성공')
     return conn
 
-
-# def select_all():
-#     try:
-#         with conn.cursor() as cursor:
-#             sql = "select * from class1"
-#             cursor.execute(sql)
-#             rs = cursor.fetchall()
-#             for row in rs:
-#                 print(row)
-#     finally:
-#         return None
 
 
 def insert_test(excel_name, conn):
@@ -56,8 +44,6 @@ def select_data(carnum, conn, curs):
         conn.commit()
         global rs
         rs = curs.fetchall()
-        # for row in rs:
-        #     print(row)
     finally:
         return rs
 
@@ -73,9 +59,7 @@ def select_ALLdata(conn, curs):
         listData = []
         for i in rs:
             listData.append(i[0])
-            # print(i[0])
     finally:
-        # print("{"+sql + "}   조회완료")
         return listData
 
 
@@ -98,7 +82,6 @@ def select_search(carnum, conn, curs):
                 if j == 5:
                     break
                 listData.append(i[j])
-                # print(i[j])
                 j = j+1
                 count = count + 1
                     
@@ -125,7 +108,6 @@ def select_Date(carnum, conn, curs):
             date=str(i[1])
             ))
     finally:
-        # print(listData)
         return listData
 
 
@@ -137,7 +119,3 @@ def clear_Data(conn, curs):
         conn.commit()
     finally:
         return None
-
-# 날짜 분리구문(년월일/시간)
-# select carnum, date_format(date,'%Y-%m-%d'),date_format(date,'%h:%i:%s') from class1 where carnum = '12가3456' order by date asc ;
-
