@@ -216,7 +216,7 @@
                 var selectedCarnum;
                 // 지도에 표시된 마커 객체를 가지고 있을 배열입니다
                 var markers = [];
-                var saveColor;
+                var saveColor = "";
                 var seletedLatLng;
                 // var selectedLocation = [];
                 var selectedDoro;
@@ -317,11 +317,11 @@
                         // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
                         // 이벤트 리스너로는 클로저를 만들어 등록합니다 
                         // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-                        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, imagePath, overlay, dateAndTime));
+                        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, imagePath, overlay, dateAndTime, saveColor));
                         kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(overlay));
                         kakao.maps.event.addListener(marker, 'click', makeClickListener(marker, imagePath, dateAndTime));
 
-                        itemEl.addEventListener("mouseover", makeOverListener(map, marker, imagePath, overlay, dateAndTime));
+                        itemEl.addEventListener("mouseover", makeOverListener(map, marker, imagePath, overlay, dateAndTime, saveColor));
                         itemEl.addEventListener("mouseout", makeOutListener(overlay));
                         itemEl.addEventListener("click", makeClickListener(marker, imagePath, dateAndTime));
 
@@ -381,7 +381,7 @@
 
 
                 // mouseon 일 경우, 커스텀오버레이 발생 
-                function makeOverListener(map, marker, imagePath, overlay, dateAndTime) {
+                function makeOverListener(map, marker, imagePath, overlay, dateAndTime, color) {
                     return function () {
                         // alert("Marker 마우스오버이벤트 발생!");
                         // console.log('마우스오버 발생!');
@@ -417,7 +417,7 @@
                             overlay.setContent(
                                 '<div class=\"wrap\">' +
                                 '                  <div class=\"info\">' +
-                                '                       <div class=\"title\" style="background:' + saveColor + ';">' + marker.getTitle() + '</div>' +
+                                '                       <div class=\"title\" style="background:' + color + ';">' + marker.getTitle() + '</div>' +
                                 '                       <div class=\"body\">' +
                                 '                           <div class=\"img\">' +
                                 '                               <img src=\"../static' + imagePath + '\" width=\"100\" height=\"100\">' +
@@ -605,6 +605,7 @@
                                         if (selectedCarnum == carnumber) {
                                             alert('이미 선택되어 있는 자료입니다.');
                                         } else {
+                                            saveColor = "";
                                             saveColor = this.style.background.slice(23, 40);
                                             // alert(saveColor);
                                             if (markers.length != 0) {

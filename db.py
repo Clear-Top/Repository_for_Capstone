@@ -128,6 +128,8 @@ def select_Date(carnum, conn, curs):
         # print(listData)
         return listData
 
+
+# 창닫기 이벤트와 연결
 def clear_Data(conn, curs):
     try:
         sql = "truncate class1;"
