@@ -107,9 +107,11 @@
                                 style=width:340px;height:80px;></a>{% endfor %}
                         <hr>{% endfor %}{% endif %}
                     </div>
-                    <div class="in_left_box3">{% for i in range(car_num | length) %}{% for j in range(car_num[i] |
-                        length)
-                        %}
+                    <h1 style="float:left;margin-left:200px"><strong>TOTAL : {% if total %}{{total}}{% endif %}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</strong></h1>
+                        <h1 style="float:left;margin-left: 60px;color:blue;"><strong>SUCCESS : {% if success %}{{success}}{% endif %}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</strong></h1>
+                        <h1 style="float:left;margin-left: 60px;color:red;"><strong>FAILED : {{fail}}</strong></h1>
+                    <div class="in_left_box3">
+                        {% for i in range(car_num | length) %}{% for j in range(car_num[i] | length) %}
                         {% if car_num[i][j] %}차량번호 : {{ car_num[i][j] }}{% endif %}
                         촬영 시간 :{% if car_time[i] %} {{car_time[i]}}{% else %} 존재하지 않습니다.{% endif %}
                         위도 정보 :{% if car_lalo[i] %} {{car_lalo[i]}}{% else %} 존재하지 않습니다.{% endif %}

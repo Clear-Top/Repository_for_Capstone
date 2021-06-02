@@ -250,7 +250,6 @@ def upload_page():
             plate_number = []
             plate_picture = []
             zipname = []
-
             print(os.getcwd())
             for file in files:
                 # check if the post request has the file part
@@ -422,7 +421,10 @@ def upload_page():
                                    car_source=plate_picture,
                                    nowtime=nowtime,
                                    active=active,
-                                   alert=0)
+                                   alert=0,
+                                   total=total_process,
+                                   success=success_process,
+                                   fail=total_process-success_process)
         except Exception as e:
             print("[SYS]", e)
             alert = -1
