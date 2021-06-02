@@ -4,10 +4,9 @@ import app
 
 
 def connect_db():
-    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root',
-                           passwd='root', db='capstone', charset='utf8')
+    conn = pymysql.connect(host='127.0.0.1', port=3307, user='root',
+                           passwd='1234', db='capstone', charset='utf8')
     return conn
-
 
 
 def insert_test(excel_name, conn):
@@ -28,10 +27,13 @@ def insert_test(excel_name, conn):
                     break
                 else:
                     sql = 'insert into class1 values(%s,%s,%s,%s,%s,%s)'
+                    if(list[1] == 'None'):
+                        i = i+1
+                        continue
+                    i = i+1
                     curs.execute(
                         sql, (list[0], list[1], list[2], list[3], list[4], list[5]))
                     conn.commit()
-                    i = i+1
     finally:
         return None
 
@@ -77,23 +79,25 @@ def select_search(carnum, conn, curs):
         count = 0
 
         for i in rs:
-            j=0
+            j = 0
             while True:
                 if j == 5:
                     break
                 listData.append(i[j])
                 j = j+1
                 count = count + 1
-                    
+
     finally:
         count = int(count/5)
         result.append(listData)
         result.append(count)
         return result
 
+
 def select_Date(carnum, conn, curs):
     try:
-        sql = "select carnum,date from class1 where carnum = '" + str(carnum) + "' order by date asc;"
+        sql = "select carnum,date from class1 where carnum = '" + \
+            str(carnum) + "' order by date asc;"
         curs.execute(sql)
         conn.commit()
         global rs
@@ -104,8 +108,8 @@ def select_Date(carnum, conn, curs):
 
         for i in rs:
             listData.append(dict(
-            title=i[0],
-            date=str(i[1])
+                title=i[0],
+                date=str(i[1])
             ))
     finally:
         return listData

@@ -246,7 +246,7 @@ def upload_page():
             u_src = []
             time_file = []
             lalo_file = []
-            
+
             plate_number = []
             plate_picture = []
             zipname = []
@@ -317,14 +317,14 @@ def upload_page():
                         print("[LPRNet]", lp[0])
                         print("[CRNN]", crnn_lp)
                         final_lpr = korlpr(lp[0], crnn_lp)
-                        total_process+=1
+                        total_process += 1
                         if final_lpr is not None and len(final_lpr) == 1:
                             print("[korlpr] returned none")
                             continue
                         if final_lpr in plate_num:
                             continue
                         # Saving Deskewed LP image
-                        success_process+=1
+                        success_process += 1
                         cv.imwrite("./static/result/"+full_image.rsplit(".")
                                    [0]+"_wp"+str(i)+".jpg", img.astype(np.uint8))
                         cv.imwrite("./static/result/"+full_image.rsplit(".")
@@ -354,13 +354,13 @@ def upload_page():
                             #print("[prob]", np.float32(p))
                             print("[CRNN]", crnn_lp)
                             final_lpr = korlpr(lp[0], crnn_lp)
-                            total_process+=1
+                            total_process += 1
                             if final_lpr is not None and len(final_lpr) == 1:
                                 print("[korlpr] returned none")
                                 continue
                             if final_lpr in plate_num:
                                 continue
-                            success_process+=1
+                            success_process += 1
                             cv.imwrite("./static/result/"+full_image.rsplit(".")
                                        [0]+"_yv4_"+str(n)+".jpg", lic.astype(np.uint8))
                             writeExcel.write_excel(
@@ -413,8 +413,8 @@ def upload_page():
                 active = 0
             end = time.time()
             total_time = (end - start)
-            print("Time : ",total_time,"seconds")
-            print("Total: ",total_process," Success:",success_process)
+            print("Time : ", total_time, "seconds")
+            print("Total: ", total_process, " Success:", success_process)
             return render_template('up.html',
                                    img_src=u_src,
                                    car_num=plate_number,
