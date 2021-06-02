@@ -246,12 +246,14 @@ def upload_page():
             u_src = []
             time_file = []
             lalo_file = []
-            lalo_excel = []
+            
             plate_number = []
             plate_picture = []
             zipname = []
+
             print(os.getcwd())
             for file in files:
+                lalo_excel = []
                 # check if the post request has the file part
                 if file and not allowed_file(file.filename):
                     print("[SYS] NOT ALLOWED FORMAT", file.filename)
@@ -421,10 +423,7 @@ def upload_page():
                                    car_source=plate_picture,
                                    nowtime=nowtime,
                                    active=active,
-                                   alert=0,
-                                   total=total_process,
-                                   success=success_process,
-                                   fail=total_process-success_process)
+                                   alert=0)
         except Exception as e:
             print("[SYS]", e)
             alert = -1
