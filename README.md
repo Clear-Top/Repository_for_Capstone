@@ -10,19 +10,14 @@ https://www.youtube.com/watch?v=mmj3nxGT2YQ [참조] <br/>
 https://colab.research.google.com/drive/1_GdoqCJWXsChrOiY8sZMr_zbr_fH-0Fg?usp=sharing [참조] <br/>
 https://morioh.com/p/696345dcfa49 <br/>
 
+#주의
+본 repo는 2021/06/11일 기점으로 public 으로 전환될 예정입니다.<br/>
 
 <br />
 <br />
 #pretrained model for lpd + car detection<br />
 <a href='https://drive.google.com/uc?export=download&id=1NcJtEwboqtQ9u27lerYOqS3kUrg6cGKv'>yolov4_cfg</a> <br /><br />
 <a href='https://drive.google.com/uc?export=download&id=1a-Nkl7Hc4Lx27L72qaBZFmkbcIyEcQvA'>yolov4_weights</a> <br/><br/>
-
-# Flask 기반의 SR-LPR 어플리케이션 구현
-Baseline모델은 LPSR-Recognition 구조를 Keras로 구현 및 훈련 진행
-웹 디자인 + 모델 훈련 + 나온 결과를 통해 추가적인 기능 구현을 최우선 목표로 진행
-
-# Input [Image,Video] 에 따라 다르게 구현해야하는지 의문.
-SISR을 이용하여 의도적인 Down Sampling을 통한 모델 훈련, SRGAN을 사용해보는것도 괜찮아보임.
 
 # Dataset
 https://sejonguniversity-my.sharepoint.com/personal/minhdl_sju_ac_kr/_layouts/15/onedrive.aspx?originalPath=aHR0cHM6Ly9zZWpvbmd1bml2ZXJzaXR5LW15LnNoYXJlcG9pbnQuY29tLzpmOi9nL3BlcnNvbmFsL21pbmhkbF9zanVfYWNfa3IvRXJSTXE4MjNWbkJLdlNrbHB0bjJXYklCLUp4TDdwS3QzaE91aVk4RTNvV2tyUT9ydGltZT1iNXlXOVNMNDJFZw&id=%2Fpersonal%2Fminhdl%5Fsju%5Fac%5Fkr%2FDocuments%2Fradish%20project%20dataset%2FCapstone%5Fdataset%2Flicense%20plate%20dataset <br/>
