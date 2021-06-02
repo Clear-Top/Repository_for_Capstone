@@ -17,9 +17,12 @@ classnames = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
               "무", "부", "수", "우", "주", "허", "하", "호"
               ]
 
-
+net = LPRNet(len(classnames) + 1)
+net.load_weights("DL/model/lpr/weights_best.pb")
 def lpr(image):
+    """
     net = LPRNet(len(classnames) + 1)
     net.load_weights("DL/model/lpr/weights_best.pb")
+    """
     x = np.expand_dims(resize_and_normailze(image), axis=0)
     return (net.predict(x, classnames))

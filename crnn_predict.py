@@ -6,9 +6,25 @@ from crnn_parameter import letters
 import argparse
 from keras import backend as K
 #K.set_learning_phase(0)
+# Get CRNN model
+model = get_Model(training=False)
 
+try:
+    model.load_weights("./DL/model/lpr/best2.hdf5")
+    print("...Previous weight data...")
+except:
+    raise Exception("No weight file!")
+Region = {"A": "서울 ", "B": "경기 ", "C": "인천 ", "D": "강원 ", "E": "충남 ", "F": "대전 ",
+            "G": "충북 ", "H": "부산 ", "I": "울산 ", "J": "대구 ", "K": "경북 ", "L": "경남 ",
+            "M": "전남 ", "N": "광주 ", "O": "전북 ", "P": "제주 "}
+Hangul = {"dk": "아", "dj": "어", "dh": "오", "dn": "우", "qk": "바", "qj": "버", "qh": "보", "qn": "부",
+            "ek": "다", "ej": "더", "eh": "도", "en": "두", "rk": "가", "rj": "거", "rh": "고", "rn": "구",
+            "wk": "자", "wj": "저", "wh": "조", "wn": "주", "ak": "마", "aj": "머", "ah": "모", "an": "무",
+            "sk": "나", "sj": "너", "sh": "노", "sn": "누", "fk": "라", "fj": "러", "fh": "로", "fn": "루",
+            "tk": "사", "tj": "서", "th": "소", "tn": "수", "gj": "허", "gk": "하", "gh": "호"}
 
 def crnn_predict(img):
+    """
     Region = {"A": "서울 ", "B": "경기 ", "C": "인천 ", "D": "강원 ", "E": "충남 ", "F": "대전 ",
             "G": "충북 ", "H": "부산 ", "I": "울산 ", "J": "대구 ", "K": "경북 ", "L": "경남 ",
             "M": "전남 ", "N": "광주 ", "O": "전북 ", "P": "제주 "}
@@ -17,7 +33,7 @@ def crnn_predict(img):
             "wk": "자", "wj": "저", "wh": "조", "wn": "주", "ak": "마", "aj": "머", "ah": "모", "an": "무",
             "sk": "나", "sj": "너", "sh": "노", "sn": "누", "fk": "라", "fj": "러", "fh": "로", "fn": "루",
             "tk": "사", "tj": "서", "th": "소", "tn": "수", "gj": "허", "gk": "하", "gh": "호"}
-
+    """
     def decode_label(out):
         # out : (1, 32, 42)
         out_best = list(np.argmax(out[0, 2:], axis=1))  # get max index -> len = 32
@@ -51,6 +67,7 @@ def crnn_predict(img):
             pass
         return region + two_num + hangul + four_num
 
+    """
     # Get CRNN model
     model = get_Model(training=False)
 
@@ -59,6 +76,7 @@ def crnn_predict(img):
         print("...Previous weight data...")
     except:
         raise Exception("No weight file!")
+    """
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     img_pred = img.astype(np.float32)
     img_pred = cv2.resize(img_pred, (128, 64))

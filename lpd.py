@@ -6,7 +6,27 @@ import sys
 import numpy as np
 import os.path
 UPLOAD_FOLDER = '/static/uploads/'
+confThreshold = 0.4  #Confidence threshold
+nmsThreshold = 0.3  #Non-maximum suppression threshold
+
+inpWidth = 416  #608     #Width of network's input image
+inpHeight = 416 #608     #Height of network's input image
+   
+classesFile = "DL/model/lpd/classes.names"
+classes = None
+with open(classesFile, 'rt') as f:
+    classes = f.read().rstrip('\n').split('\n')
+
+# Give the configuration and weight files for the model and load the network using them.
+
+modelConfiguration = "DL/model/lpd/yolov4-ANPR.cfg"
+modelWeights = "DL/model/lpd/yolov4-ANPR.weights"
+
+net = cv.dnn.readNetFromDarknet(modelConfiguration, modelWeights)
+net.setPreferableBackend(cv.dnn.DNN_BACKEND_OPENCV)
+net.setPreferableTarget(cv.dnn.DNN_TARGET_CPU)
 def lpd(file):
+    """
     confThreshold = 0.4  #Confidence threshold
     nmsThreshold = 0.3  #Non-maximum suppression threshold
 
@@ -26,7 +46,7 @@ def lpd(file):
     net = cv.dnn.readNetFromDarknet(modelConfiguration, modelWeights)
     net.setPreferableBackend(cv.dnn.DNN_BACKEND_OPENCV)
     net.setPreferableTarget(cv.dnn.DNN_TARGET_CPU)
-
+    """
     # Get the names of the output layers
     def getOutputsNames(net):
         # Get the names of all the layers in the network
